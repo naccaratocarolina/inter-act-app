@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
 
-  constructor(public formbuilder: FormBuilder) {
+  constructor(public formbuilder: FormBuilder, private router:Router) {
     this.loginForm = this.formbuilder.group({
       email: [null],
       password: [null]
@@ -18,6 +19,11 @@ export class LoginPage implements OnInit {
    }
 
   ngOnInit() {
+  }
+
+
+  registerRedirect() {
+    this.router.navigateByUrl('/register')
   }
 
 }

@@ -1,16 +1,11 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Login</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="bg-image">
   <img class='logo' src="../../../assets/logo_text.png">
   <section class='login_form'>
     <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm)" >
       <ion-input class='input' placeholder="Email" type="text" formControlName='email' required='true'></ion-input>
       <ion-input class='input' placeholder="Senha" type="password" formControlName='password' required='true'></ion-input>
-      <ion-button class='button' type="submit" color='secondary'>Entrar</ion-button>
+      <ion-button class='button' type="submit" color='primary'><h1>Entrar</h1></ion-button>
+      <h2>Ainda não possui uma conta?<span (click)='registerRedirect()'> Clique aqui.</span></h2>
     </form>
   </section>
 </ion-content>

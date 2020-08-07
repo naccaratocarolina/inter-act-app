@@ -35,6 +35,28 @@
 
 .button {
     margin-top: 5em;
+    margin-bottom: 3em;
     --border-radius: 10em;
     --color: var(--ion-color-primary);
+}
+
+h1 {
+    color: #141414;
+    font-size: 1.25em;
+    margin: auto;
+    padding: auto;
+    font-family: 'Comfortaa', cursive;
+    text-transform: capitalize;
+    font-weight: bold;
+
+}
+
+h2{
+    color: #E1E4EB;
+    font-size: 0.80em;
+    font-family: 'Comfortaa', cursive;
+}
+
+span {
+    text-decoration: underline;
 }
