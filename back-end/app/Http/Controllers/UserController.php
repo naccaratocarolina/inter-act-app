@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Http\Exceptions\HttpResponseException;
+
+use App\User;
 
 class UserController extends Controller
 {
@@ -13,7 +18,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users = User::orderBy('id', 'desc')->get();
+        return response()->json(['users' => $users]);
     }
 
     /**
@@ -23,7 +29,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+      //
     }
 
     /**
@@ -45,7 +51,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+      $user = User::findOrFail($id);
+      return response()->json(['message' => 'User encontrado!', 'user' => $user]);
     }
 
     /**
@@ -79,6 +86,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $user = User:findOrFail($id);
+      User::destroy($id);
+      return response()->json(['message' => 'User deletado!', 'user' => $user]);
     }
 }
