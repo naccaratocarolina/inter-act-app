@@ -67,12 +67,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroyUser($id)
-    {
-      $user = User::findOrFail($id);
-      $user->roles()->detach();
-      $user->permissions()->detach();
-      User::destroy($id);
-      return response()->json(['message' => 'User deletado!', 'user' => $user]);
-    }
+     public function destroyUser($id)
+     {
+       $user = User::findOrFail($id);
+       $user->roles()->detach();
+       $user->permissions()->detach();
+       User::destroy($id);
+       return response()->json(['message' => 'User deletado!', 'user' => $user]);
+      }
 }

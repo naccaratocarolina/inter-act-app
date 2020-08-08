@@ -6,7 +6,6 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
-use Laravel\Passport\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Role;
@@ -15,6 +14,7 @@ use App\Permission;
 class User extends Authenticatable
 {
     use Notifiable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -42,6 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected $dates = ['deleted_at'];
 
     /**
      * Many to Many Relationship User & Role
@@ -79,18 +81,16 @@ class User extends Authenticatable
         $this->save();
 
         //associando um role ao user
-        if($request->role != NULL) { //se existir um role associado
-          $this->roles()->attach($request->role); //attaching o role ao user
+        if($request->role) {
+          $this->roles()->attach($request->role);
           $this->save();
         }
 
-        //associando uma permission ao user
-        if($request->permissions != NULL) {
-          foreach($request->permissions as $permission) {
-            $this->permissions()->attach($permission);
-            $this->save();
-          }
+        if($request->permission) {
+          $this->permissions()->attach($request->permission);
+          $this->save();
         }
+
     }
 
     /**
@@ -125,11 +125,35 @@ class User extends Authenticatable
        }
 
        //altera as permissions
-       if($request->permissions) {
-         foreach($request->permissions as $permission) {
-           $this->permissions()->attach($request->permissions);
-           $this->save();
+       if($request->permission) {
+         $this->permissions()->attach($request->permission);
+         $this->save();
+       }
+     }
+
+     /**
+      * Check if the user has a role assigned
+      * @return bool
+      */
+     public function hasRole($roles)
+     {
+       //receives an array of roles and checks if the user is associated
+       foreach($roles as $role) {
+         if($this->roles->contains('marker', $role)) {
+           return true; //if yes, returns true
          }
+       }
+       return false; //if no, returns false
+     }
+
+     /**
+      * Check if the user is a moderator
+      * @return bool
+      */
+     public function isModerator()
+     {
+       if($this->roles->contains('marker', 'moderator')) {
+         return true;
        }
      }
 }

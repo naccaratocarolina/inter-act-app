@@ -48,8 +48,8 @@ class Role extends Model
 
       foreach($permissionsList as $permission) {
         $role_permission = new Permission();
-        $role_permission->name = $permission;
-        $role_permission->marker = strtolower(str_replace(" ", "-", $permission)); //cria o marker da permission separado por -
+        $role_permission->name = $this->name;
+        $role_permission->marker = strtolower(str_replace(" ", "-", $this->marker)); //cria o marker da permission separado por -
         $role_permission->save();
         $this->permissions()->attach($role_permission->id);
         $this->save();
