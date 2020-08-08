@@ -9,7 +9,6 @@ use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Role;
-use App\Permission;
 
 class User extends Authenticatable
 {
@@ -57,17 +56,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Many to Many Relationship User & Permission
-     * A User can have n Permissions
-     * A Permission can be assigned to n User
-     * @return mixed
-     */
-    public function permissions()
-    {
-        return $this->belongsToMany('App\Permission','permissions_users');
-    }
-
-    /**
      * Create a new User
      *
      * @return \Illuminate\Http\Response
@@ -85,11 +73,6 @@ class User extends Authenticatable
         //associando um role ao user
         if($request->role) {
           $this->roles()->attach($request->role);
-          $this->save();
-        }
-
-        if($request->permission) {
-          $this->permissions()->attach($request->permission);
           $this->save();
         }
 
@@ -122,19 +105,12 @@ class User extends Authenticatable
        }
        $this->save();
 
-       //detach os roles e permissions do user para depois alterar
+       //detach os roles do user para depois alterar
        $this->roles()->detach();
-       $this->permissions()->detach();
 
        //altera os roles
        if($request->role) {
          $this->roles()->attach($request->role);
-         $this->save();
-       }
-
-       //altera as permissions
-       if($request->permission) {
-         $this->permissions()->attach($request->permission);
          $this->save();
        }
      }

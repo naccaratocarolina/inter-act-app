@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Role;
-use App\Permission;
 use Illuminate\Http\Request;
 
 class RoleController extends Controller
@@ -66,7 +65,6 @@ class RoleController extends Controller
     public function destroyRole($id)
     {
         $role = Role::findOrFail($id);
-        $role->permissions()->detach();
         Role::destroy($id);
         return response()->json(['message' => 'Role deletado!', 'role' => $role]);
     }

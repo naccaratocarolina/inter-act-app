@@ -5,6 +5,9 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
+use Article;
+//use Comment;
+
 class AuthServiceProvider extends ServiceProvider
 {
     /**
@@ -25,12 +28,12 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        Gate::define('isModerator', function($user)) {
-          return $user->roles->first()->marker == 'moderator';
-        }
+        Gate::define('isModerator', function ($user) {
+            return $user->roles->first()->marker == 'moderator';
+        });
 
-        Gate::define('isRegisteredUser', function($user)) {
-          return $user->roles->first()->marker == 'registered-user';
-        }
+        Gate::define('isRegisteredUser', function ($user) {
+            return $user->roles->first()->marker == 'registered-user';
+        });
     }
 }
