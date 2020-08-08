@@ -8,6 +8,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
 use App\User;
+use App\Role;
 
 class UserController extends Controller
 {
@@ -16,32 +17,23 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexUser()
     {
         $users = User::orderBy('id', 'desc')->get();
         return response()->json(['users' => $users]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
+     * Create a new User
+     * And assign a Role & Permission
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-      //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+     public function createUser(Request $request)
+     {
+       $user = new User;
+       $user->createUser($request);
+       return response()->json(['message' => 'User criado!', 'user' => $user]);
+     }
 
     /**
      * Display the specified resource.
@@ -49,21 +41,10 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showUser($id)
     {
       $user = User::findOrFail($id);
       return response()->json(['message' => 'User encontrado!', 'user' => $user]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -73,10 +54,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+     public function updateUser(Request $request, $id)
+     {
+       $user = User::find($id);
+       $user->updateUser($request);
+       return response()->json(['message' => 'User editado!', 'user' => $user]);
+     }
 
     /**
      * Remove the specified resource from storage.
@@ -84,9 +67,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyUser($id)
     {
-      $user = User:findOrFail($id);
+      $user = User::findOrFail($id);
+      $user->roles()->detach();
+      $user->permissions()->detach();
       User::destroy($id);
       return response()->json(['message' => 'User deletado!', 'user' => $user]);
     }

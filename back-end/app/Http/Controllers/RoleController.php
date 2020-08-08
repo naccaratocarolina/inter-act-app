@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Role;
+use App\Permission;
 use Illuminate\Http\Request;
 
-class RolesController extends Controller
+class RoleController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function listRoles()
+    public function indexRole()
     {
         $roles = Role::orderBy('id', 'desc')->get();
         return response()->json(['roles' => $roles]);
@@ -26,35 +27,8 @@ class RolesController extends Controller
     public function createRole(Request $request)
     {
       $role = new Role();
-
-      $role->name = $request->name;
-      $role->marker = $role->marker;
-      $role->save();
-
-      //cria um array de permissoes separado por virgula
-      $permissions = explode(',', $request->roles_permissions);
-
-      foreach($permission as $permission) {
-        $permissions = new Permission();
-        $permissions->name = $permission;
-        $permissions->marker = strtolower(str_replace(" ", "-", $permission));
-        $permissions->save();
-        $role->permissions()->attach($permissions->id);
-        $role->save();
-      }
-
-      return response()->json(['roles' => $roles]);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-
+      $role->createRole($request);
+      return response()->json(['role' => $role]);
     }
 
     /**
@@ -63,20 +37,10 @@ class RolesController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function show(Role $role)
+    public function showRole($id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Role  $role
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Role $role)
-    {
-        //
+      $role = Role::findOrFail($id);
+      return response()->json(['message' => 'Role encontrado!', 'role' => $role]);
     }
 
     /**
@@ -86,24 +50,11 @@ class RolesController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateRole(Request $request, $id)
     {
-        $role = Role::find($id);
-
-        //validating request
-        if($role) {
-          if($request->name) {
-            $role->name = $request->name;
-          }
-          if($request->marker) {
-            $role->marker = $request->marker;
-          }
-          $role->save();
-          return response()->json(['message' => 'Role editado!', 'role' => $role]);
-        }
-        else {
-          return response()->json(['message' => 'Vc nao tem permissao ou o role nao existe!']);
-        }
+      $role = Role::findOrFail($id);
+      $role->updateRole($request);
+      return response()->json(['message' => 'Role editado!', 'role' => $role]);
     }
 
     /**
@@ -112,10 +63,11 @@ class RolesController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroyRole($id)
     {
-      $role = Role:findOrFail($id);
-      Role::destroy($id);
-      return response()->json(['message' => 'Role deletado!', 'role' => $role]);
+        $role = Role::findOrFail($id);
+        $role->permissions()->detach();
+        Role::destroy($id);
+        return response()->json(['message' => 'Role deletado!', 'role' => $role]);
     }
 }

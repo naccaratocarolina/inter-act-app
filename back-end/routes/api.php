@@ -19,6 +19,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //User Controller
-Route::resource('user', 'UserController');
-Route::resource('role', 'RoleController');
-Route::resource('permission', 'PermissionController');
+Route::get('indexUser', 'UserController@indexUser');
+Route::get('showUser/{id}', 'UserController@showUser');
+Route::post('createUser', 'UserController@createUser');
+Route::put('updateUser/{id}', 'UserController@updateUser');
+Route::delete('destroyUser/{id}', 'UserController@destroyUser');
+
+//Role Controller
+Route::get('indexRole', 'RoleController@indexRole');
+Route::get('showRole/{id}', 'RoleController@showRole');
+Route::post('createRole', 'RoleController@createRole');
+Route::put('updateRole/{id}', 'RoleController@updateRole');
+Route::delete('destroyRole/{id}', 'RoleController@destroyRole');

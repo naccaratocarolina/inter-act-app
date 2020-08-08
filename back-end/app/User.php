@@ -5,6 +5,12 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Http\Request;
+use Laravel\Passport\HasApiTokens;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
+use App\Role;
+use App\Permission;
 
 class User extends Authenticatable
 {
@@ -58,4 +64,72 @@ class User extends Authenticatable
     {
         return $this->belongsToMany('App\Permission','permissions_users');
     }
+
+    /**
+     * Create a new User
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function createUser(Request $request)
+    {
+        //atributos do user
+        $this->name = $request->name;
+        $this->email = $request->email;
+        $this->password = bcrypt($request->password);
+        $this->save();
+
+        //associando um role ao user
+        if($request->role != NULL) { //se existir um role associado
+          $this->roles()->attach($request->role); //attaching o role ao user
+          $this->save();
+        }
+
+        //associando uma permission ao user
+        if($request->permissions != NULL) {
+          foreach($request->permissions as $permission) {
+            $this->permissions()->attach($permission);
+            $this->save();
+          }
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function updateUser(Request $request)
+     {
+       //atualiza os campos do user
+       if($request->name){
+          $this->name = $request->name;
+       }
+       if($request->email){
+         $this->email = $request->email;
+       }
+       if($request->password){
+         $this->password = bcrypt($request->password);
+       }
+       $this->save();
+
+       //detach os roles e permissions do user para depois alterar
+       $this->roles()->detach();
+       $this->permissions()->detach();
+
+       //altera os roles
+       if($request->role) {
+         $this->roles()->attach($request->role);
+         $this->save();
+       }
+
+       //altera as permissions
+       if($request->permissions) {
+         foreach($request->permissions as $permission) {
+           $this->permissions()->attach($request->permissions);
+           $this->save();
+         }
+       }
+     }
 }
