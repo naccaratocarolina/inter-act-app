@@ -78,6 +78,8 @@ class User extends Authenticatable
         $this->name = $request->name;
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
+        $this->profile_picture = $request->profile_picture;
+        $this->description = $request->description;
         $this->save();
 
         //associando um role ao user
@@ -111,6 +113,12 @@ class User extends Authenticatable
        }
        if($request->password){
          $this->password = bcrypt($request->password);
+       }
+       if($request->profile_picture){
+         $this->profile_picture = $request->profile_picture;
+       }
+       if($request->description){
+         $this->description = $request->description;
        }
        $this->save();
 
