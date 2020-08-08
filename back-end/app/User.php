@@ -36,4 +36,26 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Many to Many Relationship User & Role
+     * A User can have n Roles
+     * A Role can be assigned to n Users
+     * @return mixed
+     */
+    public function roles()
+    {
+        return $this->belongsToMany('App\Role','roles_users');
+    }
+
+    /**
+     * Many to Many Relationship User & Permission
+     * A User can have n Permissions
+     * A Permission can be assigned to n User
+     * @return mixed
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany('App\Permission','permissions_users');
+    }
 }
