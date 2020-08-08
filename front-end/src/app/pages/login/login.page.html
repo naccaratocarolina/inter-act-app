@@ -1,7 +1,7 @@
-<ion-content class="bg-image">
+<ion-content class="bgImage">
   <img class='logo' src="../../../assets/logo_text.png">
-  <section class='login_form'>
-    <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm)" >
+  <section class='login'>
+    <form [formGroup]="loginForm" (ngSubmit)="submitLogin(loginForm)" >
       <ion-input class='input' placeholder="Email" type="text" formControlName='email' required='true'></ion-input>
       <ion-input class='input' placeholder="Senha" type="password" formControlName='password' required='true'></ion-input>
       <ion-button class='button' type="submit" color='primary'><h1>Entrar</h1></ion-button>

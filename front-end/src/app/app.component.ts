@@ -17,6 +17,11 @@ export class AppComponent implements OnInit {
       url: '/login',
       icon: 'person'
     },
+    {
+      title: 'Registre-se',
+      url: '/register',
+      icon: 'checkbox'
+    },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 
