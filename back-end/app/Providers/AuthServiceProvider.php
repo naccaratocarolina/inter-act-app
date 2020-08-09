@@ -29,12 +29,34 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
+        /**
+         * Define the moderator gate
+         * A moderator can do everything a registered user can,
+         * plus delete and update all articles and comments
+         * @return bool
+         */
+
         Gate::define('isModerator', function ($user) {
-            return $user->roles->first()->marker == 'moderator';
+            //if the given user's marker is equal to moderator
+            if($user->roles->first()->marker == 'moderator') {
+              return true; //rreturn true
+            }
+              return false; //otherwise, false
         });
 
+        /**
+         * Define the registered user gate
+         * A registered user can see all articles and comments,
+         * plus create, update and destroy them
+         * A registered user can only delete and update their own articles and comments
+         * @return bool
+         */
         Gate::define('isRegisteredUser', function ($user) {
-            return $user->roles->first()->marker == 'registered-user';
+            //if the given user's marker is equal to registered-user
+            if($user->roles->first()->marker == 'registered-user') {
+              return true; //return true
+            }
+              return false; //otherwise, false
         });
     }
 }
