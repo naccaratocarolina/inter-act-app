@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\UserRequest as UserRequest;
 
 use App\User;
 use App\Role;
@@ -28,7 +29,7 @@ class UserController extends Controller
      * And assign a Role & Permission
      * @return \Illuminate\Http\Response
      */
-     public function createUser(Request $request)
+     public function createUser(UserRequest $request)
      {
        $user = new User;
        $user->createUser($request);
@@ -54,7 +55,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request, $id)
+     public function updateUser(UserRequest $request, $id)
      {
        $user = User::find($id);
        $user->updateUser($request);

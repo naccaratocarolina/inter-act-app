@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
+use App\Http\Requests\UserRequest as UserRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\Role;
@@ -60,7 +61,7 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Http\Response
      */
-    public function createUser(Request $request)
+    public function createUser(UserRequest $request)
     {
         //atributos do user
         $this->name = $request->name;
@@ -85,7 +86,7 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request)
+     public function updateUser(UserRequest $request)
      {
        //atualiza os campos do user
        if($request->name){

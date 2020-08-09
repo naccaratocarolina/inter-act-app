@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Role;
 use Illuminate\Http\Request;
+use App\Http\Requests\RoleRequest as RoleRequest;
 
 class RoleController extends Controller
 {
@@ -23,7 +24,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createRole(Request $request)
+    public function createRole(RoleRequest $request)
     {
       $role = new Role();
       $role->createRole($request);
@@ -49,7 +50,7 @@ class RoleController extends Controller
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function updateRole(Request $request, $id)
+    public function updateRole(RoleRequest $request, $id)
     {
       $role = Role::findOrFail($id);
       $role->updateRole($request);

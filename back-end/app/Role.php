@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Requests\RoleRequest as RoleRequest;
 
 use App\User;
 
@@ -26,7 +27,7 @@ class Role extends Model
      *
      * @return \Illuminate\Http\Response
      */
-    public function createRole(Request $request)
+    public function createRole(RoleRequest $request)
     {
         $this->name = $request->name;
         $this->marker = $request->marker;
@@ -40,7 +41,7 @@ class Role extends Model
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function updateRole(Request $request)
+    public function updateRole(RoleRequest $request)
     {
         if($request->name) {
           $this->name = $request->name;
