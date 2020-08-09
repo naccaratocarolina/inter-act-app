@@ -30,7 +30,7 @@ class ArticlePolicy
      */
     public function viewArticle(User $user, Article $article)
     {
-        //
+        return $user->id === $article->user->id; //displays the user's articles
     }
 
     /**
@@ -46,7 +46,7 @@ class ArticlePolicy
           return true
         }
         else if($user->roles->contains('marker', 'registered-user')) {
-          return true;
+          return true; //a registered user always can create an article
         }
         return false; //visitor
     }
@@ -64,7 +64,9 @@ class ArticlePolicy
           return true
         }
         else if($user->roles->contains('marker', 'registered-user')) {
-          return true;
+          if($user->id === $article->user->id) {
+            return true; //only return true if the user owns the post
+          }
         }
         return false;
     }
@@ -82,7 +84,9 @@ class ArticlePolicy
         return true
       }
       else if($user->roles->contains('marker', 'registered-user')) {
-        return true;
+        if($user->id === $article->user->id) {
+          return true; //only return true if the user owns the post
+        }
       }
       return false;
     }
