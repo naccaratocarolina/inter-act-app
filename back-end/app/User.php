@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 
 use App\Role;
+use App\Articles;
 
 class User extends Authenticatable
 {
@@ -58,9 +59,15 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role','roles_users');
     }
 
+    /**
+     * One to Many Relationship User & Article
+     * A User can have n Articles
+     * A Article can belong to 1 User
+     * @return mixed
+     */
     public function articles()
     {
-        return $this->hasMany('App\User', 'user_id');
+        return $this->hasMany('App\Articles');
     }
 
     /**

@@ -8,24 +8,19 @@ use App\Http\Requests\ArticleRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\User;
-use App\Comment;
 
 class Article extends Model
 {
-    //creates a variable that refers to the articles table
-    //we will use to establish the permissions associated with roles
-    protected $table = 'articles';
-
-
+  /**
+   * One to Many Relationship User & Article
+   * A User can have n Articles
+   * A Article can belong to 1 User
+   * @return mixed
+   */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User');
     }
-
-    // public function comments()
-    // {
-    //     return $this->hasMany('App\User', 'commentId');
-    // }
 
     //creat new Article
     public function createArticle(Request $request) {
