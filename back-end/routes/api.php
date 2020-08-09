@@ -31,3 +31,11 @@ Route::get('showRole/{id}', 'RoleController@showRole');
 Route::post('createRole', 'RoleController@createRole');
 Route::put('updateRole/{id}', 'RoleController@updateRole');
 Route::delete('destroyRole/{id}', 'RoleController@destroyRole');
+
+
+//Article Controller
+Route::get('indexArticle','ArticleController@indexArticle');
+Route::get('showArticle/{id}','ArticleController@showArticle');
+Route::post('createArticle','ArticleController@createArticle');
+Route::put('updateArticle/{id}','ArticleController@updateArticle');
+Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
