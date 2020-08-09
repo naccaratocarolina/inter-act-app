@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Foundation\Http\FormRequest;
 use App\Http\Requests\UserRequest as UserRequest;
 
 use App\User;
@@ -13,6 +14,10 @@ use App\Role;
 
 class UserController extends Controller
 {
+    public function construct() {
+      $this->middleware('role');
+    }
+    
     /**
      * Display a listing of the resource.
      *
