@@ -5,7 +5,7 @@ namespace App\Providers;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
 
-use Article;
+//use Article;
 //use Comment;
 
 class AuthServiceProvider extends ServiceProvider
@@ -39,7 +39,7 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('isModerator', function ($user) {
             //if the given user's marker is equal to moderator
             if($user->roles->first()->marker == 'moderator') {
-              return true; //rreturn true
+              return true; //return true
             }
               return false; //otherwise, false
         });

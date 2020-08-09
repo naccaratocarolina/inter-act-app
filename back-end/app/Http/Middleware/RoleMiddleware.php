@@ -13,7 +13,7 @@ class RoleMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, ...$roles)
     {
         foreach($roles as $role) { //iterates the role list
           if(auth()->user()->hasRole($role)) { //if the user has the role

@@ -19,6 +19,10 @@ class PassportController extends Controller
     $user->email = $request->email;
     $user->password = bcrypt($request->password);
     $user->save();
+    if($request->role) {
+      $user->roles()->attach($request->role);
+      $user->save();
+    }
     $token = $user->createToken('MyApp')->accessToken;
     return response()->json(["message" => "Cadastro realizado!", "data" => ["user" => $user, "token" => $token]], 200);
   }

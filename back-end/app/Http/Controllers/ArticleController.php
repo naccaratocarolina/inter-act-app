@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Article;
+use App\User;
+use Auth;
 
 class ArticleController extends Controller
 {
@@ -12,7 +14,7 @@ class ArticleController extends Controller
      *
      * @return void
      */
-     /*
+/*
     public function __construct()
     {
         $this->middleware('auth');
@@ -25,8 +27,8 @@ class ArticleController extends Controller
      */
     public function indexArticle()
     {
-        $articles = Article::orderBy('id', 'desc')->get();
-        return response()->json(['articles' => $articles]);
+      $articles = Article::orderBy('id', 'desc')->get();
+      return response()->json(['articles' => $articles]);
     }
 
     /**
@@ -36,11 +38,11 @@ class ArticleController extends Controller
      */
     public function createArticle(Request $request)
     {
+        $user = auth()->user();
+        Gate::authorize('isModerator', $user);
         $article = new Article;
         $article->createArticle($request);
-        return response()->json(['message' => 'Artigo criado!', 'article' => $article]);
     }
-
 
     /**
      * Display the specified resource.

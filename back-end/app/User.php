@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 
 use App\Role;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -115,6 +116,59 @@ class User extends Authenticatable
        if($request->role) {
          $this->roles()->attach($request->role);
          $this->save();
+       }
+     }
+
+     /**
+      * Check if the user has a role assigned
+      * @return bool
+      */
+     public function hasRole($id, Role $role)
+     {/*
+       $user = User:findOrFail($id);
+       //receives an array of roles and checks if the user is associated
+       if($user->roles->contains('marker', $role)) {
+         return true; //if yes, returns true
+       }
+       return false; //if no, returns false*/
+       //return $user->roles->contains('marker', $role);
+       if( strpos($role, ',') !== false ){//check if this is an list of roles
+
+            $listOfRoles = explode(',',$role);
+
+            foreach ($listOfRoles as $role) {
+                if ($this->roles->contains('marker', $role)) {
+                    return true;
+                }
+            }
+        }else{
+            if ($this->roles->contains('marker', $role)) {
+                return true;
+            }
+        }
+
+        return false;
+     }
+
+     /**
+      * Check if the user is a moderator
+      * @return bool
+      */
+     public function isModerator()
+     {
+       if($this->roles->contains('marker', 'moderator')) {
+         return true;
+       }
+     }
+
+     /**
+      * Check if the user is a registered
+      * @return bool
+      */
+     public function isRegisteredUser()
+     {
+       if($this->roles->contains('marker', 'registered-user')) {
+         return true;
        }
      }
 }

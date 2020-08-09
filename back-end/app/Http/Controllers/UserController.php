@@ -18,6 +18,7 @@ class UserController extends Controller
    *
    * @return void
    */
+
     public function construct()
     {
       $this->middleware('role');
@@ -86,42 +87,5 @@ class UserController extends Controller
        }
        User::destroy($id);
        return response()->json(['message' => 'User deletado!', 'user' => $user]);
-      }
-
-      /**
-       * Check if the user has a role assigned
-       * @return bool
-       */
-      public function hasRole($roles)
-      {
-        //receives an array of roles and checks if the user is associated
-        foreach($roles as $role) {
-          if($this->roles->contains('marker', $role)) {
-            return true; //if yes, returns true
-          }
-        }
-        return false; //if no, returns false
-      }
-
-      /**
-       * Check if the user is a moderator
-       * @return bool
-       */
-      public function isModerator()
-      {
-        if($this->roles->contains('marker', 'moderator')) {
-          return true;
-        }
-      }
-
-      /**
-       * Check if the user is a registered
-       * @return bool
-       */
-      public function isRegisteredUser()
-      {
-        if($this->roles->contains('marker', 'registered-user')) {
-          return true;
-        }
       }
 }

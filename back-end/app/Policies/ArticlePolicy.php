@@ -43,7 +43,7 @@ class ArticlePolicy
     {
         //check if the user has attached moderator or registered user roles
         if($user->roles->contains('marker', 'moderator')) {
-          return true
+          return true;
         }
         else if($user->roles->contains('marker', 'registered-user')) {
           return true; //a registered user always can create an article
@@ -61,7 +61,7 @@ class ArticlePolicy
     public function updateArticle(User $user, Article $article)
     {
         if($user->roles->contains('marker', 'moderator')) {
-          return true
+          return true;
         }
         else if($user->roles->contains('marker', 'registered-user')) {
           if($user->id === $article->user->id) {
@@ -81,7 +81,7 @@ class ArticlePolicy
     public function deleteArticle(User $user, Article $article)
     {
       if($user->roles->contains('marker', 'moderator')) {
-        return true
+        return true;
       }
       else if($user->roles->contains('marker', 'registered-user')) {
         if($user->id === $article->user->id) {
