@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use Auth;
 
 class RoleMiddleware
 {
@@ -15,12 +16,15 @@ class RoleMiddleware
      */
     public function handle($request, Closure $next)
     {
-        foreach($roles as $role) { //iterates the role list
-          if(auth()->user()->hasRole($role)) { //if the user has the role
-            return $next($request); //request approved
-          }
+        $user = Auth::user();
+        if($user->roles->contains('marker', 'moderator')) {
+          return $next($request);
         }
-
-        abort(404); //if the user doesn't have the role, the request is not approved
+        else if($user->roles->contains('marker', 'registered-user')) {
+          return $next($request);
+        }
+        else {
+          return response()->json(['Crie uma conta!']);
+        }
     }
 }

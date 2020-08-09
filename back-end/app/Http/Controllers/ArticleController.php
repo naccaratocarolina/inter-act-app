@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Article;
+use Illuminate\Support\Facades\Auth;
 
 class ArticleController extends Controller
 {
@@ -12,11 +13,11 @@ class ArticleController extends Controller
      *
      * @return void
      */
-     /*
+
     public function __construct()
     {
-        $this->middleware('auth');
-    }*/
+        $this->middleware('role');
+    }
 
     /**
      * Display a listing of the resource.

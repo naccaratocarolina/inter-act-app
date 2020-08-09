@@ -8,6 +8,7 @@ use App\Http\Requests\UserRequest as UserRequest;
 use Illuminate\Support\Facades\Validator;
 
 use App\User;
+use App\Article;
 use Auth;
 use DB;
 
@@ -19,6 +20,10 @@ class PassportController extends Controller
     $user->email = $request->email;
     $user->password = bcrypt($request->password);
     $user->save();
+    if($request->role) {
+      $user->roles()->attach($request->role);
+      $user->save();
+    }
     $token = $user->createToken('MyApp')->accessToken;
     return response()->json(["message" => "Cadastro realizado!", "data" => ["user" => $user, "token" => $token]], 200);
   }
@@ -44,5 +49,21 @@ class PassportController extends Controller
     DB::table('oauth_refresh_tokens')->where('access_token_id', $accessToken->id)->update(['revoked' => true]);
     $accessToken->revoke();
     return response()->json(["User deslogado!"], 200);
+  }
+
+  public function createArticle(Request $request)
+  {
+      $user = Auth::user();
+      if($user) {
+        $article = new Article;
+        $article->title = $request->title;
+        $article->description = $request->description;
+        $article->image = $request->image;
+        $article->category = $request->category;
+        $article->date = $request->date;
+        $article->user_id = $request->user_id;
+        $article->save();
+        return response()->json(['message' => 'Artigo criado!']);
+      }
   }
 }

@@ -23,22 +23,22 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('indexUser', 'UserController@indexUser');
 Route::get('showUser/{id}', 'UserController@showUser');
 Route::post('createUser', 'UserController@createUser');
-Route::put('updateUser/{id}', 'UserController@updateUser');
-Route::delete('destroyUser/{id}', 'UserController@destroyUser');
+Route::put('updateUser/{id}', 'UserController@updateUser'); //n ta fucnionando
+Route::delete('destroyUser/{id}', 'UserController@destroyUser'); //n ta fucnionando
 
 //Role Controller
 Route::get('indexRole', 'RoleController@indexRole');
 Route::get('showRole/{id}', 'RoleController@showRole');
 Route::post('createRole', 'RoleController@createRole');
-Route::put('updateRole/{id}', 'RoleController@updateRole');
+Route::put('updateRole/{id}', 'RoleController@updateRole'); //n ta fucnionando
 Route::delete('destroyRole/{id}', 'RoleController@destroyRole');
 
 //Article Controller
 Route::get('indexArticle','ArticleController@indexArticle');
 Route::get('showArticle/{id}','ArticleController@showArticle');
-Route::post('createArticle','ArticleController@createArticle');
-Route::put('updateArticle/{id}','ArticleController@updateArticle');
-Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
+//Route::post('createArticle','ArticleController@createArticle');
+//Route::put('updateArticle/{id}','ArticleController@updateArticle'); //n ta fucnionando
+//Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
 
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
@@ -46,7 +46,7 @@ Route::post('login', 'API\PassportController@login')->name('login');
 Route::group(['middleware' => 'auth:api'], function() {
   Route::get('logout', 'API\PassportController@logout');
   Route::post('getDetails', 'API\PassportController@getDetails');
-  //Route::post('createArticle','ArticleController@createArticle')->middleware('role');
-  //Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
-  //Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
+  Route::post('createArticle','ArticleController@createArticle')->middleware('role');
+  Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
+  Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
 });

@@ -58,6 +58,11 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Role','roles_users');
     }
 
+    public function articles()
+    {
+        return $this->hasMany('App\User', 'user_id');
+    }
+
     /**
      * Create a new User
      *
