@@ -14,12 +14,12 @@ class ArticleController extends Controller
      *
      * @return void
      */
-
+/*
     public function __construct()
     {
         $this->middleware('auth');
     }
-
+*/
     /**
      * Display a listing of the resource.
      *
@@ -38,8 +38,6 @@ class ArticleController extends Controller
      */
     public function createArticle(Request $request)
     {
-        $user = auth()->user();
-        Gate::authorize('isModerator', $user);
         $article = new Article;
         $article->createArticle($request);
     }
@@ -65,7 +63,6 @@ class ArticleController extends Controller
      */
     public function updateArticle(Request $request, $id)
     {
-
         $article = Article::findOrFail($id);
         $article->updateArticle($request);
         return response()->json(['message' => 'Artigo editado!', 'article' => $article]);

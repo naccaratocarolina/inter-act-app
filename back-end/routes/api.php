@@ -22,26 +22,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Auth::routes();
 
 //User Controller
-Route::get('indexUser', 'UserController@indexUser')->middleware('role:moderator,registered-user');
-Route::get('showUser/{id}', 'UserController@showUser')->middleware('role:moderator,registered-user');
-Route::post('createUser', 'UserController@createUser')->middleware('role:moderator,registered-user');
-Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role:moderator,registered-user');
-Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role:moderator,registered-user');
+Route::get('indexUser', 'UserController@indexUser');
+Route::get('showUser/{id}', 'UserController@showUser');
+Route::post('createUser', 'UserController@createUser');
+Route::put('updateUser/{id}', 'UserController@updateUser');
+Route::delete('destroyUser/{id}', 'UserController@destroyUser');
 
 //Role Controller
-Route::get('indexRole', 'RoleController@indexRole')->middleware('can:isModerator');
-Route::get('showRole/{id}', 'RoleController@showRole')->middleware('can:isModerator');
-Route::post('createRole', 'RoleController@createRole')->middleware('can:isModerator');
-Route::put('updateRole/{id}', 'RoleController@updateRole')->middleware('can:isModerator');
-Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('can:isModerator');
-/*
+Route::get('indexRole', 'RoleController@indexRole');
+Route::get('showRole/{id}', 'RoleController@showRole');
+Route::post('createRole', 'RoleController@createRole');
+Route::put('updateRole/{id}', 'RoleController@updateRole');
+Route::delete('destroyRole/{id}', 'RoleController@destroyRole');
+
 //Article Controller
 Route::get('indexArticle','ArticleController@indexArticle');
 Route::get('showArticle/{id}','ArticleController@showArticle');
 Route::post('createArticle','ArticleController@createArticle');
 Route::put('updateArticle/{id}','ArticleController@updateArticle');
 Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
-*/
+
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
 Route::post('login', 'API\PassportController@login')->name('login');
@@ -50,9 +50,10 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
+  /*
   Route::get('indexArticle','ArticleController@indexArticle');
   Route::get('showArticle/{id}','ArticleController@showArticle');
   Route::post('createArticle','ArticleController@createArticle');
   Route::put('updateArticle/{id}','ArticleController@updateArticle');
-  Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
+  Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');*/
 });
