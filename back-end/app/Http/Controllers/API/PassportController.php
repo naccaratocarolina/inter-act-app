@@ -50,20 +50,4 @@ class PassportController extends Controller
     $accessToken->revoke();
     return response()->json(["User deslogado!"], 200);
   }
-
-  public function createArticle(Request $request)
-  {
-      $user = Auth::user();
-      if($user) {
-        $article = new Article;
-        $article->title = $request->title;
-        $article->description = $request->description;
-        $article->image = $request->image;
-        $article->category = $request->category;
-        $article->date = $request->date;
-        $article->user_id = $request->user_id;
-        $article->save();
-        return response()->json(['message' => 'Artigo criado!']);
-      }
-  }
 }

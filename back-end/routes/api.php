@@ -33,13 +33,6 @@ Route::post('createRole', 'RoleController@createRole');
 Route::put('updateRole/{id}', 'RoleController@updateRole'); //n ta fucnionando
 Route::delete('destroyRole/{id}', 'RoleController@destroyRole');
 
-//Article Controller
-Route::get('indexArticle','ArticleController@indexArticle');
-Route::get('showArticle/{id}','ArticleController@showArticle');
-//Route::post('createArticle','ArticleController@createArticle');
-//Route::put('updateArticle/{id}','ArticleController@updateArticle'); //n ta fucnionando
-//Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
-
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
 Route::post('login', 'API\PassportController@login')->name('login');
@@ -49,4 +42,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('createArticle','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
+  Route::get('indexArticle','ArticleController@indexArticle');
+  Route::get('showArticle/{id}','ArticleController@showArticle')->middleware('role');
 });
