@@ -123,31 +123,13 @@ class User extends Authenticatable
       * Check if the user has a role assigned
       * @return bool
       */
-     public function hasRole($id, Role $role)
-     {/*
-       $user = User:findOrFail($id);
+     public function hasRole($role)
+     {
        //receives an array of roles and checks if the user is associated
-       if($user->roles->contains('marker', $role)) {
+       if($this->roles->contains('marker', $role)) {
          return true; //if yes, returns true
        }
-       return false; //if no, returns false*/
-       //return $user->roles->contains('marker', $role);
-       if( strpos($role, ',') !== false ){//check if this is an list of roles
-
-            $listOfRoles = explode(',',$role);
-
-            foreach ($listOfRoles as $role) {
-                if ($this->roles->contains('marker', $role)) {
-                    return true;
-                }
-            }
-        }else{
-            if ($this->roles->contains('marker', $role)) {
-                return true;
-            }
-        }
-
-        return false;
+       return false; //if no, returns false
      }
 
      /**
