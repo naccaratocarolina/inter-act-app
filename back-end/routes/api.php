@@ -1,3 +1,4 @@
+
 <?php
 
 use Illuminate\Http\Request;
@@ -28,16 +29,16 @@ Route::delete('destroyUser/{id}', 'UserController@destroyUser');
 //Role Controller
 Route::get('indexRole', 'RoleController@indexRole');
 Route::get('showRole/{id}', 'RoleController@showRole');
-Route::post('createRole', 'RoleController@createRole')->middleware('role');
-Route::put('updateRole/{id}', 'RoleController@updateRole')->middleware('role');
-Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('role');
+Route::post('createRole', 'RoleController@createRole');
+Route::put('updateRole/{id}', 'RoleController@updateRole');
+Route::delete('destroyRole/{id}', 'RoleController@destroyRole');
 
 //Article Controller
-//Route::get('indexArticle','ArticleController@indexArticle');
-//Route::get('showArticle/{id}','ArticleController@showArticle');
-//Route::post('createArticle','ArticleController@createArticle');
-//Route::put('updateArticle/{id}','ArticleController@updateArticle');
-//Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
+Route::get('indexArticle','ArticleController@indexArticle');
+Route::get('showArticle/{id}','ArticleController@showArticle');
+Route::post('createArticle','ArticleController@createArticle');
+Route::put('updateArticle/{id}','ArticleController@updateArticle');
+Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
 
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');

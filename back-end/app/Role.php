@@ -41,7 +41,7 @@ class Role extends Model
      * @param  \App\Role  $role
      * @return \Illuminate\Http\Response
      */
-    public function updateRole(RoleRequest $request)
+    public function updateRole(Request $request)
     {
         if($request->name) {
           $this->name = $request->name;
