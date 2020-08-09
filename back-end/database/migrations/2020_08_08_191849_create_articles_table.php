@@ -14,13 +14,13 @@ class CreateArticlesTable extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigIncrements('id')->nullable();
             $table->string('title')->nullable();
             $table->string('description')->nullable();
-            $table->string('image');
-            $table->string('category');
-            $table->string('date')->numeric();
-            $table->unsignedBigInteger('userId');
+            $table->string('image')->nullable();
+            $table->string('category')->nullable();
+            $table->string('date')->nullable();
+            $table->unsignedBigInteger('userId')->nullable();
             $table->timestamps();
         });
 

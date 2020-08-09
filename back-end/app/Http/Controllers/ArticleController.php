@@ -28,6 +28,7 @@ class ArticleController extends Controller
     {
         $article = new Article;
         $article->createArticle($request);
+        return response()->json(['message' => 'Artigo criado!', 'article' => $article]); 
     }
 
 
@@ -52,6 +53,7 @@ class ArticleController extends Controller
      */
     public function updateArticle(Request $request, $id)
     {
+        
         $article = Article::find($id);
         $article->updateArticle($request);
         return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
@@ -75,8 +77,8 @@ class ArticleController extends Controller
    *
    * @return void
    */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 }

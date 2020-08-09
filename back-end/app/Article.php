@@ -20,33 +20,38 @@ class Article extends Model
         return $this->belongsTo('App\User', 'userId');
     }
 
-    public function comments()
-    {
-        return $this->hasMany('App\User', 'commentId');
+    // public function comments()
+    // {
+    //     return $this->hasMany('App\User', 'commentId');
+    // }
+
+    //creat new Article
+    public function createArticle(Request $request) {
+      $article = new Article;
+      $this->title = $request->title;
+      $this->description = $request->description;
+      $this->image = $request->image;
+      $this->category = $request->category;
+      $this->userId = $request->userId;
+      $this->id = $request->id;
+      $this->save();
+      return response()->json($article);
     }
 
-    //creat new commentary
-    public function creatCommentary(Request $request) {
-        $comment = new Comment;
-        $comment->text = $request->text;
-        $comment->user_id = $request->user_id;
-        $comment->article_id = $request->article_id;
-        $comment->save();
-        return response()->json($comment);
-    }
-
-    //update commentary by user
-    public function userUpdateComment(Request $request, $id, $user_id) {
-        $comment = Comment::findOrFail($id);
-        $user = User::findOrFail($user_id);
-        $comments = $user->comments;
-        foreach($comments as $user_comment) {
-          if($user_comment->id === $id) { //check if the comment with the $id has relation with the $user_id
-            $user_comment->text = $request->text; //if yes, update text attribute
-            $user_comment->save();
-            return response()->json([$user_comment, 'Comentario postado!']);
-          }
-        }
-        return response()->json(['Sem permissao para editar esse comentario!']);
+    //update Article by user
+    public function updateArticle(Request $request) {
+      if($request->title){
+        $this->title = $request->title;
       }
+      if($request->description){
+       $this->description = $request->description;
+      }
+      if($request->image){
+        $this->image = $request->image;
+      }
+      if($request->category){
+        $this->category = $request->category;
+      }
+      $this->save();
+    }
 }
