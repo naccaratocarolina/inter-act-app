@@ -11,6 +11,7 @@ use App\Http\Requests\UserRequest as UserRequest;
 use App\User;
 use App\Role;
 use App\Article;
+use Auth;
 
 class UserController extends Controller
 {

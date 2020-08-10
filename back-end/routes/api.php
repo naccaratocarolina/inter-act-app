@@ -23,20 +23,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('indexUser', 'UserController@indexUser');
 Route::post('createUser', 'UserController@createUser');
 
-//Role Controller
-Route::get('indexRole', 'RoleController@indexRole');
-Route::get('showRole/{id}', 'RoleController@showRole');
-Route::post('createRole', 'RoleController@createRole');
-Route::put('updateRole/{id}', 'RoleController@updateRole');
-Route::delete('destroyRole/{id}', 'RoleController@destroyRole');
-
-//Comment Controller
-Route::get('indexComment','CommentController@indexComment');
-Route::get('showComment/{id}','CommentController@showComment');
-Route::post('createComment','CommentController@createComment');
-Route::put('updateComment/{id}','CommentController@updateComment');
-Route::delete('destroyComment/{id}','CommentController@destroyComment');
-
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
 Route::post('login', 'API\PassportController@login')->name('login');
@@ -45,7 +31,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
-  Route::get('indexAllArticles','ArticleController@indexAllArticles')->middleware('role');
+  Route::get('indexAllArticles','ArticleController@indexAllArticles');
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
   Route::post('createArticle','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
@@ -58,7 +44,16 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 
   //Role Controller
+  Route::get('indexRole', 'RoleController@indexRole');
+  Route::get('showRole/{id}', 'RoleController@showRole');
   Route::post('createRole', 'RoleController@createRole');
   Route::put('updateRole/{id}', 'RoleController@updateRole')->middleware('moderator');
   Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('moderator');
+
+  //Comment Controller
+  Route::get('indexComment','CommentController@indexComment')->middleware('role');
+  Route::get('showComment/{id}','CommentController@showComment')->middleware('role');
+  Route::post('createComment','CommentController@createComment')->middleware('role');
+  Route::put('updateComment/{id}','CommentController@updateComment')->middleware('role');
+  Route::delete('destroyComment/{id}','CommentController@destroyComment')->middleware('role');
 });
