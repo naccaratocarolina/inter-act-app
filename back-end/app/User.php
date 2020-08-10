@@ -10,7 +10,7 @@ use App\Http\Requests\UserRequest as UserRequest;
 use Laravel\Passport\HasApiTokens;
 
 use App\Role;
-use App\Articles;
+use App\Article;
 
 class User extends Authenticatable
 {
@@ -65,7 +65,7 @@ class User extends Authenticatable
      */
     public function articles()
     {
-        return $this->hasMany('App\Articles');
+        return $this->hasMany('App\Article');
     }
 
     /**
@@ -88,7 +88,6 @@ class User extends Authenticatable
           $this->roles()->attach($request->role);
           $this->save();
         }
-
     }
 
     /**

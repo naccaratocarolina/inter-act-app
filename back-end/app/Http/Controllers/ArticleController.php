@@ -32,7 +32,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Display a listing of the resource that belongs to the given user.
      *
      * @return \Illuminate\Http\Response
      */

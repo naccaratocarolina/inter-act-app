@@ -25,7 +25,8 @@ class Article extends Model
     //creat new Article
     public function createArticle(Request $request, $user_id) {
       $this->title = $request->title;
-      $this->description = $request->description;
+      $this->subtitle = $request->subtitle;
+      $this->text = $request->text;
       $this->image = $request->image;
       $this->category = $request->category;
       $this->date = $request->date;
@@ -38,8 +39,11 @@ class Article extends Model
       if($request->title){
         $this->title = $request->title;
       }
-      if($request->description){
-       $this->description = $request->description;
+      if($request->subtitle){
+       $this->subtitle = $request->subtitle;
+      }
+      if($request->text){
+       $this->text = $request->text;
       }
       if($request->image){
         $this->image = $request->image;
