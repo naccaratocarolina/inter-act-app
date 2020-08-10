@@ -7,7 +7,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Passport\HasApiTokens;
 
 use App\Role;
@@ -16,7 +15,6 @@ use App\Articles;
 class User extends Authenticatable
 {
     use Notifiable;
-    use SoftDeletes;
     use HasApiTokens;
 
     /**
@@ -119,9 +117,6 @@ class User extends Authenticatable
          $this->description = $request->description;
        }
        $this->save();
-
-       //detach os roles do user para depois alterar
-       $this->roles()->detach();
 
        //altera os roles
        if($request->role) {

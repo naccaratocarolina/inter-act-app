@@ -8,6 +8,15 @@ use App\Http\Requests\RoleRequest as RoleRequest;
 
 class RoleController extends Controller
 {
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+    public function construct()
+    {
+      $this->middleware('moderator');
+    }
     /**
      * Display a listing of the resource.
      *

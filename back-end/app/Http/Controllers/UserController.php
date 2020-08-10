@@ -82,10 +82,7 @@ class UserController extends Controller
      public function destroyUser($id)
      {
        $user = User::findOrFail($id);
-       if($user->roles() != null) {
-         $user->roles()->detach();
-       }
-       User::destroy($id);
+       $user->delete();
        return response()->json(['message' => 'User deletado!', 'user' => $user]);
       }
 }
