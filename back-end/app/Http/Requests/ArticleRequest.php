@@ -13,7 +13,7 @@ class ArticleRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -21,10 +21,38 @@ class ArticleRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
-    {
-        return [
-            //
-        ];
-    }
+     public function rules()
+         {
+             if($this->isMethod('post')){
+                 return[
+                     'title' => 'required|string',
+                     'description' => 'required|string',
+                 ];
+             }
+             if($this->isMethod('put')){
+                 return[
+                     'title' => 'required|string',
+                     'description' => 'required|string',
+                 ];
+             }
+             if($this->isMethod('get')){
+                 return[
+                     'title' => 'required|string',
+                     'description' => 'required|string',
+                 ];
+             }
+             if($this->isMethod('delete')){
+                 return[
+                     'title' => 'required|string',
+                     'description' => 'required|string',
+                 ];
+             }
+
+         }
+
+         public function messages(){
+             return[
+                 'title.aplha' => 'Somente caracteres afabéticos ',
+             ];
+         }
 }
