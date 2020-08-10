@@ -43,9 +43,9 @@ class CadastreNotification extends Notification
         $url = url('/invoice/'.$this->invoice->id);
         $user = $notifiable;
         return (new MailMessage)
-                    ->greeting('Seja bem vindo a InterAct')
+                    ->greeting($user->name.'. Seja bem vindo a InterAct!')
                     ->line('Clique no botão a baixo e confirm se cadastro')
-                    ->action('Confirmar cadastro', $url)
+                    ->action('Confirmar cadastro', $url('localhost:8100/login'))
                     ->line('Obrigada por escolher a InterAct!');
     }
 
