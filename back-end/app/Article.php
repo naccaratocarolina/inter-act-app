@@ -23,13 +23,13 @@ class Article extends Model
     }
 
     //creat new Article
-    public function createArticle(Request $request) {
+    public function createArticle(Request $request, $user_id) {
       $this->title = $request->title;
       $this->description = $request->description;
       $this->image = $request->image;
       $this->category = $request->category;
       $this->date = $request->date;
-      $this->user_id = $request->user_id;
+      $this->user_id = $user_id;
       $this->save();
     }
 

@@ -39,9 +39,9 @@ Route::post('login', 'API\PassportController@login')->name('login');
 Route::group(['middleware' => 'auth:api'], function() {
   Route::get('logout', 'API\PassportController@logout');
   Route::post('getDetails', 'API\PassportController@getDetails');
-  Route::post('createArticle','ArticleController@createArticle')->middleware('role');
+  Route::post('createArticle/{user_id}','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
-  Route::get('indexArticle','ArticleController@indexArticle');
+  Route::get('indexAllArticle','ArticleController@indexArticle');
   Route::get('showArticle/{id}','ArticleController@showArticle');
 });

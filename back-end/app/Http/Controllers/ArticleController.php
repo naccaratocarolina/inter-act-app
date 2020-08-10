@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
-use App\Article;
 use Illuminate\Support\Facades\Auth;
+
+use App\User;
+use App\Article;
 
 class ArticleController extends Controller
 {
@@ -24,7 +25,18 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexArticle()
+    public function indexAllArticle()
+    {
+        $articles = Article::orderBy('id', 'desc')->get();
+        return response()->json(['articles' => $articles]);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexUserArticle()
     {
         $articles = Article::orderBy('id', 'desc')->get();
         return response()->json(['articles' => $articles]);
@@ -35,11 +47,12 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request)
+    public function createArticle(Request $request, $user_id)
     {
-        $article = new Article;
-        $article->createArticle($request);
-        return response()->json(['message' => 'Artigo criado!', 'article' => $article]);
+      $user = User::findOrFail($user_id);
+      $article = new Article;
+      $article->createArticle($request, $user_id);
+      return response()->json(['message' => 'Artigo criado!', 'article' => $article]);
     }
 
 
@@ -64,7 +77,6 @@ class ArticleController extends Controller
      */
     public function updateArticle(Request $request, $id)
     {
-
         $article = Article::findOrFail($id);
         $article->updateArticle($request);
         return response()->json(['message' => 'Artigo editado!', 'article' => $article]);

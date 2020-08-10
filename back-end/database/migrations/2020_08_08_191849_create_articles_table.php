@@ -20,7 +20,7 @@ class CreateArticlesTable extends Migration
             $table->string('image')->nullable();
             $table->string('category');
             $table->string('date')->nullable();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
 
