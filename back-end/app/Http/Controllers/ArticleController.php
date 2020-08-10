@@ -9,16 +9,6 @@ use App\Article;
 
 class ArticleController extends Controller
 {
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-
-    public function __construct()
-    {
-        $this->middleware('role');
-    }
 
     /**
      * Display a listing of the resource.
