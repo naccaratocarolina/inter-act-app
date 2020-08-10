@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\ArticleRequest;
 use App\Article;
 
 class ArticleController extends Controller
@@ -24,7 +25,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request)
+    public function createArticle(ArticleRequest $request)
     {
         $article = new Article;
         $article->createArticle($request);
@@ -40,6 +41,7 @@ class ArticleController extends Controller
      */
     public function showArticle($id)
     {
+        $article = User::findOrFail($id);
         $article = Article::findOrFail($id);
         return response()->json(['message' => 'Artigo encontrado!', 'article' => $article]);        
     }
@@ -51,7 +53,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function updateArticle(Request $request, $id)
+    public function updateArticle(ArticleRequest $request, $id)
     {
         
         $article = Article::find($id);

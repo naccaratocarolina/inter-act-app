@@ -17,22 +17,22 @@ class Article extends Model
     //
     public function user()
     {
-        return $this->belongsTo('App\User', 'userId');
+        return $this->belongsTo('App\User', 'user_id');
     }
 
-    // public function comments()
-    // {
-    //     return $this->hasMany('App\User', 'commentId');
-    // }
+    public function comments()
+    {
+        return $this->hasMany('App\User', 'comment_id');
+    }
 
     //creat new Article
-    public function createArticle(Request $request) {
+    public function createArticle(ArticleRequest $request){
       $article = new Article;
+
       $this->title = $request->title;
       $this->description = $request->description;
       $this->image = $request->image;
       $this->category = $request->category;
-      $this->userId = $request->userId;
       $this->id = $request->id;
       $this->save();
       return response()->json($article);

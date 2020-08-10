@@ -39,3 +39,9 @@ Route::get('showArticle/{id}','ArticleController@showArticle');
 Route::post('createArticle','ArticleController@createArticle');
 Route::put('updateArticle/{id}','ArticleController@updateArticle');
 Route::delete('destroyArticle/{id}','ArticleController@destroyArticle');
+
+Route::get('indexComment','CommentController@indexComment');
+Route::get('showComment/{id}','CommentController@showComment');
+Route::post('createComment','CommentController@createComment');
+Route::put('updateComment/{id}','CommentController@updateComment');
+Route::delete('destroyComment/{id}','CommentController@destroyComment');
