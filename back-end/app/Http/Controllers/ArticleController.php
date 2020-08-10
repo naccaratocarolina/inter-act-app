@@ -39,7 +39,7 @@ class ArticleController extends Controller
     public function indexUserArticles()
     {
         $user = Auth::user();
-        $articles = $user->articles;
+        $articles = $user->articles; //grab the user's articles
         return response()->json(['articles' => $articles]);
     }
 
