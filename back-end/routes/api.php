@@ -19,19 +19,27 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Routes that do not need permissions
+/*
+|--------------------------------------------------------------------------
+| Routes that do not need permissions
+|--------------------------------------------------------------------------
+*/
 //Article Controller
 Route::get('indexAllArticles','ArticleController@indexAllArticles');
-
-//User Controller
-Route::get('indexUser', 'UserController@indexUser');
-Route::post('createUser', 'UserController@createUser');
 
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
 Route::post('login', 'API\PassportController@login')->name('login');
 
-//Routes that require a logged in user
+//User Controller
+Route::get('indexUser', 'UserController@indexUser');
+Route::post('createUser', 'UserController@createUser');
+
+/*
+|--------------------------------------------------------------------------
+| Routes that require a logged in user
+|--------------------------------------------------------------------------
+*/
 Route::group(['middleware' => 'auth:api'], function() {
   Route::get('logout', 'API\PassportController@logout');
   Route::post('getDetails', 'API\PassportController@getDetails');
