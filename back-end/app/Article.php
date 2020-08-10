@@ -8,6 +8,7 @@ use App\Http\Requests\ArticleRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 use App\User;
+use Auth;
 
 class Article extends Model
 {
@@ -23,14 +24,17 @@ class Article extends Model
     }
 
     //creat new Article
-    public function createArticle(Request $request, $user_id) {
+    public function createArticle(Request $request) {
+      //grab the user id that is making the request
+      $user = Auth::user();
+      $this->user_id = $user->id; //and saves it in the article table
+
       $this->title = $request->title;
       $this->subtitle = $request->subtitle;
       $this->text = $request->text;
       $this->image = $request->image;
       $this->category = $request->category;
       $this->date = $request->date;
-      $this->user_id = $user_id;
       $this->save();
     }
 

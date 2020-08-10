@@ -25,7 +25,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexAllArticle()
+    public function indexAllArticles()
     {
         $articles = Article::orderBy('id', 'desc')->get();
         return response()->json(['articles' => $articles]);
@@ -36,22 +36,22 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexUserArticle()
+    public function indexUserArticles()
     {
-        $articles = Article::orderBy('id', 'desc')->get();
+        $user = Auth::user();
+        $articles = $user->articles;
         return response()->json(['articles' => $articles]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Creates a new instance of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request, $user_id)
+    public function createArticle(Request $request)
     {
-      $user = User::findOrFail($user_id);
       $article = new Article;
-      $article->createArticle($request, $user_id);
+      $article->createArticle($request);
       return response()->json(['message' => 'Artigo criado!', 'article' => $article]);
     }
 
@@ -77,9 +77,13 @@ class ArticleController extends Controller
      */
     public function updateArticle(Request $request, $id)
     {
+        $user = Auth::user();
         $article = Article::findOrFail($id);
-        $article->updateArticle($request);
-        return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
+        if($article->user_id == $user->id) { //if the user making the request own the article
+          $article->updateArticle($request);
+          return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
+        }
+        return response()->json(['Voce nao pode editar esse artigo!']);
     }
 
     /**
@@ -90,8 +94,12 @@ class ArticleController extends Controller
      */
     public function destroyArticle($id)
     {
+        $user = Auth::user();
         $article = Article::findOrFail($id);
-        Article::destroy($id);
-        return response()->json(['message' => 'Artigo deletado!', 'article' => $article]);
+        if($article->user_id == $user->id) {
+          Article::destroy($id);
+          return response()->json(['message' => 'Artigo deletado!', 'article' => $article]);
+        }
+        return response()->json(['Voce nao pode deletar esse artigo!']);
     }
 }
