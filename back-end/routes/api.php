@@ -22,6 +22,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 //User Controller
 Route::get('indexUser', 'UserController@indexUser');
 Route::post('createUser', 'UserController@createUser');
+Route::get('indexAllArticles','ArticleController@indexAllArticles');
 
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
@@ -31,7 +32,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
-  Route::get('indexAllArticles','ArticleController@indexAllArticles');
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
   Route::post('createArticle','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
