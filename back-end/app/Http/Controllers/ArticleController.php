@@ -56,7 +56,7 @@ class ArticleController extends Controller
     public function updateArticle(ArticleRequest $request, $id)
     {
         
-        $article = Article::find($id);
+        $article = Article::findOrFail($id);
         $article->updateArticle($request);
         return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
     }

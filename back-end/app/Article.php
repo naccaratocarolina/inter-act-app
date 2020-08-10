@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
+use Carbon\Carbon;
 use App\Users;
 use App\Comments;
 
@@ -28,7 +28,7 @@ class Article extends Model
     //creat new Article
     public function createArticle(ArticleRequest $request){
       $article = new Article;
-
+      $current = Carbon::now();
       $this->title = $request->title;
       $this->description = $request->description;
       $this->image = $request->image;
@@ -40,6 +40,7 @@ class Article extends Model
 
     //update Article by user
     public function updateArticle(Request $request) {
+      $current = Carbon::now();
       if($request->title){
         $this->title = $request->title;
       }

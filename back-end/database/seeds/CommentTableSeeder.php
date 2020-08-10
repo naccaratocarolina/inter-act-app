@@ -2,13 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Article;
-use App\Comment;
-use App\User;
-
-class ArticleTableSeeder extends Seeder
+class CommentTableSeeder extends Seeder
 {
-    
     /**
      * Run the database seeds.
      *
@@ -18,6 +13,4 @@ class ArticleTableSeeder extends Seeder
     {
         //
     }
-
-    
 }
