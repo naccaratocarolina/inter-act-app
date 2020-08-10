@@ -6,12 +6,24 @@ use Illuminate\Http\Request;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use App\Http\Requests\UserRequest as UserRequest;
 
 use App\User;
 use App\Role;
+use App\Article;
 
 class UserController extends Controller
 {
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+    public function construct()
+    {
+      $this->middleware('role');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,7 +40,7 @@ class UserController extends Controller
      * And assign a Role & Permission
      * @return \Illuminate\Http\Response
      */
-     public function createUser(Request $request)
+     public function createUser(UserRequest $request)
      {
        $user = new User;
        $user->createUser($request);
@@ -71,8 +83,7 @@ class UserController extends Controller
      {
        $user = User::findOrFail($id);
        $user->roles()->detach();
-       $user->permissions()->detach();
-       User::destroy($id);
-       return response()->json(['message' => 'User deletado!', 'user' => $user]);
+       $user = User::destroy($id);
+       return response()->json(['message' => 'User deletado!']);
       }
 }

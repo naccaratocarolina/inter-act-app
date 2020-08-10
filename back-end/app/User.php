@@ -6,15 +6,16 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Http\Requests\UserRequest as UserRequest;
+use Laravel\Passport\HasApiTokens;
 
 use App\Role;
-use App\Permission;
+use App\Article;
 
 class User extends Authenticatable
 {
     use Notifiable;
-    use SoftDeletes;
+    use HasApiTokens;
 
     /**
      * The attributes that are mass assignable.
@@ -57,14 +58,14 @@ class User extends Authenticatable
     }
 
     /**
-     * Many to Many Relationship User & Permission
-     * A User can have n Permissions
-     * A Permission can be assigned to n User
+     * One to Many Relationship User & Article
+     * A User can have n Articles
+     * A Article can belong to 1 User
      * @return mixed
      */
-    public function permissions()
+    public function articles()
     {
-        return $this->belongsToMany('App\Permission','permissions_users');
+        return $this->hasMany('App\Article');
     }
 
     /**
@@ -72,12 +73,14 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Http\Response
      */
-    public function createUser(Request $request)
+    public function createUser(UserRequest $request)
     {
         //atributos do user
         $this->name = $request->name;
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
+        $this->profile_picture = $request->profile_picture;
+        $this->description = $request->description;
         $this->save();
 
         //associando um role ao user
@@ -85,12 +88,6 @@ class User extends Authenticatable
           $this->roles()->attach($request->role);
           $this->save();
         }
-
-        if($request->permission) {
-          $this->permissions()->attach($request->permission);
-          $this->save();
-        }
-
     }
 
     /**
@@ -112,48 +109,18 @@ class User extends Authenticatable
        if($request->password){
          $this->password = bcrypt($request->password);
        }
+       if($request->profile_picture){
+         $this->profile_picture = $request->profile_picture;
+       }
+       if($request->description){
+         $this->description = $request->description;
+       }
        $this->save();
-
-       //detach os roles e permissions do user para depois alterar
-       $this->roles()->detach();
-       $this->permissions()->detach();
 
        //altera os roles
        if($request->role) {
          $this->roles()->attach($request->role);
          $this->save();
-       }
-
-       //altera as permissions
-       if($request->permission) {
-         $this->permissions()->attach($request->permission);
-         $this->save();
-       }
-     }
-
-     /**
-      * Check if the user has a role assigned
-      * @return bool
-      */
-     public function hasRole($roles)
-     {
-       //receives an array of roles and checks if the user is associated
-       foreach($roles as $role) {
-         if($this->roles->contains('marker', $role)) {
-           return true; //if yes, returns true
-         }
-       }
-       return false; //if no, returns false
-     }
-
-     /**
-      * Check if the user is a moderator
-      * @return bool
-      */
-     public function isModerator()
-     {
-       if($this->roles->contains('marker', 'moderator')) {
-         return true;
        }
      }
 }

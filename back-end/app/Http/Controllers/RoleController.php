@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Role;
-use App\Permission;
 use Illuminate\Http\Request;
+use App\Http\Requests\RoleRequest as RoleRequest;
 
 class RoleController extends Controller
 {
+  /**
+   * Create a new controller instance.
+   *
+   * @return void
+   */
+    public function construct()
+    {
+      $this->middleware('moderator');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +33,7 @@ class RoleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createRole(Request $request)
+    public function createRole(RoleRequest $request)
     {
       $role = new Role();
       $role->createRole($request);
@@ -66,7 +75,6 @@ class RoleController extends Controller
     public function destroyRole($id)
     {
         $role = Role::findOrFail($id);
-        $role->permissions()->detach();
         Role::destroy($id);
         return response()->json(['message' => 'Role deletado!', 'role' => $role]);
     }

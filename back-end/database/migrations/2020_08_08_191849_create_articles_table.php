@@ -14,19 +14,19 @@ class CreateArticlesTable extends Migration
     public function up()
     {
         Schema::create('articles', function (Blueprint $table) {
-            $table->bigIncrements('id')->nullable();
-            $table->string('title')->nullable();
-            $table->string('description')->nullable();
+            $table->bigIncrements('id');
+            $table->string('title');
+            $table->string('subtitle');
+            $table->string('text')->nullable();
             $table->string('image')->nullable();
-            $table->string('category')->nullable();
+            $table->string('category');
             $table->string('date')->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
 
-
         Schema::table('articles', function (Blueprint $table) {
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+          $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
