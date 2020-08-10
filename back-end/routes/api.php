@@ -30,6 +30,13 @@ Route::post('createRole', 'RoleController@createRole');
 Route::put('updateRole/{id}', 'RoleController@updateRole');
 Route::delete('destroyRole/{id}', 'RoleController@destroyRole');
 
+//Comment Controller
+Route::get('indexComment','CommentController@indexComment');
+Route::get('showComment/{id}','CommentController@showComment');
+Route::post('createComment','CommentController@createComment');
+Route::put('updateComment/{id}','CommentController@updateComment');
+Route::delete('destroyComment/{id}','CommentController@destroyComment');
+
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
 Route::post('login', 'API\PassportController@login')->name('login');
