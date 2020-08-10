@@ -9,8 +9,9 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
 use Laravel\Passport\HasApiTokens;
 
-use App\Role;
 use App\Article;
+use App\Comment;
+use App\Role;
 
 class User extends Authenticatable
 {
@@ -66,6 +67,17 @@ class User extends Authenticatable
     public function articles()
     {
         return $this->hasMany('App\Article');
+    }
+
+    /**
+     * One to Many Relationship User & Comment
+     * A User can post n Comments
+     * A Comment can belong to 1 User
+     * @return mixed
+     */
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
     }
 
     /**

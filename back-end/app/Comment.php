@@ -7,23 +7,35 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
+
 use App\Users;
-use App\Articles;
+use App\Article;
 use App\Comment;
 
 class Comment extends Model
 {
     protected $table = 'comments';
-    
-    //
+
+    /**
+     * One to Many Relationship User & Comment
+     * A User can post n Comments
+     * A Comment can belong to 1 User
+     * @return mixed
+     */
     public function user()
     {
-        return $this->belongsTo('App\User', 'user_id');
+        return $this->belongsTo('App\User');
     }
 
+    /**
+     * One to Many Relationship Article & Comment
+     * An Article can have n Comments
+     * A Comment can belong to 1 Article
+     * @return mixed
+     */
     public function article()
     {
-        return $this->belongsTo('App\User', 'article_id');
+        return $this->belongsTo('App\Article');
     }
 
     //creat new comment

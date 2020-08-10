@@ -23,6 +23,17 @@ class Article extends Model
         return $this->belongsTo('App\User');
     }
 
+    /**
+     * One to Many Relationship Article & Comment
+     * An Article can have n Comments
+     * A Comment can belong to 1 Article
+     * @return mixed
+     */
+     public function comments()
+     {
+         return $this->hasMany('App\Comment');
+     }
+
     //creat new Article
     public function createArticle(Request $request) {
       //grab the user id that is making the request
