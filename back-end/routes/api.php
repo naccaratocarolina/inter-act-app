@@ -67,6 +67,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //User Controller
   Route::get('showUser/{id}', 'UserController@showUser')->middleware('role');
+  Route::get('followingCounter', 'UserController@followingCounter');
+  Route::get('followersCounter', 'UserController@followersCounter');
   Route::post('follow/{following_id}', 'UserController@follow')->name('register');
   Route::put('updateUser/{id}', 'UserController@updateUser');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');

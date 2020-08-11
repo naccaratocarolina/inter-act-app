@@ -95,4 +95,26 @@ class UserController extends Controller
         $user->save();
         return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
       }
+
+      public function followingCounter() {
+        $user = Auth::user();
+        $count = $user->following->count();
+        if($count == 1) {
+          return response()->json(['message' => 'Voce tem ' . $count . ' seguidor']);
+        }
+        else {
+          return response()->json(['message' => 'Voce tem ' . $count . ' seguidores']);
+        }
+      }
+
+      public function followersCounter() {
+        $user = Auth::user();
+        $count = $user->followers->count();
+        if($count == 1) {
+          return response()->json(['message' => 'Voce segue ' . $count . ' usuario']);
+        }
+        else {
+          return response()->json(['message' => 'Voce segue ' . $count . ' usuarios']);
+        }
+      }
 }
