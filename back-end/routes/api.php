@@ -70,6 +70,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('followingCounter', 'UserController@followingCounter');
   Route::get('followersCounter', 'UserController@followersCounter');
   Route::post('follow/{following_id}', 'UserController@follow')->name('register');
+  Route::post('unfollow/{following_id}', 'UserController@unfollow')->name('register');
   Route::put('updateUser/{id}', 'UserController@updateUser');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });

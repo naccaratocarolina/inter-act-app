@@ -105,6 +105,20 @@ class UserController extends Controller
       }
 
       /**
+       * Function that detach the relationship of one user following another
+       *
+       * @param  int  $following_id
+       * @return \Illuminate\Http\Response
+       */
+      public function unfollow($following_id) {
+        $user = Auth::user();
+        $following = User::findOrFail($following_id);
+        $user->following()->detach($following_id);
+        $user->save();
+        return response()->json(['message' => 'Voce parou de seguir x ' . $following->name]);
+      }
+
+      /**
        * Counts how many followers the user making the request has
        *
        * @return int  $count
