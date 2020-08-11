@@ -39,9 +39,9 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexArticleComment()
+    public function indexArticleComment($article_id)
     {
-        $article = Auth::article();
+        $article = Article::findOrFail($article_id);
         $comments = $article->comments; //grab the user's comments
         return response()->json(['comments' => $comments]);
     }
@@ -53,10 +53,9 @@ class CommentController extends Controller
      */
     public function createComment(CommentRequest $request, $article_id)
     {
-        $article = Auth::article();
         $article = Article::findOrFail($article_id);
         $comment = new Comment;
-        $comment->createComment($request);
+        $comment->createComment($request, $article_id);
         return response()->json(['message' => 'Comentário criado!', 'comment' => $comment]);
     }
 
@@ -71,13 +70,9 @@ class CommentController extends Controller
     public function updateComment(CommentRequest $request, $id)
     {
         $user = Auth::user();
-        $article = Auth::article();
         $comment = Comment::findOrFail($id);
-        if($comment->user_id === $user->id){ //if the user making the request own the comment
-            $comment->updateComment($request);
-            return response()->json(['message' => 'Comentário editado!', 'comment' => $comment]);
-        }
-        return response()->json(['Voce não pode editar este comentário']);
+        $comment->updateComment($request);
+        return response()->json(['message' => 'Comentário editado!', 'comment' => $comment]);
     }
 
     /**
@@ -101,13 +96,9 @@ class CommentController extends Controller
     public function destroyComment($id)
     {
         $user = Auth::user();
-        $article = Auth::article();
         $comment = Comment::findOrFail($id);
-        if($comment->user_id === $user->id){
-            Comment::destroy($id);
-            return response()->json(['message' => 'Comentário deletado!', 'comment' => $comment]);
-        }
+        Comment::destroy($id);
         return response()->json(['message' => 'Comentário deletado!', 'comment' => $comment]);
-        
+
     }
 }

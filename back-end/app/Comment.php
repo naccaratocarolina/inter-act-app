@@ -39,17 +39,13 @@ class Comment extends Model
     }
 
     //creat new comment by user
-    public function createComment(Request $request) { //grab the user id that is making the request
+    public function createComment(Request $request, $article_id) { //grab the user id that is making the request
+      $this->user_id = $request->id; //and saves it in the article table
+      $this->article_id = $article_id; //and saves it in the article table
 
-      $user = Auth::user();
-      $this->user_id = $user->id; //and saves it in the article table
-
-      $article = Auth::article();
-      $this->article_id = $article->id; //and saves it in the article table
-      
-        $current = Carbon::now();
-        $this->commentary = $request->commentary;
-        $this->save();
+      //$current = Carbon::now();
+      $this->commentary = $request->commentary;
+      $this->save();
     }
 
     //update comment by user

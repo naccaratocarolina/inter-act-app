@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 /*
 |--------------------------------------------------------------------------
 | Routes that do not need permissions
@@ -54,15 +50,15 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('createArticle','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
-  
+
 
   //Comment Controller
   Route::get('indexUserComment','CommentController@indexUserComment')->middleware('role');
   Route::get('indexArticleComment','CommentController@indexArticleComment')->middleware('role');
   Route::get('showComment/{id}','CommentController@showComment')->middleware('role');
-  Route::post('createComment/{id}','CommentController@createComment')->middleware('role');
-  Route::put('updateComment/{id}','CommentController@updateComment')->middleware('role');
-  Route::delete('destroyComment/{id}','CommentController@destroyComment')->middleware('role');
+  Route::post('createComment/{article_id}','CommentController@createComment')->middleware('role');
+  Route::put('updateComment/{id}','CommentController@updateComment');
+  Route::delete('destroyComment/{id}','CommentController@destroyComment');
 
   //Role Controller
   Route::get('indexRole', 'RoleController@indexRole')->middleware('moderator');
