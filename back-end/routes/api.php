@@ -45,14 +45,17 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
+  Route::get('showArticle/{id}','ArticleController@showArticle');
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
+  Route::get('indexAllArticles','ArticleController@indexAllrArticles')->middleware('role');
   Route::post('createArticle','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
-  Route::get('showArticle/{id}','ArticleController@showArticle');
+  
 
   //Comment Controller
-  Route::get('indexComment','CommentController@indexComment')->middleware('role');
+  Route::get('indexAllComment','CommentController@indexAllComment')->middleware('role');
+  Route::get('indexUserComment','CommentController@indexUserComment')->middleware('role');
   Route::get('showComment/{id}','CommentController@showComment')->middleware('role');
   Route::post('createComment','CommentController@createComment')->middleware('role');
   Route::put('updateComment/{id}','CommentController@updateComment')->middleware('role');

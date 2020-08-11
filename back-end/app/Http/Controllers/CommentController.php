@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CommentRequest;
 use App\Comment;
 use Carbon\Carbon;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -14,9 +15,21 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexComment()
+    public function indexAllComment()
     {
         $comments = Comment::orderBy('id', 'desc')->get();
+        return response()->json(['comments' => $comments]);
+    }
+
+    /**
+     * Display a listing of the resource that belongs to the given user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexUserComment()
+    {
+        $user = Auth::user();
+        $comments = $user->comments; //grab the user's comments
         return response()->json(['comments' => $comments]);
     }
 
@@ -42,9 +55,13 @@ class CommentController extends Controller
      */
     public function updateComment(CommentRequest $request, $id)
     {
+        $user = Auth::user();
         $comment = Comment::findOrFail($id);
-        $comment->updateComment($request);
-        return response()->json(['message' => 'Comentário editado!', 'comment' => $comment]);
+        if($comment->user_id === $user->id){ //if the user making the request own the comment
+            $comment->updateComment($request);
+            return response()->json(['message' => 'Comentário editado!', 'comment' => $comment]);
+        }
+        return response()->json(['Voce não pode editar este comentário']);
     }
 
     /**
@@ -67,8 +84,13 @@ class CommentController extends Controller
      */
     public function destroyComment($id)
     {
+        $user = Auth::user();
         $comment = Comment::findOrFail($id);
-        Comment::destroy($id);
+        if($comment->user_id === $user->id){
+            Comment::destroy($id);
+            return response()->json(['message' => 'Comentário deletado!', 'comment' => $comment]);
+        }
         return response()->json(['message' => 'Comentário deletado!', 'comment' => $comment]);
+        
     }
 }

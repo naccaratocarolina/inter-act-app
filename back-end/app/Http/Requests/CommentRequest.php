@@ -27,31 +27,13 @@ class CommentRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->isMethod('post')){
-            return[
+        return[
                 
-                'commentary' => 'required|string',
-            ];
-        }
-        if($this->isMethod('put')){
-            return[
-                
-                'commentary' => 'required|string',
-            ];
-        }
-        if($this->isMethod('get')){
-            return[
-                
-                'commentary' => 'required|string',
-            ];
-        }
-        if($this->isMethod('delete')){
-            return[
-                
-                'commentary' => 'required|string',
-            ];
-        }
+            'commentary' => 'required|string',
+        ];
             
-        
+    }
+    protected function failedValidation(Validator $validator) {
+        throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
 }

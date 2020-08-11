@@ -6,7 +6,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
-
 use App\User;
 use Auth;
 

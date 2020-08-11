@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
-
 use App\Users;
 use App\Article;
 use App\Comment;
+use Auth;
 
 class Comment extends Model
 {
@@ -38,14 +38,14 @@ class Comment extends Model
         return $this->belongsTo('App\Article');
     }
 
-    //creat new comment
-    public function createComment(Request $request) {
-        $comment = new Comment;
+    //creat new comment by user
+    public function createComment(Request $request) { //grab the user id that is making the request
+      $user = Auth::user();
+      $this->user_id = $user->id; //and saves it in the article table
+
         $current = Carbon::now();
         $this->commentary = $request->commentary;
-        $this->user_id = $request->user_id;
         $this->save();
-        return response()->json($comment);
     }
 
     //update comment by user
