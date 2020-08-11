@@ -14,7 +14,6 @@ use App\Comment;
 class Comment extends Model
 {
     protected $table = 'comments';
-    
     //
     public function user()
     {
@@ -30,6 +29,7 @@ class Comment extends Model
     public function createComment(Request $request) {
         $comment = new Comment;
         $current = Carbon::now();
+        $comment->notify(new CadastreNotification($comment));
         $this->commentary = $request->commentary;
         $this->user_id = $request->user_id;
         $this->save();

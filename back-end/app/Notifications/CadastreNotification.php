@@ -6,21 +6,25 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\User;
 
 class CadastreNotification extends Notification
 {
     use Queueable;
+    private $user;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(User $user)
     {
-        //
+        $this->user = $user;
     }
 
+    // MAIL_USERNAME=7a50f743fc673f //gomesejcm@gmail.com
+    // MAIL_PASSWORD=02f55b9705d36a  //ztjgixffjtisoybn
     /**
      * Get the notification's delivery channels.
      *
@@ -43,9 +47,10 @@ class CadastreNotification extends Notification
         $url = url('/invoice/'.$this->invoice->id);
         $user = $notifiable;
         return (new MailMessage)
+                    ->subject('Confirmação de cadastro InterAct')
                     ->greeting($user->name.'. Seja bem vindo a InterAct!')
-                    ->line('Clique no botão a baixo e confirm se cadastro')
-                    ->action('Confirmar cadastro', $url('localhost:8100/login'))
+                    ->line($this->user->body.'Clique no botão a baixo e confirm se cadastro')
+                    ->action('Confirmar cadastro', $url('/'))
                     ->line('Obrigada por escolher a InterAct!');
     }
 
