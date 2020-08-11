@@ -39,6 +39,7 @@ class UserController extends Controller
     /**
      * Create a new User
      * And assign a Role & Permission
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
      public function createUser(UserRequest $request)
@@ -88,6 +89,13 @@ class UserController extends Controller
        return response()->json(['message' => 'User deletado!']);
       }
 
+
+      /**
+       * Function that creates the relationship of one user following another
+       *
+       * @param  int  $following_id
+       * @return \Illuminate\Http\Response
+       */
       public function follow($following_id) {
         $user = Auth::user();
         $following = User::findOrFail($following_id);
@@ -96,6 +104,11 @@ class UserController extends Controller
         return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
       }
 
+      /**
+       * Counts how many followers the user making the request has
+       *
+       * @return int  $count
+       */
       public function followingCounter() {
         $user = Auth::user();
         $count = $user->following->count();
@@ -107,6 +120,11 @@ class UserController extends Controller
         }
       }
 
+      /**
+       * Counts how many people the user making the request follows
+       *
+       * @return int  $count
+       */
       public function followersCounter() {
         $user = Auth::user();
         $count = $user->followers->count();
