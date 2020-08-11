@@ -92,4 +92,21 @@ class ArticleController extends Controller
         }
         return response()->json(['Voce nao pode deletar esse artigo!']);
     }
+
+    /**
+     * Counts the likes of an article.
+     *
+     * @param  int $id
+     * @return object message, count
+     */
+    public function likesCounter($id) {
+      $article = Article::findOrFail($id);
+      $count = $article->isLikedBy->count();
+      if($count == 1) {
+        return response()->json(['message' => 'O seu artigo tem ' . $count . ' curtida', 'count' => $count]);
+      }
+      else {
+        return response()->json(['message' => 'O seu artigo tem ' . $count . ' curtidas', 'count' => $count]);
+      }
+    }
 }

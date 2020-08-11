@@ -13,7 +13,7 @@ class Article extends Model
 {
   /**
    * One to Many Relationship User & Article
-   * A User can have n Articles
+   * An User can have n Articles
    * A Article can belong to 1 User
    * @return mixed
    */
@@ -21,6 +21,17 @@ class Article extends Model
     {
         return $this->belongsTo('App\User');
     }
+
+    /**
+     * Many to Many Relationship User & Article
+     * An User can like n Articles
+     * A Article can be liked by n Users
+     * @return mixed
+     */
+      public function isLikedBy()
+      {
+          return $this->belongsToMany('App\User', 'articles_users');
+      }
 
     /**
      * One to Many Relationship Article & Comment

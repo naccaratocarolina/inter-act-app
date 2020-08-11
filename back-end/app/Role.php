@@ -8,12 +8,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Requests\RoleRequest as RoleRequest;
 
 use App\User;
+use Auth;
 
 class Role extends Model
 {
   /**
    * Many to Many Relationship User & Role
-   * A User can have n Roles
+   * An User can have n Roles
    * A Role can be assigned to n Users
    * @return mixed
    */
