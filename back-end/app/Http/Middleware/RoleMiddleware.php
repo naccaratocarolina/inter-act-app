@@ -35,8 +35,42 @@ class RoleMiddleware
          * A registered user can only delete and update their own articles and comments
          * @return mixed
          */
-         else if($user->roles->contains('marker', 'registered-user')) {
-           return $next($request);
+        else if($user->roles->contains('marker', 'registered-user')) {
+          //Allows the request to proceed only if the user id is the same as the $request id
+          if($request->id) {
+            if($request->id === $user->id) {
+              return $next($request);
+            }
+            else {
+              return response()->json(['Apenas moderadores podem editar e deletar outros usuarios!']);
+            }
+          }
+
+          //Allows the request to proceed only if the user that is making the request owns the article
+          if($user->articles) {
+            $articles = $user->articles;
+            foreach($articles as $article) {
+              if($article->user_id == $user->id) {
+                return $next($request);
+              }
+            }
+          }
+          else {
+            return response()->json(['Voce nao eh dono desse artigo!']);
+          }
+
+          //Allows the request to proceed only if the user that is making the request owns the comment
+          if($user->comments) {
+            $comments = $user->comments;
+            foreach($comments as $comment) {
+              if($comment->user_id == $user->id) {
+                return $next($request);
+              }
+            }
+          }
+          else {
+            return response()->json(['Voce nao eh dono desse comentario!']);
+          }
          }
 
         /**
