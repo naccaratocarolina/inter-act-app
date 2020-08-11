@@ -1,0 +1,91 @@
+ion-toolbar {
+    --background: #0D8FE3;
+}
+
+ion-menu-button {
+    --color: #ffffff;
+}
+
+ion-button {
+    --color: #ffffff;
+}
+
+ion-button ion-icon {
+    font-size: 1.875em;
+    color: white;
+}
+
+ion-title {
+    --color: #ffffff;
+    text-align: center;
+    width: 100%;
+    font-size: 1.5em;
+    font-weight: 400;
+}
+
+ion-title, ion-label {
+    font-family: 'Comfortaa', cursive;
+}
+
+ion-label {
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+ion-segment {
+    margin-top:0;
+    margin-bottom: 2em;
+}
+
+ion-slides {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.image {
+    padding-left: 1em;
+    padding-right: 0.8em;
+    
+}
+
+img {
+    object-fit: cover;
+    width:5.313em;
+    height:5.313em;
+    border-radius: 0.125em;
+    margin-top: 1.5em;
+}
+
+.title {
+    font-weight: bold;
+    color: #4F4F4F;
+    margin: 0;
+    padding-bottom: 0.5em;
+    font-size: 0.8em;
+}
+
+p{
+    padding-bottom: 0.6em;
+}
+
+h6, p {
+    margin: 0em;
+    font-size: 0.8em;
+}
+
+.title, h6, p {
+    text-align: left;
+}
+
+h6, ion-icon {
+    font-weight: bold;
+    color: #0D8FE3 ;
+}
+
+ion-icon {
+    padding-left: 0.3em;
+}
+
+hr {
+    width: 90%;
+    border-top: 0.063em solid #939393;
+}
