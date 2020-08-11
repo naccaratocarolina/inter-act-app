@@ -123,7 +123,7 @@ class UserController extends Controller
        *
        * @return int  $count
        */
-      public function followingCounter() {
+      public function followersCounter() {
         $user = Auth::user();
         $count = $user->following->count();
         if($count == 1) {
@@ -139,7 +139,7 @@ class UserController extends Controller
        *
        * @return int  $count
        */
-      public function followersCounter() {
+      public function followingCounter() {
         $user = Auth::user();
         $count = $user->followers->count();
         if($count == 1) {

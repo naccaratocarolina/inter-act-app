@@ -6,6 +6,9 @@ use App\Role;
 use Illuminate\Http\Request;
 use App\Http\Requests\RoleRequest as RoleRequest;
 
+use App\User;
+use Auth;
+
 class RoleController extends Controller
 {
   /**
@@ -38,6 +41,18 @@ class RoleController extends Controller
       $role = new Role();
       $role->createRole($request);
       return response()->json(['role' => $role]);
+    }
+
+    /**
+     * Add a role to the authenticated user
+     *
+     * @return object
+     */
+
+    public function addRole($role_id) {
+      $user = Auth::user();
+      $user->roles()->attach($role_id);
+      return response()->json(['ok']);
     }
 
     /**

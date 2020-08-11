@@ -113,8 +113,8 @@ class User extends Authenticatable
 
         //associando um role ao user
         if($request->role) {
-          $this->roles()->attach($request->role);
-          $this->save();
+          $role = Role::find($request->role);
+          $role->addRole($role->id);
         }
     }
 

@@ -62,6 +62,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('indexRole', 'RoleController@indexRole')->middleware('moderator');
   Route::get('showRole/{id}', 'RoleController@showRole')->middleware('moderator');
   Route::post('createRole', 'RoleController@createRole');
+  Route::post('addRole/{role_id}', 'RoleController@addRole');
   Route::put('updateRole/{id}', 'RoleController@updateRole')->middleware('moderator');
   Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('moderator');
 

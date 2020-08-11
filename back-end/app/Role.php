@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Http\Requests\RoleRequest as RoleRequest;
 
 use App\User;
+use Auth;
 
 class Role extends Model
 {
