@@ -14,7 +14,7 @@ class Article extends Model
 {
   /**
    * One to Many Relationship User & Article
-   * A User can have n Articles
+   * An User can have n Articles
    * A Article can belong to 1 User
    * @return mixed
    */

@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     /**
      * Many to Many Relationship User & Role
-     * A User can have n Roles
+     * An User can have n Roles
      * A Role can be assigned to n Users
      * @return mixed
      */
@@ -60,7 +60,7 @@ class User extends Authenticatable
 
     /**
      * One to Many Relationship User & Article
-     * A User can have n Articles
+     * An User can have n Articles
      * A Article can belong to 1 User
      * @return mixed
      */
@@ -71,13 +71,29 @@ class User extends Authenticatable
 
     /**
      * One to Many Relationship User & Comment
-     * A User can post n Comments
+     * An User can post n Comments
      * A Comment can belong to 1 User
      * @return mixed
      */
     public function comments()
     {
         return $this->hasMany('App\Comment');
+    }
+
+    /**
+     * Many to Many Self Relationship User & User
+     * An User can follow n Users
+     * An User can be followed by n Users
+     * @return mixed
+     */
+    public function followers()
+    {
+        return $this->belongsToMany('App\User', 'followers_following', 'follower_id', 'following_id');
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany('App\User', 'followers_following', 'follower_id', 'following_id');
     }
 
     /**

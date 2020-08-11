@@ -18,7 +18,7 @@ class Comment extends Model
 
     /**
      * One to Many Relationship User & Comment
-     * A User can post n Comments
+     * An User can post n Comments
      * A Comment can belong to 1 User
      * @return mixed
      */

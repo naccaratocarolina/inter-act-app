@@ -87,4 +87,12 @@ class UserController extends Controller
        $user = User::destroy($id);
        return response()->json(['message' => 'User deletado!']);
       }
+
+      public function follow($following_id) {
+        $user = Auth::user();
+        $following = User::findOrFail($following_id);
+        $user->following()->attach($following_id);
+        $user->save();
+        return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
+      }
 }
