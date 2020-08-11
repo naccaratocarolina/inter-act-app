@@ -70,6 +70,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Many to Many Relationship User & Article
+     * An User can like n Articles
+     * A Article can be liked by n Users
+     * @return mixed
+     */
+    public function like()
+    {
+        return $this->belongsToMany('App\Article', 'articles_users');
+    }
+
+    /**
      * One to Many Relationship User & Comment
      * An User can post n Comments
      * A Comment can belong to 1 User
@@ -113,8 +124,8 @@ class User extends Authenticatable
 
         //associando um role ao user
         if($request->role) {
-          $role = Role::find($request->role);
-          $role->addRole($role->id);
+          $this->roles()->attach($request->role);
+          $this->save();
         }
     }
 

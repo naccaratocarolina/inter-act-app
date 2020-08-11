@@ -121,32 +121,60 @@ class UserController extends Controller
       /**
        * Counts how many followers the user making the request has
        *
-       * @return int  $count
+       * @return object  message, count
        */
       public function followersCounter() {
         $user = Auth::user();
         $count = $user->following->count();
         if($count == 1) {
-          return response()->json(['message' => 'Voce tem ' . $count . ' seguidor']);
+          return response()->json(['message' => 'Voce tem ' . $count . ' seguidor', 'count' => $count]);
         }
         else {
-          return response()->json(['message' => 'Voce tem ' . $count . ' seguidores']);
+          return response()->json(['message' => 'Voce tem ' . $count . ' seguidores', 'count' => $count]);
         }
       }
 
       /**
        * Counts how many people the user making the request follows
        *
-       * @return int  $count
+       * @return object  message, count
        */
       public function followingCounter() {
         $user = Auth::user();
         $count = $user->followers->count();
         if($count == 1) {
-          return response()->json(['message' => 'Voce segue ' . $count . ' usuario']);
+          return response()->json(['message' => 'Voce segue ' . $count . ' usuario', 'count' => $count]);
         }
         else {
-          return response()->json(['message' => 'Voce segue ' . $count . ' usuarios']);
+          return response()->json(['message' => 'Voce segue ' . $count . ' usuarios', 'count' => $count]);
         }
+      }
+
+      /**
+       * Function that creates the relationship of one user liking an article
+       *
+       * @param  int  $article_id
+       * @return \Illuminate\Http\Response
+       */
+      public function like($article_id) {
+        $user = Auth::user();
+        $article = Article::findOrFail($article_id);
+        $user->like()->attach($article);
+        $user->save();
+        return response()->json(['message' => 'Artigo curtido! :)']);
+      }
+
+      /**
+       * Function that detach the relationship of one user liking an article
+       *
+       * @param  int  $article_id
+       * @return \Illuminate\Http\Response
+       */
+      public function dislike($article_id) {
+        $user = Auth::user();
+        $article = Article::findOrFail($article_id);
+        $user->like()->detach($article);
+        $user->save();
+        return response()->json(['message' => 'Artigo descurtido!']);
       }
 }

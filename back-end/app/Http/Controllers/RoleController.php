@@ -48,7 +48,6 @@ class RoleController extends Controller
      *
      * @return object
      */
-
     public function addRole($role_id) {
       $user = Auth::user();
       $user->roles()->attach($role_id);

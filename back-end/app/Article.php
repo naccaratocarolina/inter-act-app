@@ -24,6 +24,17 @@ class Article extends Model
     }
 
     /**
+     * Many to Many Relationship User & Article
+     * An User can like n Articles
+     * A Article can be liked by n Users
+     * @return mixed
+     */
+      public function isLikedBy()
+      {
+          return $this->belongsToMany('App\User', 'articles_users');
+      }
+
+    /**
      * One to Many Relationship Article & Comment
      * An Article can have n Comments
      * A Comment can belong to 1 Article

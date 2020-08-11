@@ -15,10 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 /*
 |--------------------------------------------------------------------------
 | Routes that do not need permissions
@@ -34,6 +30,7 @@ Route::post('login', 'API\PassportController@login')->name('login');
 //User Controller
 Route::get('indexUser', 'UserController@indexUser');
 Route::post('createUser', 'UserController@createUser');
+Route::post('createRole', 'RoleController@createRole');
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +43,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //Article Controller
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
+  Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
@@ -61,7 +59,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   //Role Controller
   Route::get('indexRole', 'RoleController@indexRole')->middleware('moderator');
   Route::get('showRole/{id}', 'RoleController@showRole')->middleware('moderator');
-  Route::post('createRole', 'RoleController@createRole');
   Route::post('addRole/{role_id}', 'RoleController@addRole');
   Route::put('updateRole/{id}', 'RoleController@updateRole')->middleware('moderator');
   Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('moderator');
@@ -70,8 +67,10 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('showUser/{id}', 'UserController@showUser')->middleware('role');
   Route::get('followingCounter', 'UserController@followingCounter');
   Route::get('followersCounter', 'UserController@followersCounter');
-  Route::post('follow/{following_id}', 'UserController@follow')->name('register');
-  Route::post('unfollow/{following_id}', 'UserController@unfollow')->name('register');
+  Route::post('follow/{following_id}', 'UserController@follow');
+  Route::post('unfollow/{following_id}', 'UserController@unfollow');
+  Route::post('like/{article_id}', 'UserController@like');
+  Route::post('dislike/{article_id}', 'UserController@dislike');
   Route::put('updateUser/{id}', 'UserController@updateUser');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });
