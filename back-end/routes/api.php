@@ -35,6 +35,9 @@ Route::post('login', 'API\PassportController@login')->name('login');
 Route::get('indexUser', 'UserController@indexUser');
 Route::post('createUser', 'UserController@createUser');
 
+//Comment Controller
+Route::get('indexAllComment','CommentController@indexAllComment');
+
 /*
 |--------------------------------------------------------------------------
 | Routes that require a logged in user
@@ -45,19 +48,19 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
-  Route::get('showArticle/{id}','ArticleController@showArticle');
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
   Route::get('indexAllArticles','ArticleController@indexAllrArticles')->middleware('role');
+  Route::get('showArticle/{id}','ArticleController@showArticle');
   Route::post('createArticle','ArticleController@createArticle')->middleware('role');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
   
 
   //Comment Controller
-  Route::get('indexAllComment','CommentController@indexAllComment')->middleware('role');
   Route::get('indexUserComment','CommentController@indexUserComment')->middleware('role');
+  Route::get('indexArticleComment','CommentController@indexArticleComment')->middleware('role');
   Route::get('showComment/{id}','CommentController@showComment')->middleware('role');
-  Route::post('createComment','CommentController@createComment')->middleware('role');
+  Route::post('createComment/{id}','CommentController@createComment')->middleware('role');
   Route::put('updateComment/{id}','CommentController@updateComment')->middleware('role');
   Route::delete('destroyComment/{id}','CommentController@destroyComment')->middleware('role');
 

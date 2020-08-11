@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CommentRequest;
 use App\Comment;
+use App\Article;
 use Carbon\Carbon;
 use Auth;
 
@@ -34,12 +35,26 @@ class CommentController extends Controller
     }
 
     /**
+     * Display a listing of the resource that belongs to the given user.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexArticleComment()
+    {
+        $article = Auth::article();
+        $comments = $article->comments; //grab the user's comments
+        return response()->json(['comments' => $comments]);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function createComment(CommentRequest $request)
+    public function createComment(CommentRequest $request, $article_id)
     {
+        $article = Auth::article();
+        $article = Article::findOrFail($article_id);
         $comment = new Comment;
         $comment->createComment($request);
         return response()->json(['message' => 'Comentário criado!', 'comment' => $comment]);
@@ -56,6 +71,7 @@ class CommentController extends Controller
     public function updateComment(CommentRequest $request, $id)
     {
         $user = Auth::user();
+        $article = Auth::article();
         $comment = Comment::findOrFail($id);
         if($comment->user_id === $user->id){ //if the user making the request own the comment
             $comment->updateComment($request);
@@ -85,6 +101,7 @@ class CommentController extends Controller
     public function destroyComment($id)
     {
         $user = Auth::user();
+        $article = Auth::article();
         $comment = Comment::findOrFail($id);
         if($comment->user_id === $user->id){
             Comment::destroy($id);
