@@ -2,9 +2,9 @@
   <img class='logo' src="../../../assets/logo_text.png">
   <section class='login'>
     <form [formGroup]="loginForm" (ngSubmit)="submitLogin(loginForm)" >
-      <ion-input class='input' placeholder="Email" type="text" formControlName='email' required='true'></ion-input>
-      <ion-input class='input' placeholder="Senha" type="password" formControlName='password' required='true'></ion-input>
-      <ion-button class='button' type="submit" color='primary'><h1>Entrar</h1></ion-button>
+      <ion-input class='input' placeholder="Email" type="email" formControlName='email'></ion-input>
+      <ion-input class='input' placeholder="Senha" type="password" formControlName='password'></ion-input>
+      <ion-button class='button' [disabled]="!loginForm" type="submit" color='primary'><h1>Entrar</h1></ion-button>
       <h2>Ainda não possui uma conta?<span (click)='registerRedirect()'> Clique aqui.</span></h2>
     </form>
   </section>

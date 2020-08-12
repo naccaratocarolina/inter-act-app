@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
         $admin->password = bcrypt('senha123');
         $admin->save();
         $admin->roles()->attach($moderator);
-
+/*
         factory(User::class, 24)->create()->each(function ($user) {
           $articles = factory(Article::class,3)->make();
           $comments = factory(Comment::class,3)->make();
@@ -41,5 +41,6 @@ class UserSeeder extends Seeder
           //User have Role n-n
           $user->roles()->attach($registeredUser);
         });
-    }
+    }*/
+  }
 }
