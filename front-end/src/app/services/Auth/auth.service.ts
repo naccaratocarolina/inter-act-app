@@ -10,7 +10,7 @@ export class AuthService {
   apiUrl:string = 'http://localhost:8000/api/';
 
   //Http Request Header
-  httpHeaders: object = {
+  httpHeaders: any = {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json'
@@ -21,24 +21,24 @@ export class AuthService {
 
   //register a new User
   public register(request_form): Observable<any> {
-    return this.http.post(this.httpHeaders + 'register', request_form, this.httpHeaders);
+    return this.http.post(this.apiUrl + 'register', request_form, this.httpHeaders);
   }
 
   //login an existent User
   public login(request_form): Observable<any> {
-    return this.http.post(this.httpHeaders + 'login', request_form, this.httpHeaders);
+    return this.http.post(this.apiUrl + 'login', request_form, this.httpHeaders);
   }
 
-  public getDetails(): OBservable<any> {
+  public getDetails(): Observable<any> {
     //Authorization->Bearer . token
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.post(this.httpHeaders + 'getDetails', this.httpHeaders);
+    return this.http.post(this.apiUrl + 'getDetails', this.httpHeaders);
   }
 
   //logout of an existent User
-  public logout(): OBservable<any> {
+  public logout(): Observable<any> {
     //Authorization->Bearer . token
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.get(this.httpHeaders + 'logout', this.httpHeaders);
+    return this.http.get(this.apiUrl + 'logout', this.httpHeaders);
   }
 }
