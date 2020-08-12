@@ -102,12 +102,10 @@ class UserController extends Controller
 
         switch ($action) {
           case 'Follow':
-            User::where('id', $id)->increment('friends_count');
             $user->following()->attach($id);
             return response()->json(['message' => 'Agora voce segue x ' . $other_user->name]);
             break;
           case 'Unfollow':
-            User::where('id', $id)->decrement('friends_count');
             $user->following()->detach($id);
             return response()->json(['message' => 'Voce parou de seguir x ' . $other_user->name]);
             break;

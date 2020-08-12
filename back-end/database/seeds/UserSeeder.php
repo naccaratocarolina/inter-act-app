@@ -24,18 +24,18 @@ class UserSeeder extends Seeder
         $admin->save();
         $admin->roles()->attach($moderator);
 
-        factory(User::class, 12)->create()->each(function ($user) {
-          $articles = factory(Article::class, 2)->make();
-          $comments = factory(Comment::class, 2)->make();
+        factory(User::class, 24)->create()->each(function ($user) {
+          $articles = factory(Article::class,3)->make();
+          $comments = factory(Comment::class,3)->make();
           $registeredUser = Role::where('marker', 'registered-user')->first();
 
-          //User post an Article 1-n
+          //User post Article 1-n
           $user->articles()->saveMany($articles);
 
-          //User post a Comment 1-n
+          //User post Comment 1-n
           $user->comments()->saveMany($comments);
 
-          //User likes an Article n-n
+          //User like Article n-n
           $user->like()->attach($articles);
 
           //User have Role n-n
