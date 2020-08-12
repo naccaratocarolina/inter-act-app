@@ -21,6 +21,7 @@ class CreateArticlesTable extends Migration
             $table->string('image')->nullable();
             $table->string('category');
             $table->string('date')->nullable();
+            $table->integer('likes_count')->default(0);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });

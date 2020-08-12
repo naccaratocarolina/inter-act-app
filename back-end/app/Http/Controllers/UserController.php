@@ -89,33 +89,29 @@ class UserController extends Controller
        return response()->json(['message' => 'User deletado!']);
       }
 
-
       /**
-       * Function that creates the relationship of one user following another
+       * Function that can attach or detach the relationship of one user following another
        *
        * @param  int  $following_id
        * @return \Illuminate\Http\Response
        */
-      public function follow($following_id) {
+      public function actionFollow(Request $request, $id) {
         $user = Auth::user();
-        $following = User::findOrFail($following_id);
-        $user->following()->attach($following_id);
-        $user->save();
-        return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
-      }
+        $other_user = User::findOrFail($id);
+        $action = $request->get('action');
 
-      /**
-       * Function that detach the relationship of one user following another
-       *
-       * @param  int  $following_id
-       * @return \Illuminate\Http\Response
-       */
-      public function unfollow($following_id) {
-        $user = Auth::user();
-        $following = User::findOrFail($following_id);
-        $user->following()->detach($following_id);
-        $user->save();
-        return response()->json(['message' => 'Voce parou de seguir x ' . $following->name]);
+        switch ($action) {
+          case 'Follow':
+            User::where('id', $id)->increment('friends_count');
+            $user->following()->attach($id);
+            return response()->json(['message' => 'Agora voce segue x ' . $other_user->name]);
+            break;
+          case 'Unfollow':
+            User::where('id', $id)->decrement('friends_count');
+            $user->following()->detach($id);
+            return response()->json(['message' => 'Voce parou de seguir x ' . $other_user->name]);
+            break;
+        }
       }
 
       /**
@@ -156,25 +152,24 @@ class UserController extends Controller
        * @param  int  $article_id
        * @return \Illuminate\Http\Response
        */
-      public function like($article_id) {
-        $user = Auth::user();
-        $article = Article::findOrFail($article_id);
-        $user->like()->attach($article);
-        $user->save();
-        return response()->json(['message' => 'Artigo curtido! :)']);
-      }
 
-      /**
-       * Function that detach the relationship of one user liking an article
-       *
-       * @param  int  $article_id
-       * @return \Illuminate\Http\Response
-       */
-      public function dislike($article_id) {
+
+      public function actionLike(Request $request, $article_id) {
         $user = Auth::user();
         $article = Article::findOrFail($article_id);
-        $user->like()->detach($article);
-        $user->save();
-        return response()->json(['message' => 'Artigo descurtido!']);
+        $action = $request->get('action');
+
+        switch ($action) {
+          case 'Like':
+            Article::where('id', $article_id)->increment('likes_count');
+            $user->like()->attach($article);
+            return response()->json(['Voce deu um like <3']);
+            break;
+          case 'Unlike':
+            Article::where('id', $article_id)->decrement('likes_count');
+            $user->like()->detach($article);
+            return response()->json(['Voce removeu o seu like :()']);
+            break;
+        }
       }
 }

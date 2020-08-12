@@ -73,8 +73,8 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('followersCounter', 'UserController@followersCounter');
   Route::post('follow/{following_id}', 'UserController@follow');
   Route::post('unfollow/{following_id}', 'UserController@unfollow');
-  Route::post('like/{article_id}', 'UserController@like');
-  Route::post('dislike/{article_id}', 'UserController@dislike');
+  Route::post('actionFollow/{id}', 'UserController@actionFollow');
+  Route::post('actionLike/{article_id}', 'UserController@actionLike');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });

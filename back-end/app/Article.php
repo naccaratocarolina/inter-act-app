@@ -30,7 +30,7 @@ class Article extends Model
      */
       public function isLikedBy()
       {
-          return $this->belongsToMany('App\User', 'articles_users');
+          return $this->belongsToMany('App\User', 'likes');
       }
 
     /**

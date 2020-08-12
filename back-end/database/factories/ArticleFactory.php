@@ -11,6 +11,7 @@ $factory->define(Article::class, function (Faker $faker) {
         'subtitle' => $faker->text,
         'text' => $faker->text,
         'category' => $faker->randomElement($categories = array('Comida','Arte', 'Atividade Física', 'Viagem')),
+        'likes_count' => $faker->randomDigitNotNull,
         'user_id' => factory('App\User')->create()->id,
     ];
 });

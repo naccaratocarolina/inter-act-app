@@ -77,7 +77,7 @@ class User extends Authenticatable
      */
     public function like()
     {
-        return $this->belongsToMany('App\Article', 'articles_users');
+        return $this->belongsToMany('App\Article', 'likes');
     }
 
     /**
