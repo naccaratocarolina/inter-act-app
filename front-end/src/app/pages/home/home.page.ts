@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -16,14 +17,14 @@ export class HomePage implements OnInit {
     slidesPerView: 1,
     speed: 400
   }
-  
+
   //Array com os posts da aba Todos
   public postsAll:any = [];
-  
+
   //Array com os posts da aba seguindo
   public postFollowing:any =[]
 
-  constructor() { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
     this.postsAll = [
@@ -103,5 +104,9 @@ export class HomePage implements OnInit {
     slides.getActiveIndex().then(seLectedIndex =>{
       this.segment = seLectedIndex;
     })
+  }
+
+  public redirectArticle() {
+    this.router.navigate(['/article']);
   }
 }

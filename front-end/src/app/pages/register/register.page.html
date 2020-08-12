@@ -1,0 +1,13 @@
+
+
+<ion-content class='bgImage'>
+  <section class='register'>
+    <h1>Registrar-se</h1>
+    <form [formGroup]="registerForm" (ngSubmit)="submitRegister(registerForm)">
+      <ion-input class='input' placeholder="Nome" type="text" formControlName='name'></ion-input>
+      <ion-input class='input' placeholder="Email" type="email" formControlName='email'></ion-input>
+      <ion-input class='input' placeholder="Senha" type="password" formControlName='password'></ion-input>
+      <ion-button class='button' [disabled]="!registerForm" type="submit" color='transparent' size='large'><h2>Enviar</h2></ion-button>
+    </form>
+  </section>
+</ion-content>

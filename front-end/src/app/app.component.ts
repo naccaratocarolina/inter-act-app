@@ -41,9 +41,9 @@ export class AppComponent implements OnInit {
       title: 'Spam',
       url: '/folder/Spam',
       icon: 'warning'
-    } */ 
+    } */
   ];
-     
+
 
   constructor(
     private platform: Platform,
