@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFollowersFollowingTable extends Migration
+class CreateFollowersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,13 @@ class CreateFollowersFollowingTable extends Migration
      */
     public function up()
     {
-        Schema::create('followers_following', function (Blueprint $table) {
+        Schema::create('followers', function (Blueprint $table) {
             $table->primary(['follower_id', 'following_id']); //composite key
             $table->unsignedBigInteger('follower_id');
             $table->unsignedBigInteger('following_id');
         });
 
-        Schema::table('followers_following', function (Blueprint $table) {
+        Schema::table('followers', function (Blueprint $table) {
             $table->foreign('follower_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('following_id')->references('id')->on('users')->onDelete('cascade');
         });
@@ -32,6 +32,6 @@ class CreateFollowersFollowingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('followers_following');
+        Schema::dropIfExists('followers');
     }
 }
