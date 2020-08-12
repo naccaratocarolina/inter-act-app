@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
+use App\User;
 
 class CadastreNotification extends Notification
 {
@@ -42,9 +43,9 @@ class CadastreNotification extends Notification
     {
         return (new MailMessage)
                     ->subject('Confirmação de cadastro InterAct')
-                    ->greeting($user->name.'. Seja bem vindo a InterAct!')
-                    ->line($this->user->body.'Clique no botão a baixo e confirm se cadastro')
-                    ->action('Confirmar cadastro', $url('/'))
+                    ->greeting(' Seja bem vindo a InterAct!')
+                    ->line('Clique no botão a baixo e confirm se cadastro')
+                    ->action('Confirmar cadastro' , url('/'))
                     ->line('Obrigada por escolher a InterAct!');
     }
 

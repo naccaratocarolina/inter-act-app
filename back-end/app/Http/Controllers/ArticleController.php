@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\ArticleRequest as ArticleRequest;
 
 use App\User;
 use App\Article;
@@ -38,7 +39,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request)
+    public function createArticle(ArticleRequest $request)
     {
       $article = new Article;
       $article->createArticle($request);
@@ -65,7 +66,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function updateArticle(Request $request, $id)
+    public function updateArticle(ArticleRequest $request, $id)
     {
         $user = Auth::user();
         $article = Article::findOrFail($id);

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\CommentRequest;
+use App\Http\Requests\CommentRequest as CommentRequest;
 use App\Comment;
 use App\Article;
 use Carbon\Carbon;
