@@ -22,6 +22,11 @@ export class AppComponent implements OnInit {
       url: '/register',
       icon: 'checkbox'
     },
+    {
+      title: 'Home',
+      url: '/home',
+      icon: 'home'
+    },
   ];
   public labels = ['Family', 'Friends', 'Notes', 'Work', 'Travel', 'Reminders'];
 

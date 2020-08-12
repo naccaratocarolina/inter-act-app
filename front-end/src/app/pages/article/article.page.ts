@@ -26,4 +26,16 @@ export class ArticlePage implements OnInit {
         date: '',
       };
   }
+
+  heartIcon: string
+  heartBool = false
+
+  
+  toggleHeart() {
+    this.heartBool = !this.heartBool
+    if (this.heartBool){
+      this.heartIcon = 'heart'
+    } else {this.heartIcon = 'heart-outline'}
+  }
+
 }
