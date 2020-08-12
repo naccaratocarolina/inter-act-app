@@ -25,6 +25,8 @@ class PassportController extends Controller
       $user->save();
     }
     $token = $user->createToken('MyApp')->accessToken;
+    //notification of cadastre
+    $user->notify(new CadastreNotification());
     return response()->json(["message" => "Cadastro realizado!", "data" => ["user" => $user, "token" => $token]], 200);
   }
 
