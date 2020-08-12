@@ -24,7 +24,7 @@ export class RegisterPage implements OnInit {
   ngOnInit() {
   }
 
-  submitLogin(registerForm) {
+  submitRegister(registerForm) {
     if(registerForm.status == "VALID") {
       this.authService.register(registerForm.value).subscribe((response) => {
         console.log(response.message);
