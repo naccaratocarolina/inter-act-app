@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { ArticleService } from '../../services/article.service';
+import { IonicStorageModule } from "@ionic/storage";
+
 
 @Component({
   selector: 'app-home',
@@ -24,10 +27,12 @@ export class HomePage implements OnInit {
   //Array com os posts da aba seguindo
   public postFollowing:any =[]
 
-  constructor(private router: Router) { }
+  constructor(
+    private router: Router, 
+    public articleService: ArticleService) { }
 
   ngOnInit() {
-    this.postsAll = [
+    /* this.postsAll = [
       {
         id: '1',
         user_id: '',
@@ -69,7 +74,7 @@ export class HomePage implements OnInit {
         date: '',
       },
     ];
-
+      */
     this.postFollowing = [
       {
         id: '3',
@@ -91,8 +96,16 @@ export class HomePage implements OnInit {
         category: '',
         date: '',
       },
-    ];
+    ]; 
   }
+  public ionViewWillEnter() { 
+
+    this.articleService.indexAllArticles().subscribe((response) =>{
+      this.postsAll = response.articles;
+      console.log(this.postsAll);
+    });
+  }
+
 
   async segmentChanged(ev) {
     await this.selectedSlide.slideTo(this.segment)
