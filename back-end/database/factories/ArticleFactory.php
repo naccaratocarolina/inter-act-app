@@ -10,6 +10,7 @@ $factory->define(Article::class, function (Faker $faker) {
         'title' => $faker->text,
         'subtitle' => $faker->text,
         'text' => $faker->text,
+        'image' => $faker->imageUrl($width = 640, $height = 480),
         'category' => $faker->randomElement($categories = array('Comida','Arte', 'Atividade Física', 'Viagem')),
         'likes_count' => $faker->randomDigitNotNull,
         'user_id' => factory('App\User')->create()->id,

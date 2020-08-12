@@ -51,7 +51,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
 
-
   //Comment Controller
   Route::get('indexUserComment','CommentController@indexUserComment')->middleware('role');
   Route::get('indexArticleComment','CommentController@indexArticleComment')->middleware('role');
@@ -71,8 +70,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('showUser/{id}', 'UserController@showUser');
   Route::get('followingCounter', 'UserController@followingCounter');
   Route::get('followersCounter', 'UserController@followersCounter');
-  Route::post('follow/{following_id}', 'UserController@follow');
-  Route::post('unfollow/{following_id}', 'UserController@unfollow');
   Route::post('actionFollow/{id}', 'UserController@actionFollow');
   Route::post('actionLike/{article_id}', 'UserController@actionLike');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');

@@ -22,6 +22,7 @@ class CreateArticlesTable extends Migration
             $table->string('category');
             $table->string('date')->nullable();
             $table->integer('likes_count')->default(0);
+            $table->boolean('is_liked')->default(0);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();
         });
