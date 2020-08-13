@@ -10,6 +10,7 @@ use App\Notifications\CadastreNotification;
 
 use App\User;
 use App\Article;
+use App\Role;
 use Auth;
 use DB;
 
@@ -21,12 +22,12 @@ class PassportController extends Controller
     $user->email = $request->email;
     $user->password = bcrypt($request->password);
     $user->save();
+    //always assign a registered user marker to a newly created user
+    $registeredUser = Role::where('marker', 'registered-user')->first();
+    $user->roles()->attach($registeredUser);
+    $user->save();
     //notification of cadastre
     //$user->notify(new CadastreNotification());
-    if($request->role) {
-      $user->roles()->attach($request->role);
-      $user->save();
-    }
     $articles = $user->articles;
     $comments = $user->comments;
     $token = $user->createToken('MyApp')->accessToken;
