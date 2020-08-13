@@ -44,7 +44,7 @@ export class HomePage implements OnInit {
     this.articleService.indexFollowingArticles().subscribe((response) => {
       console.log(response.articles);
       response.articles.shift();
-      
+
       for(let i=0; i<response.articles.length; i++) {
         for (let j=0; j<response.articles[i].length; j++) {
           this.postFollowing.push(response.articles[i][j]);
