@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
 use Illuminate\Support\Facades\Validator;
+use App\Notifications\CadastreNotification;
 
 use App\User;
 use App\Article;
@@ -20,6 +21,8 @@ class PassportController extends Controller
     $user->email = $request->email;
     $user->password = bcrypt($request->password);
     $user->save();
+    //notification of cadastre
+    //$user->notify(new CadastreNotification());
     if($request->role) {
       $user->roles()->attach($request->role);
       $user->save();
@@ -28,7 +31,7 @@ class PassportController extends Controller
     $comments = $user->comments;
     $token = $user->createToken('MyApp')->accessToken;
     return response()->json([
-      "message" => "Seja bem-vindx!", 
+      "message" => "Seja bem-vindx!",
       "data" => [
         "user" => $user,
         "articles" => $articles,
