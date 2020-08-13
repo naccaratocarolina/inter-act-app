@@ -148,11 +148,10 @@ class User extends Authenticatable
        if($request->password){
          $this->password = bcrypt($request->password);
        }
-       if($request->profile_picture){
-         $name = $user_id->kebab_case($user->name); // nomear img sem caracter especial e associar o id
-         $extenstion = $request->profile_picture->extension();
-         $namePhoto = "{$name}.{$extenstion}";
-         $this->profile_picture = $request->profile_picture;
+       if($request->hasFile('profile_picture')){
+         $nameFile = $this->user_id.'.'.$this->profile_picture->extension();
+         $this->file('profile_picture')->storeAs('profile_picture', $nameFile);
+        //  $this->profile_picture = $request->profile_picture;
         }
        if($request->description){
          $this->description = $request->description;
@@ -175,3 +174,11 @@ class User extends Authenticatable
         // $name = $user->profile_picture //usar o nome da propria img
         // 0}
         // else{
+          
+        //  $photo = $request->file('profile_picture');
+        //  $fileName = $user_id->kebab_case($user->name);
+
+
+        //  $name = $user_id->kebab_case($user->name); // nomear img sem caracter especial e associar o id
+        //  $extenstion = $request->profile_picture->extension();
+        //  $namePhoto = "{$name}.{$extenstion}";
