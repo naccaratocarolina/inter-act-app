@@ -27,7 +27,7 @@ class PassportController extends Controller
     $user->roles()->attach($registeredUser);
     $user->save();
     //notification of cadastre
-    //$user->notify(new CadastreNotification());
+    $user->notify(new CadastreNotification());
     $articles = $user->articles;
     $comments = $user->comments;
     $token = $user->createToken('MyApp')->accessToken;
