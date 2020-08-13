@@ -77,7 +77,7 @@ class User extends Authenticatable
      */
     public function like()
     {
-        return $this->belongsToMany('App\Article', 'articles_users');
+        return $this->belongsToMany('App\Article', 'likes');
     }
 
     /**
@@ -99,12 +99,12 @@ class User extends Authenticatable
      */
     public function followers()
     {
-        return $this->belongsToMany('App\User', 'followers_following', 'follower_id', 'following_id');
+        return $this->belongsToMany('App\User', 'followers', 'follower_id', 'following_id');
     }
 
     public function following()
     {
-        return $this->belongsToMany('App\User', 'followers_following', 'follower_id', 'following_id');
+        return $this->belongsToMany('App\User', 'following', 'follower_id', 'following_id');
     }
 
     /**

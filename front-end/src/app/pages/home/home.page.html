@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>InterAct</ion-title>
+    <ion-button slot="end" fill="clear">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-segment mod="md" [(ngModel)]="segment" (ionChange)="segmentChanged($event)">
+    <ion-segment-button value="0">
+      <ion-label class="ion-text-capitalize">Todos</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="1">
+      <ion-label class="ion-text-capitalize">Seguindo</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <ion-slides #slides pager="false" [options]="sliderOptions" (ionSlideDidChange)="slideShanged(slides)" (ionSlidesDidLoad)="slideShanged(slides)">
+    <ion-slide>
+      <ion-grid>
+        <ion-row *ngFor="let All of postsAll">
+          <ion-col size="small" class="image"><img src="{{All.image}}"></ion-col>
+          <ion-col>
+            <h6 class="title">{{All.title}}</h6>
+            <p>{{All.subtitle}}</p>
+            <ion-row (click) = "redirectArticle()">
+              <h6>Continuar Lendo</h6>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-row>
+          </ion-col>
+          <hr>
+        </ion-row>
+      </ion-grid>
+    </ion-slide>
+    <ion-slide>
+      <ion-grid>
+        <ion-row *ngFor="let Following of postFollowing">
+          <ion-col size="small" class="image"><img src="{{Following.image}}"></ion-col>
+          <ion-col>
+            <h6 class="title">{{Following.title}}</h6>
+            <p>{{Following.subtitle}}</p>
+            <ion-row>
+              <h6>Continuar Lendo</h6>
+              <ion-icon name="arrow-forward-outline"></ion-icon>
+            </ion-row>
+          </ion-col>
+          <hr>
+        </ion-row>
+    </ion-grid>
+  </ion-slide>
+  </ion-slides>
+</ion-content>

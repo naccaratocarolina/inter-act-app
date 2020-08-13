@@ -1,0 +1,62 @@
+
+
+
+.bgImage {
+    --background: #fff url("../../../assets/bg_image_horizon.jpg") no-repeat center center / cover;
+  }
+
+.logo {
+    margin: 4em auto 3em auto;
+    display:block;
+    max-width: 50%;
+  }
+
+.input {
+    border-bottom: 0.08em solid #141414;
+    width: 65%;
+}
+
+.login {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+
+.input {
+    text-align: left;
+    --placeholder-font-weight: bold;
+    --placeholder-color: #000000;
+    margin-left:auto;
+    margin-right:auto;
+    display:block;
+}
+
+.button {
+    margin-top: 5em;
+    margin-bottom: 3em;
+    --border-radius: 10em;
+    --color: var(--ion-color-primary);
+}
+
+h1 {
+    color: #141414;
+    font-size: 1.25em;
+    margin: auto;
+    padding: auto;
+    font-family: 'Comfortaa', cursive;
+    text-transform: capitalize;
+    font-weight: bold;
+
+}
+
+h2{
+    color: #E1E4EB;
+    font-size: 0.80em;
+    font-family: 'Comfortaa', cursive;
+}
+
+span {
+    text-decoration: underline;
+}

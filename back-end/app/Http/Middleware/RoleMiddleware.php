@@ -50,7 +50,7 @@ class RoleMiddleware
           if($user->articles) {
             $articles = $user->articles;
             foreach($articles as $article) {
-              if($article->user_id == $user->id) {
+              if($article->user_id === $user->id) {
                 return $next($request);
               }
             }
@@ -63,7 +63,7 @@ class RoleMiddleware
           if($user->comments) {
             $comments = $user->comments;
             foreach($comments as $comment) {
-              if($comment->user_id == $user->id) {
+              if($comment->user_id === $user->id) {
                 return $next($request);
               }
             }
@@ -78,6 +78,6 @@ class RoleMiddleware
          * the role of registered or moderator, the Middleware
          * prints the message to create an account
          */
-        abort(404, 'Crie uma conta!');
+        return response()->json(['Crie uma conta!']);
     }
 }

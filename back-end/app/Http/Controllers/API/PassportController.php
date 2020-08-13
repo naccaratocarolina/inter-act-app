@@ -27,15 +27,33 @@ class PassportController extends Controller
       $user->roles()->attach($request->role);
       $user->save();
     }
+    $articles = $user->articles;
+    $comments = $user->comments;
     $token = $user->createToken('MyApp')->accessToken;
-    return response()->json(["message" => "Cadastro realizado!", "data" => ["user" => $user, "token" => $token]], 200);
+    return response()->json([
+      "message" => "Seja bem-vindx!", 
+      "data" => [
+        "user" => $user,
+        "articles" => $articles,
+        "comments" => $comments,
+        "token" => $token]
+      ], 200);
   }
 
   public function login() {
     if(Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
       $user = Auth::user();
       $token = $user->createToken('MyApp')->accessToken;
-      return response()->json(["message" => "Login realizado!", "data" => ["user" => $user, "token" => $token]], 200);
+      $articles = $user->articles;
+      $comments = $user->comments;
+      return response()->json([
+        "message" => "Login concluido!",
+        "data" => [
+          "user" => $user,
+          "articles" => $articles,
+          "comments" => $comments,
+          "token" => $token]
+        ], 200);
     }
     else {
       return response()->json(["message" => "Email ou senha inválidos!", "data" => [null]], 500);
