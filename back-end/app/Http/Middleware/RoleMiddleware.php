@@ -78,6 +78,6 @@ class RoleMiddleware
          * the role of registered or moderator, the Middleware
          * prints the message to create an account
          */
-        abort(404, 'Crie uma conta!');
+        return response()->json(['Crie uma conta!']);
     }
 }
