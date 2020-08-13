@@ -26,6 +26,7 @@ class ArticleRequest extends FormRequest
             return[
                 'title' => 'required|string',
                 'description' => 'required|string',
+                'image'=>'file|image|mimes:jpeg,png,gif,webp|max:2048',
             ];
 
         }
