@@ -50,7 +50,7 @@ class RoleMiddleware
           if($user->articles) {
             $articles = $user->articles;
             foreach($articles as $article) {
-              if($article->user_id == $user->id) {
+              if($article->user_id === $user->id) {
                 return $next($request);
               }
             }
@@ -63,7 +63,7 @@ class RoleMiddleware
           if($user->comments) {
             $comments = $user->comments;
             foreach($comments as $comment) {
-              if($comment->user_id == $user->id) {
+              if($comment->user_id === $user->id) {
                 return $next($request);
               }
             }

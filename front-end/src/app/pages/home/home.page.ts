@@ -28,91 +28,41 @@ export class HomePage implements OnInit {
   public postFollowing:any =[]
 
   constructor(
-    private router: Router, 
+    private router: Router,
     public articleService: ArticleService) { }
 
-  ngOnInit() {
-    /* this.postsAll = [
-      {
-        id: '1',
-        user_id: '',
-        title: 'Saladinha fit do Hussein',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'salada.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '2',
-        user_id: '',
-        title: 'Yoga em casa',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'yoga.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '3',
-        user_id: '',
-        title: 'Mixto Quiente',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'food.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '4',
-        user_id: '',
-        title: 'Street Dance',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'streetdance.jpg',
-        category: '',
-        date: '',
-      },
-    ];
-      */
-    this.postFollowing = [
-      {
-        id: '3',
-        user_id: '',
-        title: 'Mixto Quiente',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'food.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '4',
-        user_id: '',
-        title: 'Street Dance',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'streetdance.jpg',
-        category: '',
-        date: '',
-      },
-    ]; 
-  }
-  public ionViewWillEnter() { 
+  ngOnInit() { }
 
-    this.articleService.indexAllArticles().subscribe((response) =>{
+  public ionViewWillEnter() {
+    //display a listing of all articles
+    this.articleService.indexAllArticles().subscribe((response) => {
       this.postsAll = response.articles;
       console.log(this.postsAll);
     });
+
+    //display a listing of the articles posted by users that the logged user follows
+    this.articleService.indexFollowingArticles().subscribe((response) => {
+      console.log(response.articles);
+      response.articles.shift();
+
+      for(let i=0; i<response.articles.length; i++) {
+        for (let j=0; j<response.articles[i].length; j++) {
+          this.postFollowing.push(response.articles[i][j]);
+        }
+      }
+    });
   }
 
+  public ionViewWillLeave() {
+    this.postsAll = [];
+    this.postFollowing = [];
+  }
 
   async segmentChanged(ev) {
     await this.selectedSlide.slideTo(this.segment)
   }
 
   slideShanged(slides : IonSlides) {
-
     this.selectedSlide = slides;
     slides.getActiveIndex().then(seLectedIndex =>{
       this.segment = seLectedIndex;

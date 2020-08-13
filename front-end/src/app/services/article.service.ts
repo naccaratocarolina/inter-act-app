@@ -22,6 +22,11 @@ export class ArticleService {
 
   public indexAllArticles ():Observable<any> {
     return this.http.get(this.apiUrl + 'indexAllArticles', this.httpHeaders);
-    
+  }
+
+  public indexFollowingArticles():Observable<any> {
+    //Authorization->Bearer . token
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'indexFollowingArticles', this.httpHeaders);
   }
 }

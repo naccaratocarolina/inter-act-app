@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //Article Controller
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
+  Route::get('indexFollowingArticles', 'ArticleController@indexFollowingArticles')->middleware('role');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');

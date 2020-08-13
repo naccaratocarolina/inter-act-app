@@ -103,10 +103,12 @@ class UserController extends Controller
         switch ($action) {
           case 'Follow':
             $user->following()->attach($id);
+            $other_user->followers()->attach($user->id);
             return response()->json(['message' => 'Agora voce segue x ' . $other_user->name]);
             break;
           case 'Unfollow':
             $user->following()->detach($id);
+            $other_user->followers()->detach($user->id);
             return response()->json(['message' => 'Voce parou de seguir x ' . $other_user->name]);
             break;
         }

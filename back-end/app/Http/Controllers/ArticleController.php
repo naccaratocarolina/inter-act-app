@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use App\User;
 use App\Article;
@@ -31,6 +32,24 @@ class ArticleController extends Controller
         $user = Auth::user();
         $articles = $user->articles; //grab the user's articles
         return response()->json(['articles' => $articles]);
+    }
+
+    /**
+     * Display a listing of the resource that belongs to the users that the user making the request follows.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexFollowingArticles() {
+      $user = Auth::user();
+      //grab que users that $user is following
+      $following_array = $user->following;
+      $response = array();
+
+      foreach($following_array as $following) {
+        $articles = $following->articles;
+        array_push($response, $articles);
+      }
+      return response()->json(['articles' => $response]);
     }
 
     /**
