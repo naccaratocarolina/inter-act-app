@@ -163,16 +163,14 @@ class UserController extends Controller
           case 'Like':
             Article::where('id', $article_id)->increment('likes_count');
             $user->like()->attach($article);
-            $article->is_liked = 1;
             $article->save();
-            return response()->json(['Voce deu um like <3', 'is_liked' => $article->is_liked]);
+            return response()->json(['Voce deu um like <3']);
             break;
           case 'Unlike':
             Article::where('id', $article_id)->decrement('likes_count');
             $user->like()->detach($article);
-            $article->is_liked = 0;
             $article->save();
-            return response()->json(['Voce removeu o seu like :()', 'is_liked' => $article->is_liked]);
+            return response()->json(['Voce removeu o seu like :(']);
             break;
         }
       }

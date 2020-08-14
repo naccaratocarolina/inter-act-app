@@ -24,7 +24,7 @@ class UserSeeder extends Seeder
         $admin->save();
         $admin->roles()->attach($moderator);
 
-        factory(User::class, 24)->create()->each(function ($user) {
+        factory(User::class, 10)->create()->each(function ($user) {
           $articles = factory(Article::class,2)->make();
           $comments = factory(Comment::class,2)->make();
           $registeredUser = Role::where('marker', 'registered-user')->first();
