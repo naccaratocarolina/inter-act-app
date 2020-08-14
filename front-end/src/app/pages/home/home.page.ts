@@ -72,4 +72,8 @@ export class HomePage implements OnInit {
   public redirectArticle() {
     this.router.navigate(['/article']);
   }
+
+  public redirectNewArticle() {
+    this.router.navigate(['/new-article']);
+  }
 }
