@@ -16,6 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        //Creating the moderator
         $moderator = Role::where('marker', 'moderator')->first();
         $admin = new User();
         $admin->name = 'Moderador';
@@ -24,6 +25,7 @@ class UserSeeder extends Seeder
         $admin->save();
         $admin->roles()->attach($moderator);
 
+        //Creating the others registered users
         factory(User::class, 10)->create()->each(function ($user) {
           $articles = factory(Article::class,2)->make();
           $comments = factory(Comment::class,2)->make();
@@ -40,6 +42,12 @@ class UserSeeder extends Seeder
 
           //User have Role n-n
           $user->roles()->attach($registeredUser);
+
+          //User follow n Users n-n
+          $user->following()->attach(User::all()->random()->id);
+
+          //User is followed by n Users n-n
+          $user->followers()->attach(User::all()->random()->id);
         });
   }
 }
