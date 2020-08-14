@@ -95,22 +95,19 @@ class UserController extends Controller
        * @param  int  $following_id
        * @return \Illuminate\Http\Response
        */
-      public function actionFollow(Request $request, $id) {
+      public function actionFollow($following_id) {
         $user = Auth::user();
-        $other_user = User::findOrFail($id);
-        $action = $request->get('action');
+        $following = User::findOrFail($following_id);
 
-        switch ($action) {
-          case 'Follow':
-            $user->following()->attach($id);
-            $other_user->followers()->attach($user->id);
-            return response()->json(['message' => 'Agora voce segue x ' . $other_user->name]);
-            break;
-          case 'Unfollow':
-            $user->following()->detach($id);
-            $other_user->followers()->detach($user->id);
-            return response()->json(['message' => 'Voce parou de seguir x ' . $other_user->name]);
-            break;
+        if(!$user->following->contains($following->id)) {
+          $user->following()->attach($following_id);
+          $following->followers()->attach($user->id);
+          return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
+        }
+        else {
+          $user->following()->detach($following->id);
+          $following->followers()->detach($user->id);
+          return response()->json(['message' => 'Voce parou de seguir x ' . $following->name]);
         }
       }
 
@@ -120,14 +117,14 @@ class UserController extends Controller
        * @param  int  $id
        * @return bool
        */
-      public function hasFollow($id) {
+      public function hasFollow($following_id) {
         $user = Auth::user();
-        $other_user = User::findOrFail($id);
+        $following = User::findOrFail($following_id);
 
         $following_list = $user->following;
 
-        foreach($following_list as $following) {
-          if($other_user->id === $following->id) {
+        foreach($following_list as $following_user) {
+          if($following->id === $following_user->id) {
             return 1;
           }
         }
@@ -172,24 +169,17 @@ class UserController extends Controller
        * @param  int  $article_id
        * @return \Illuminate\Http\Response
        */
-      public function actionLike(Request $request, $article_id) {
+      public function actionLike($article_id) {
         $user = Auth::user();
         $article = Article::findOrFail($article_id);
-        $action = $request->get('action');
 
-        switch ($action) {
-          case 'Like':
-            Article::where('id', $article_id)->increment('likes_count');
-            $user->like()->attach($article);
-            $article->save();
-            return response()->json(['Voce deu um like <3']);
-            break;
-          case 'Unlike':
-            Article::where('id', $article_id)->decrement('likes_count');
-            $user->like()->detach($article);
-            $article->save();
-            return response()->json(['Voce removeu o seu like :(']);
-            break;
+        if(!$user->like->contains($article->id)) {
+          $user->like()->attach($article_id);
+          return response()->json(['Voce deu um like <3']);
+        }
+        else {
+          $user->like()->detach($article_id);
+          return response()->json(['Voce removeu o seu like :(']);
         }
       }
 
