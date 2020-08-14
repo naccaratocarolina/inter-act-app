@@ -7,23 +7,21 @@
     </ion-buttons>
   
       <ion-buttons slot="end">
-        <form [formGroup]="newArticleForm" (ngSubmit)="submitForm(newArticleForm)">
+        <form [formGroup]="editArticleForm" (ngSubmit)="submitForm(editArticleForm)">
           <ion-button type="submit">
-            Postar
+            Editar
           </ion-button>
         </form>
       </ion-buttons>
     
-    
-
-    <ion-title>Novo Artigo</ion-title>
+    <ion-title>Editar Artigo</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
   <div class="ion-padding">
 
-    <form [formGroup]="newArticleForm" (ngSubmit)="submitForm(newArticleForm)">
+    <form [formGroup]="editArticleForm" (ngSubmit)="submitForm(editArticleForm)">
       
      <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-fab-button>

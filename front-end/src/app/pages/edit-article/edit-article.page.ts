@@ -3,13 +3,13 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-new-article',
-  templateUrl: './new-article.page.html',
-  styleUrls: ['./new-article.page.scss'],
+  selector: 'app-edit-article',
+  templateUrl: './edit-article.page.html',
+  styleUrls: ['./edit-article.page.scss'],
 })
-export class NewArticlePage implements OnInit {
+export class EditArticlePage implements OnInit {
 
-  newArticleForm: FormGroup;
+  editArticleForm: FormGroup;
 
   customActionSheetOptions: any = {
     header: 'Categorias',
@@ -18,16 +18,16 @@ export class NewArticlePage implements OnInit {
 
   constructor(
     public formbuilder: FormBuilder,
-    private router: Router) {
+    private router: Router) { 
 
-    this.newArticleForm = this.formbuilder.group({
-      title: [null],
-      subtitle: [null],
-      description: [null],
-      category: [null],
-      image: [null]
-    });
-   }
+      this.editArticleForm = this.formbuilder.group({
+        title: [null],
+        subtitle: [null],
+        description: [null],
+        category: [null],
+        image: [null]
+      });
+    }
 
   ngOnInit() {
   }
@@ -40,4 +40,5 @@ export class NewArticlePage implements OnInit {
   public redirectHome() {
     this.router.navigate(['/home']);
   }
+
 }
