@@ -34,8 +34,6 @@ export class LoginPage implements OnInit {
           localStorage.setItem('user_id', response.data.user.id);
           localStorage.setItem('user_name', response.data.user.name);
           localStorage.setItem('user_email', response.data.user.email);
-          localStorage.setItem('user_articles', response.data.articles);
-          localStorage.setItem('user_comments', response.data.comments);
 
           //redirects to home page
           this.router.navigate(['/home']);
