@@ -49,6 +49,7 @@ p {
     margin-left: 1.5em;
     color: #333333;
     font-size: 0.9em;
+    font-family: 'Montserrat', sans-serif;
 }
 
 ion-button {
@@ -68,4 +69,21 @@ ion-icon {
     font-weight: bold;
     font-size: 0.875em;
     
+}
+
+.username {
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+    font-size: 1em;
+}
+
+.comment {
+    font-family: Roboto, sans-serif;
+    font-size: 1em;
+}
+
+.numofcomments {
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+    font-size: 1em;
 }

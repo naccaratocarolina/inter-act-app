@@ -1,5 +1,10 @@
 
-
+h1 {
+    font-family: 'Comfortaa', cursive;
+    text-transform: capitalize;
+    margin: auto;
+    padding: auto;
+}
 
 .bg-image {
     --background: #fff url("../../../assets/bg_image_garden.jpg") no-repeat center center / cover;

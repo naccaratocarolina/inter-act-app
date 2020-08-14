@@ -32,13 +32,12 @@
         <ion-button size="small" fill="clear" (click)="toggleHeart()" id="1">
           <ion-icon name={{heartIcon}}></ion-icon>
         </ion-button>
-
-
-
-
       </ion-col>
       <ion-col><h5 class="likes">32</h5></ion-col>
     </ion-row>
   </ion-grid>
-  
+  <p class='numofcomments'>{{numOfComments}} comentários</p>
+  <section *ngFor='let comment of articleContent.comments'>
+    <p class='comment'><span class='username'>{{comment.username}}: </span>{{comment.comment}}</p>
+  </section>
 </ion-content>

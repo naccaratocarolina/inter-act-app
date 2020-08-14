@@ -1,0 +1,104 @@
+
+
+ion-card {
+    border-radius: 2em;
+    text-align: center;
+    position: relative;
+    bottom: 4.5em;
+    margin: 0;
+    box-shadow: none;
+}
+
+.followers, .following {
+    display: flex;
+    flex-direction: column;
+}
+
+.followinfo {
+    display: flex;
+    justify-content: space-around;
+}
+
+.profile-pic {
+    object-fit: cover;
+}
+
+.profile{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.follow{
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    bottom: 5em;
+    text-transform: capitalize;
+    font-size: 1.1em;
+}
+
+.articles {
+    margin-top: 2em;
+}
+
+h1, h2, h3, h4 {
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+h1 {
+    color: #000000;
+    font-size: 2.5em;
+}
+
+h2 {
+    color: #333333;
+    font-size: 1.25em;
+    width:75%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+h3 {
+    color: #333333;
+    font-size: 1.75em;
+}
+
+
+h4{
+    color: #0D8FE3;
+    text-shadow: 0.2px 0.2px 0.2px rgb(51, 51, 51); 
+}
+
+.title {
+    font-weight: bold;
+    color: #141414;
+    margin: 0;
+    padding-bottom: 0.5em;
+    font-size: 1.7em;
+}
+
+p{
+    padding-bottom: 0.6em;
+}
+
+h6, p {
+    margin: 0em;
+    font-size: 1em;
+    color: #333333;
+    font-family: 'Montserrat', sans-serif;
+}
+
+img {
+    padding: 0;
+}
+
+ion-grid, ion-col {
+    padding:0;
+    margin-bottom: 2em;
+}
+
+.continue, ion-icon{
+    color: #0D8FE3;
+}

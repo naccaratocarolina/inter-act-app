@@ -13,35 +13,35 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [
     {
+      title: 'Login',
+      url: 'login',
+      icon: 'person'
+    },
+    {
+      title: 'Registre-se',
+      url: 'register',
+      icon: 'checkbox'
+    },
+    {
       title: 'Perfil',
-      url: '/folder/Inbox',
+      url: 'profile',
       icon: 'person'
     },
     {
       title: 'Home',
-      url: '/folder/Outbox',
+      url: 'home',
       icon: 'home'
     },
     {
       title: 'Configurações',
-      url: '/folder/Favorites',
+      url: 'config',
       icon: 'settings'
     },
     {
       title: 'Sair',
       url: '/folder/Archived',
       icon: 'log-out-outline'
-    }
-    /* {
-      title: 'Trash',
-      url: '/folder/Trash',
-      icon: 'trash'
     },
-    {
-      title: 'Spam',
-      url: '/folder/Spam',
-      icon: 'warning'
-    } */
   ];
 
 
