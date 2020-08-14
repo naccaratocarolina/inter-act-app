@@ -115,6 +115,26 @@ class UserController extends Controller
       }
 
       /**
+       * Function that check if an article was already followed
+       *
+       * @param  int  $id
+       * @return bool
+       */
+      public function hasFollow($id) {
+        $user = Auth::user();
+        $other_user = User::findOrFail($id);
+
+        $following_list = $user->following;
+
+        foreach($following_list as $following) {
+          if($other_user->id === $following->id) {
+            return 1;
+          }
+        }
+        return 0;
+      }
+
+      /**
        * Counts how many followers the user making the request has
        *
        * @return object  message, count
@@ -152,8 +172,6 @@ class UserController extends Controller
        * @param  int  $article_id
        * @return \Illuminate\Http\Response
        */
-
-
       public function actionLike(Request $request, $article_id) {
         $user = Auth::user();
         $article = Article::findOrFail($article_id);
@@ -173,5 +191,24 @@ class UserController extends Controller
             return response()->json(['Voce removeu o seu like :(']);
             break;
         }
+      }
+
+      /**
+       * Function that check if an article was already liked
+       *
+       * @param  int  $article_id
+       * @return bool
+       */
+      public function hasLike($article_id) {
+        $user = Auth::user();
+        $article_like = Article::findOrFail($article_id);
+        $articles = $user->like;
+
+        foreach($articles as $article) {
+          if($article_like->id === $article->id) {
+            return 1;
+          }
+        }
+        return 0;
       }
 }
