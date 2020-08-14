@@ -122,7 +122,12 @@ class User extends Authenticatable
         $this->description = $request->description;
         $this->save();
 
-        //associando um role ao user
+        //always assign a registered user marker to a newly created user
+        $registeredUser = Role::where('marker', 'registered-user')->first();
+        $this->roles()->attach($registeredUser);
+        $this->save();
+
+        //add other roles if desired
         if($request->role) {
           $this->roles()->attach($request->role);
           $this->save();
