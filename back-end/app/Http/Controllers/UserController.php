@@ -100,13 +100,21 @@ class UserController extends Controller
         $following = User::findOrFail($following_id);
 
         if(!$user->following->contains($following->id)) {
+          //attach the ids
           $user->following()->attach($following_id);
           $following->followers()->attach($user->id);
+          //increments the following and follower count
+          User::where('id', $user->id)->increment('following_count');
+          User::where('id', $following->id)->increment('follower_count');
           return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
         }
         else {
+          //dettach the ids
           $user->following()->detach($following->id);
           $following->followers()->detach($user->id);
+          //decrements the following and follower count
+          User::where('id', $user->id)->decrement('following_count');
+          User::where('id', $following->id)->decrement('follower_count');
           return response()->json(['message' => 'Voce parou de seguir x ' . $following->name]);
         }
       }
@@ -174,13 +182,17 @@ class UserController extends Controller
         $article = Article::findOrFail($article_id);
 
         if(!$user->like->contains($article->id)) {
+          //attach the ids
           $user->like()->attach($article_id);
+          //increments the likes count
           Article::where('id', $article_id)->increment('likes_count');
           $article = Article::findOrFail($article_id);
           return response()->json(['message' => 'Voce deu um like <3', 'likes_count'=> $article->likes_count] );
         }
         else {
+          //attach the ids
           $user->like()->detach($article_id);
+          //decrements the likes count
           Article::where('id', $article_id)->decrement('likes_count');
           $article = Article::findOrFail($article_id);
           return response()->json(['message' => 'Voce removeu o seu like :(', 'likes_count'=> $article->likes_count] );

@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   //Article Controller
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
   Route::get('indexFollowingArticles', 'ArticleController@indexFollowingArticles');
+  Route::get('indexArticleOwner/{article_id}', 'ArticleController@indexArticleOwner');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
@@ -72,12 +73,12 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //User Controller
   Route::get('showUser/{id}', 'UserController@showUser');
+  Route::get('actionLike/{article_id}', 'UserController@actionLike');
+  Route::get('actionFollow/{following_id}', 'UserController@actionFollow');
   Route::get('followingCounter', 'UserController@followingCounter');
   Route::get('followersCounter', 'UserController@followersCounter');
   Route::get('hasFollow/{following_id}', 'UserController@hasFollow');
   Route::get('hasLike/{article_id}', 'UserController@hasLike');
-  Route::post('actionFollow/{following_id}', 'UserController@actionFollow');
-  Route::get('actionLike/{article_id}', 'UserController@actionLike');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });

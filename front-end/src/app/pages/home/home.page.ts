@@ -34,13 +34,25 @@ export class HomePage implements OnInit {
   ngOnInit() { }
 
   public ionViewWillEnter() {
-    //display a listing of all articles
+    this.indexAllArticles();
+    this.indexFollowingArticles();
+  }
+
+  public ionViewWillLeave() {
+    this.postsAll = [];
+    this.postFollowing = [];
+  }
+
+  //display a listing of all articles
+  public indexAllArticles() {
     this.articleService.indexAllArticles().subscribe((response) => {
       this.postsAll = response.articles;
       console.log(this.postsAll);
     });
+  }
 
-    //display a listing of the articles posted by users that the logged user follows
+  //display a listing of the articles posted by users that the logged user follows
+  public indexFollowingArticles() {
     this.articleService.indexFollowingArticles().subscribe((response) => {
       console.log(response.articles);
 
@@ -52,9 +64,15 @@ export class HomePage implements OnInit {
     });
   }
 
-  public ionViewWillLeave() {
-    this.postsAll = [];
-    this.postFollowing = [];
+  //redirects to the article page loading the card id clicked into storage
+  public redirectArticle(article_id) {
+    localStorage.setItem('article_id', JSON.stringify(article_id));
+    this.router.navigate(['/article']);
+  }
+
+  //redirects to the create article page
+  public redirectNewArticle() {
+    this.router.navigate(['/new-article']);
   }
 
   async segmentChanged(ev) {
@@ -66,14 +84,5 @@ export class HomePage implements OnInit {
     slides.getActiveIndex().then(seLectedIndex =>{
       this.segment = seLectedIndex;
     })
-  }
-
-  public redirectArticle(article) {
-    localStorage.setItem('article', JSON.stringify(article));
-    this.router.navigate(['/article']);
-  }
-
-  public redirectNewArticle() {
-    this.router.navigate(['/new-article']);
   }
 }

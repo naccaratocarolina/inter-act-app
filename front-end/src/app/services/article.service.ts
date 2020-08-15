@@ -24,8 +24,12 @@ export class ArticleService {
     return this.http.get(this.apiUrl + 'indexAllArticles', this.httpHeaders);
   }
 
+  public indexArticleOwner(article_id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'indexArticleOwner/' + article_id, this.httpHeaders);
+  }
+
   public indexFollowingArticles():Observable<any> {
-    //Authorization->Bearer . token
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'indexFollowingArticles', this.httpHeaders);
   }
@@ -39,7 +43,7 @@ export class ArticleService {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'showArticle/' + id, this.httpHeaders);
   }
-  
+
   public createArticle(form):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.post(this.apiUrl + 'createArticle', form, this.httpHeaders);

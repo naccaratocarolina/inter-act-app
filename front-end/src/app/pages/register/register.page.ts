@@ -28,13 +28,6 @@ export class RegisterPage implements OnInit {
     if(registerForm.status == "VALID") {
       this.authService.register(registerForm.value).subscribe((response) => {
         console.log(response.message);
-        console.log(response.data);
-
-        //Saves on the local storage important informations
-        localStorage.setItem('token', response.data.token);
-        localStorage.setItem('user_id', response.data.user.id);
-        localStorage.setItem('user_name', response.data.user.name);
-        localStorage.setItem('user_email', response.data.user.email);
 
         //redirects to home page
         this.router.navigate(['/home']);

@@ -36,6 +36,18 @@ class ArticleController extends Controller
     }
 
     /**
+     * Display the article owner.
+     *
+     * @param  \App\Article  $article_id
+     * @return \Illuminate\Http\Response
+     */
+    public function indexArticleOwner($article_id) {
+      $article = Article::findOrFail($article_id);
+      $article_owner = $article->user;
+      return response()->json(['message' => 'Dono do artigo encontrado!', 'article_owner' => $article_owner]);
+    }
+
+    /**
      * Display a listing of the resource that belongs to the users that the user making the request follows.
      *
      * @return \Illuminate\Http\Response

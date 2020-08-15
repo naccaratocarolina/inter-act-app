@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
-import { UserService } from '../../services/user.service';
 import { LikeService } from '../../services/like.service';
 
 
@@ -11,63 +10,59 @@ import { LikeService } from '../../services/like.service';
 })
 export class ArticlePage implements OnInit {
 
-  public user_id:number;
-  public userContent = [];
+  public article_owner = [];
   public article_id:number;
   public articleContent = [];
   public count:number;
+  heartIcon: string;
+  heartBool: boolean;
 
-  constructor(
-    public articleService:ArticleService, 
-    public userService:UserService,
-    public likeService:LikeService) {
-
-    this.article_id = JSON.parse(localStorage.getItem('article'));
-    this.user_id = JSON.parse(localStorage.getItem('user_id'));
+  constructor(public articleService:ArticleService, public likeService:LikeService) {
+    this.article_id = JSON.parse(localStorage.getItem('article_id'));
    }
 
-  ngOnInit() {
+  ngOnInit() { }
 
+  public ionViewWillEnter() {
     this.showArticle();
-    this.showUser();
     this.hasLike(this.article_id);
   }
 
-  heartIcon: string
-  heartBool: boolean;
-
-
-  public showHeart() {
-    if (this.heartBool){
-      this.heartIcon = 'heart'
-    } else {this.heartIcon = 'heart-outline'}
+  public ionViewWillLeave() {
+    this.articleContent = [];
+    this.article_owner = [];
   }
 
-  showArticle(){
+  //Get the article by its id
+  public showArticle(){
     this.articleService.showArticle(this.article_id).subscribe((response) =>{
       console.log(response.message);
-      this.articleContent = response.article; 
+      this.articleContent = response.article;
       this.count = response.article.likes_count;
+      this.indexArticleOwner(this.article_id);
     });
   }
 
-  showUser() {
-    console.log(this.user_id);
-      this.userService.showUser(this.user_id).subscribe((response) =>{
+  //Get the article owner also by its id
+  public indexArticleOwner(article_id) {
+    this.articleService.indexArticleOwner(article_id).subscribe((response) => {
       console.log(response.message);
-      this.userContent = response.user; 
+      this.article_owner = response.article_owner;
     });
   }
-  
 
-  public redirectProfile(profile_id) {
-    localStorage.setItem('profile_id', JSON.stringify(profile_id));
-    window.location.replace('/profile');
+  //Like or dislike an article
+  public actionLike(article_id) {
+      this.likeService.actionLike(article_id).subscribe((response) => {
+      console.log(response.message);
+      this.count = response.likes_count;
+      this.hasLike(article_id);
+    });
   }
 
+  //Check if the article war already liked by the logged user or not
   public hasLike(article_id) {
     this.likeService.hasLike(article_id).subscribe((response) => {
-      console.log(response);
       if (response) {
         this.heartBool = true;
       }
@@ -78,17 +73,22 @@ export class ArticlePage implements OnInit {
     });
   }
 
-  public actionLike(article_id) {
-      this.likeService.actionLike(article_id).subscribe((response) => {
-      console.log(response.message);
-      this.count = response.likes_count;
-      console.log(response.likes_count);
-      this.hasLike(article_id);
-    });
+  //Display the icon checking if it has already been liked or not
+  public showHeart() {
+    if (this.heartBool) {
+      this.heartIcon = 'heart';
+    } else {
+      this.heartIcon = 'heart-outline';
+    }
+  }
+
+  //Redirects to the user's profile
+  public redirectProfile(profile_id) {
+    localStorage.setItem('profile_id', JSON.stringify(profile_id));
+    window.location.replace('/profile');
   }
 
   goBack() {
     window.history.back();
   }
-
 }
