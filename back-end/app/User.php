@@ -8,7 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
 use Laravel\Passport\HasApiTokens;
-
+use Illuminate\Support\Facades\Storage;
 use App\Article;
 use App\Comment;
 use App\Role;
@@ -118,8 +118,15 @@ class User extends Authenticatable
         $this->name = $request->name;
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
-        $this->profile_picture = $request->profile_picture;
         $this->description = $request->description;
+
+        IF(!Storage::exists('localPhoto/')){
+          Storage::makeDirectory('localPhoto/', 0775, true);
+        }
+        $file = $request->file('profile_picture');
+        $fileName = rand().'.'.$file->getClientOriginalExtension();
+        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $this->profile_picture = $path;
         $this->save();
 
         //associando um role ao user
@@ -136,7 +143,30 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request)
+    public function updatePhotoUser(Request $request)
+    {
+      if($request->profile_picture){
+        IF(!Storage::exists('localPhoto/')){
+          Storage::delete('profile_picture'. $this->photo);
+          Storage::makeDirectory('localPhoto/', 0775, true);
+        }
+        $file = $request->file('profile_picture');
+        $fileName = rand().'.'.$file->getClientOriginalExtension();
+        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $this->profile_picture = $path;
+        $this->save();
+      }
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function updateUser(UserRequest $request)
      {
        //atualiza os campos do user
        if($request->name){
@@ -148,11 +178,7 @@ class User extends Authenticatable
        if($request->password){
          $this->password = bcrypt($request->password);
        }
-       if($request->hasFile('profile_picture')){
-         $nameFile = $this->user_id.'.'.$this->profile_picture->extension();
-         $this->file('profile_picture')->storeAs('profile_picture', $nameFile);
-        //  $this->profile_picture = $request->profile_picture;
-        }
+
        if($request->description){
          $this->description = $request->description;
        }
@@ -162,23 +188,7 @@ class User extends Authenticatable
        if($request->role) {
          $this->roles()->attach($request->role);
          $this->save();
-       }
+        }
      }
+
 }
-
-
-        //  $data[profile_picture] = $user->'profile_picture'; //para pegar o valor da imagem na tabela
-        //  if($user->profile_picture){
-          
-         
-        // $name = $user->profile_picture //usar o nome da propria img
-        // 0}
-        // else{
-          
-        //  $photo = $request->file('profile_picture');
-        //  $fileName = $user_id->kebab_case($user->name);
-
-
-        //  $name = $user_id->kebab_case($user->name); // nomear img sem caracter especial e associar o id
-        //  $extenstion = $request->profile_picture->extension();
-        //  $namePhoto = "{$name}.{$extenstion}";

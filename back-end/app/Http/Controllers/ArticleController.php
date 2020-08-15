@@ -17,8 +17,8 @@ class ArticleController extends Controller
      */
     public function indexAllArticles()
     {
-        $articles = Article::orderBy('id', 'desc')->get();
-        return response()->json(['articles' => $articles]);
+      $articles = Article::orderBy('id', 'desc')->get();
+      return response()->json(['articles' => $articles]);
     }
 
     /**
@@ -28,9 +28,9 @@ class ArticleController extends Controller
      */
     public function indexUserArticles()
     {
-        $user = Auth::user();
-        $articles = $user->articles; //grab the user's articles
-        return response()->json(['articles' => $articles]);
+      $user = Auth::user();
+      $articles = $user->articles; //grab the user's articles
+      return response()->json(['articles' => $articles]);
     }
 
     /**
@@ -54,8 +54,22 @@ class ArticleController extends Controller
      */
     public function showArticle($id)
     {
-        $article = Article::findOrFail($id);
-        return response()->json(['message' => 'Artigo encontrado!', 'article' => $article]);
+      $article = Article::findOrFail($id);
+      return response()->json(['message' => 'Artigo encontrado!', 'article' => $article]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePhotoArticle(Request $request, $id)
+    {
+      $article = Article::find($id);
+      $article->updatePhotoArticle($request);
+      return response()->json(['message' => 'Foto editada!', 'article' => $article]);
     }
 
     /**
@@ -67,13 +81,13 @@ class ArticleController extends Controller
      */
     public function updateArticle(Request $request, $id)
     {
-        $user = Auth::user();
-        $article = Article::findOrFail($id);
-        if($article->user_id == $user->id) { //if the user making the request own the article
-          $article->updateArticle($request);
-          return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
-        }
-        return response()->json(['Voce nao pode editar esse artigo!']);
+      $user = Auth::user();
+      $article = Article::findOrFail($id);
+      if($article->user_id == $user->id) { //if the user making the request own the article
+        $article->updateArticle($request);
+        return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
+      }
+      return response()->json(['Voce nao pode editar esse artigo!']);
     }
 
     /**

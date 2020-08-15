@@ -32,8 +32,8 @@ class UserController extends Controller
      */
     public function indexUser()
     {
-        $users = User::orderBy('id', 'desc')->get();
-        return response()->json(['users' => $users]);
+      $users = User::orderBy('id', 'desc')->get();
+      return response()->json(['users' => $users]);
     }
 
     /**
@@ -44,9 +44,9 @@ class UserController extends Controller
      */
      public function createUser(UserRequest $request)
      {
-       $user = new User;
-       $user->createUser($request);
-       return response()->json(['message' => 'User criado!', 'user' => $user]);
+      $user = new User;
+      $user->createUser($request);
+      return response()->json(['message' => 'User criado!', 'user' => $user]);
      }
 
     /**
@@ -58,7 +58,21 @@ class UserController extends Controller
     public function showUser($id)
     {
       $user = User::findOrFail($id);
-      return response()->json(['message' => 'User encontrado!', 'user' => $user]);
+      return response()->json(['message' => 'Usuario encontrado!', 'user' => $user]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePhotoUser(Request $request, $id)
+    {
+      $user = User::find($id);
+      $user->updatePhotoUser($request);
+      return response()->json(['message' => 'Foto editada!', 'user' => $user]);
     }
 
     /**
@@ -72,7 +86,7 @@ class UserController extends Controller
      {
        $user = User::find($id);
        $user->updateUser($request);
-       return response()->json(['message' => 'User editado!', 'user' => $user]);
+       return response()->json(['message' => 'Usuario editado!', 'user' => $user]);
      }
 
     /**
@@ -83,10 +97,10 @@ class UserController extends Controller
      */
      public function destroyUser($id)
      {
-       $user = User::findOrFail($id);
-       $user->roles()->detach();
-       $user = User::destroy($id);
-       return response()->json(['message' => 'User deletado!']);
+      $user = User::findOrFail($id);
+      $user->roles()->detach();
+      $user = User::destroy($id);
+      return response()->json(['message' => 'Usuario deletado!']);
       }
 
       /**
@@ -95,7 +109,8 @@ class UserController extends Controller
        * @param  int  $following_id
        * @return \Illuminate\Http\Response
        */
-      public function actionFollow(Request $request, $id) {
+      public function actionFollow(Request $request, $id) 
+      {
         $user = Auth::user();
         $other_user = User::findOrFail($id);
         $action = $request->get('action');
@@ -117,7 +132,8 @@ class UserController extends Controller
        *
        * @return object  message, count
        */
-      public function followersCounter() {
+      public function followersCounter() 
+      {
         $user = Auth::user();
         $count = $user->following->count();
         if($count == 1) {
@@ -133,7 +149,8 @@ class UserController extends Controller
        *
        * @return object  message, count
        */
-      public function followingCounter() {
+      public function followingCounter() 
+      {
         $user = Auth::user();
         $count = $user->followers->count();
         if($count == 1) {
@@ -152,7 +169,8 @@ class UserController extends Controller
        */
 
 
-      public function actionLike(Request $request, $article_id) {
+      public function actionLike(Request $request, $article_id) 
+      {
         $user = Auth::user();
         $article = Article::findOrFail($article_id);
         $action = $request->get('action');

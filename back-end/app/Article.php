@@ -44,7 +44,11 @@ class Article extends Model
          return $this->hasMany('App\Comment');
      }
 
-    //creat new Article
+    /**
+     * Create a new Article
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function createArticle(Request $request) {
       //grab the user id that is making the request
       $user = Auth::user();
@@ -56,10 +60,47 @@ class Article extends Model
       $this->image = $request->image;
       $this->category = $request->category;
       $this->date = $request->date;
+      
+      IF(!Storage::exists('localPhoto/')){
+        Storage::makeDirectory('localPhoto/', 0775, true);
+      }
+      $file = $request->file('image');
+      $fileName = rand().'.'.$file->getClientOriginalExtension();
+      $path = $file->storeAs('localPhoto/' ,$fileName);
+      $this->image = $path;
       $this->save();
     }
 
-    //update Article by user
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePhotoArticle(Request $request)
+    {
+      if($request->image){
+        IF(!Storage::exists('localPhoto/')){
+          Storage::delete('image'. $this->photo);
+          Storage::makeDirectory('localPhoto/', 0775, true);
+        }
+        $file = $request->file('image');
+        $fileName = rand().'.'.$file->getClientOriginalExtension();
+        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $this->image = $path;
+        $this->save();
+      }
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function updateArticle(Request $request) {
       if($request->title){
         $this->title = $request->title;
@@ -69,9 +110,6 @@ class Article extends Model
       }
       if($request->text){
        $this->text = $request->text;
-      }
-      if($request->image){
-        $this->image = $request->image;
       }
       if($request->category){
         $this->category = $request->category;
