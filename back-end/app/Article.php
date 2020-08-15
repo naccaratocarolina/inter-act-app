@@ -19,7 +19,7 @@ class Article extends Model
    */
     public function user()
     {
-        return $this->belongsTo('App\User');
+      return $this->belongsTo('App\User');
     }
 
     /**
@@ -30,7 +30,7 @@ class Article extends Model
      */
       public function isLikedBy()
       {
-          return $this->belongsToMany('App\User', 'likes');
+        return $this->belongsToMany('App\User', 'likes');
       }
 
     /**
@@ -41,7 +41,7 @@ class Article extends Model
      */
      public function comments()
      {
-         return $this->hasMany('App\Comment');
+        return $this->hasMany('App\Comment');
      }
 
     /**
