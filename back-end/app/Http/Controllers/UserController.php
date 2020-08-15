@@ -175,11 +175,15 @@ class UserController extends Controller
 
         if(!$user->like->contains($article->id)) {
           $user->like()->attach($article_id);
-          return response()->json(['Voce deu um like <3']);
+          Article::where('id', $article_id)->increment('likes_count');
+          $article = Article::findOrFail($article_id);
+          return response()->json(['message' => 'Voce deu um like <3', 'likes_count'=> $article->likes_count] );
         }
         else {
           $user->like()->detach($article_id);
-          return response()->json(['Voce removeu o seu like :(']);
+          Article::where('id', $article_id)->decrement('likes_count');
+          $article = Article::findOrFail($article_id);
+          return response()->json(['message' => 'Voce removeu o seu like :(', 'likes_count'=> $article->likes_count] );
         }
       }
 

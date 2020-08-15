@@ -28,7 +28,7 @@
           <ion-col>
             <h6 class="title">{{All.title}}</h6>
             <p>{{All.subtitle}}</p>
-            <ion-row (click) = "redirectArticle()">
+            <ion-row (click) = "redirectArticle(All.id)">
               <h6>Continuar Lendo</h6>
               <ion-icon name="arrow-forward-outline"></ion-icon>
             </ion-row>
@@ -44,7 +44,7 @@
           <ion-col>
             <h6 class="title">{{Following.title}}</h6>
             <p>{{Following.subtitle}}</p>
-            <ion-row>
+            <ion-row (click) = "redirectArticle(Following.id)">
               <h6>Continuar Lendo</h6>
               <ion-icon name="arrow-forward-outline"></ion-icon>
             </ion-row>

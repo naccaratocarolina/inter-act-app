@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
-import { IonicStorageModule } from "@ionic/storage";
+import { Storage, IonicStorageModule } from "@ionic/storage";
 
 
 @Component({
@@ -68,7 +68,8 @@ export class HomePage implements OnInit {
     })
   }
 
-  public redirectArticle() {
+  public redirectArticle(article) {
+    localStorage.setItem('article', JSON.stringify(article));
     this.router.navigate(['/article']);
   }
 

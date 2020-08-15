@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 //Article Controller
 Route::get('indexAllArticles','ArticleController@indexAllArticles');
+Route::get('showArticle/{id}', 'ArticleController@showArticle');
 
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
@@ -30,6 +31,8 @@ Route::post('login', 'API\PassportController@login')->name('login');
 //User Controller
 Route::get('indexUser', 'UserController@indexUser');
 Route::post('createUser', 'UserController@createUser');
+
+//Role Controller
 Route::post('createRole', 'RoleController@createRole');
 
 //Comment Controller
@@ -71,10 +74,10 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('showUser/{id}', 'UserController@showUser');
   Route::get('followingCounter', 'UserController@followingCounter');
   Route::get('followersCounter', 'UserController@followersCounter');
-  Route::post('actionFollow/{following_id}', 'UserController@actionFollow');
   Route::get('hasFollow/{following_id}', 'UserController@hasFollow');
-  Route::post('actionLike/{article_id}', 'UserController@actionLike');
   Route::get('hasLike/{article_id}', 'UserController@hasLike');
+  Route::post('actionFollow/{following_id}', 'UserController@actionFollow');
+  Route::get('actionLike/{article_id}', 'UserController@actionLike');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });

@@ -29,4 +29,29 @@ export class ArticleService {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'indexFollowingArticles', this.httpHeaders);
   }
+
+  public likesCounter(id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'likesCounter/' + id, this.httpHeaders);
+  }
+
+  public showArticle(id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'showArticle/' + id, this.httpHeaders);
+  }
+  
+  public createArticle(form):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.post(this.apiUrl + 'createArticle', form, this.httpHeaders);
+  }
+
+  public updateArticle(form, id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.put(this.apiUrl + 'updateArticle/' + id, form, this.httpHeaders);
+  }
+
+  public destroyArticle(id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.delete(this.apiUrl + 'destroyArticle/' + id, this.httpHeaders);
+  }
 }
