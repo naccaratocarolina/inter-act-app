@@ -23,7 +23,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to the given user.
+     * Display a listing of the resource that belongs to the authenticated user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -35,7 +35,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to the given user.
+     * Display a listing of the resource that belongs to tthe authenticated user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,7 +47,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Creates a new instance of the resource.
      *
      * @return \Illuminate\Http\Response
      */

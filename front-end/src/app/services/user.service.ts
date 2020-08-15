@@ -18,6 +18,8 @@ export class UserService {
     }
   }
 
+  token:string;
+
   constructor(public http:HttpClient) { }
 
   //Display a listing of all users
