@@ -1,4 +1,4 @@
-$this<?php
+<?php
 
 namespace App;
 
