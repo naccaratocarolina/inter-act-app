@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 */
 //Article Controller
 Route::get('indexAllArticles','ArticleController@indexAllArticles');
+Route::get('showArticle/{id}', 'ArticleController@showArticle');
 
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
@@ -30,6 +31,8 @@ Route::post('login', 'API\PassportController@login')->name('login');
 //User Controller
 Route::get('indexUser', 'UserController@indexUser');
 Route::post('createUser', 'UserController@createUser');
+
+//Role Controller
 Route::post('createRole', 'RoleController@createRole');
 
 //Comment Controller
@@ -46,6 +49,8 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //Article Controller
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
+  Route::get('indexFollowingArticles', 'ArticleController@indexFollowingArticles');
+  Route::get('indexArticleOwner/{article_id}', 'ArticleController@indexArticleOwner');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
@@ -68,10 +73,12 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //User Controller
   Route::get('showUser/{id}', 'UserController@showUser');
+  Route::get('actionLike/{article_id}', 'UserController@actionLike');
+  Route::get('actionFollow/{following_id}', 'UserController@actionFollow');
   Route::get('followingCounter', 'UserController@followingCounter');
   Route::get('followersCounter', 'UserController@followersCounter');
-  Route::post('actionFollow/{id}', 'UserController@actionFollow');
-  Route::post('actionLike/{article_id}', 'UserController@actionLike');
+  Route::get('hasFollow/{following_id}', 'UserController@hasFollow');
+  Route::get('hasLike/{article_id}', 'UserController@hasLike');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });

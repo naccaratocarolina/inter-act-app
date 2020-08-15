@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 
 class ArticleRequest extends FormRequest
 {
@@ -25,6 +26,7 @@ class ArticleRequest extends FormRequest
         {
             return[
                 'title' => 'required|string',
+                'category' => 'required|string',
                 'description' => 'required|string',
             ];
 

@@ -34,6 +34,14 @@ const routes: Routes = [
   {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
+  },
+  {
+    path: 'new-article',
+    loadChildren: () => import('./pages/new-article/new-article.module').then( m => m.NewArticlePageModule)
+  },
+  {
+    path: 'edit-article',
+    loadChildren: () => import('./pages/edit-article/edit-article.module').then( m => m.EditArticlePageModule)
   }
 ];
 

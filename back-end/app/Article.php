@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Carbon\Carbon;
 use App\User;
 use Auth;
 
@@ -55,7 +56,12 @@ class Article extends Model
       $this->text = $request->text;
       $this->image = $request->image;
       $this->category = $request->category;
-      $this->date = $request->date;
+
+      date_default_timezone_set('America/Sao_Paulo');
+      $now = Carbon::now();
+      $this->date = $now->toFormattedDateString();
+      $this->save();
+
       $this->save();
     }
 

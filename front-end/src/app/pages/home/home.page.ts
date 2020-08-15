@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IonSlides } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
-import { IonicStorageModule } from "@ionic/storage";
+import { Storage, IonicStorageModule } from "@ionic/storage";
 
 
 @Component({
@@ -28,98 +28,61 @@ export class HomePage implements OnInit {
   public postFollowing:any =[]
 
   constructor(
-    private router: Router, 
+    private router: Router,
     public articleService: ArticleService) { }
 
-  ngOnInit() {
-    /* this.postsAll = [
-      {
-        id: '1',
-        user_id: '',
-        title: 'Saladinha fit do Hussein',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'salada.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '2',
-        user_id: '',
-        title: 'Yoga em casa',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'yoga.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '3',
-        user_id: '',
-        title: 'Mixto Quiente',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'food.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '4',
-        user_id: '',
-        title: 'Street Dance',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'streetdance.jpg',
-        category: '',
-        date: '',
-      },
-    ];
-      */
-    this.postFollowing = [
-      {
-        id: '3',
-        user_id: '',
-        title: 'Mixto Quiente',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'food.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '4',
-        user_id: '',
-        title: 'Street Dance',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: 'streetdance.jpg',
-        category: '',
-        date: '',
-      },
-    ]; 
-  }
-  public ionViewWillEnter() { 
+  ngOnInit() { }
 
-    this.articleService.indexAllArticles().subscribe((response) =>{
+  public ionViewWillEnter() {
+    this.indexAllArticles();
+    this.indexFollowingArticles();
+  }
+
+  public ionViewWillLeave() {
+    this.postsAll = [];
+    this.postFollowing = [];
+  }
+
+  //display a listing of all articles
+  public indexAllArticles() {
+    this.articleService.indexAllArticles().subscribe((response) => {
       this.postsAll = response.articles;
       console.log(this.postsAll);
     });
   }
 
+  //display a listing of the articles posted by users that the logged user follows
+  public indexFollowingArticles() {
+    this.articleService.indexFollowingArticles().subscribe((response) => {
+      console.log(response.articles);
+
+      for(let i=0; i<response.articles.length; i++) {
+        for (let j=0; j<response.articles[i].length; j++) {
+          this.postFollowing.push(response.articles[i][j]);
+        }
+      }
+    });
+  }
+
+  //redirects to the article page loading the card id clicked into storage
+  public redirectArticle(article_id) {
+    localStorage.setItem('article_id', JSON.stringify(article_id));
+    this.router.navigate(['/article']);
+  }
+
+  //redirects to the create article page
+  public redirectNewArticle() {
+    this.router.navigate(['/new-article']);
+  }
 
   async segmentChanged(ev) {
     await this.selectedSlide.slideTo(this.segment)
   }
 
   slideShanged(slides : IonSlides) {
-
     this.selectedSlide = slides;
     slides.getActiveIndex().then(seLectedIndex =>{
       this.segment = seLectedIndex;
     })
-  }
-
-  public redirectArticle() {
-    this.router.navigate(['/article']);
   }
 }

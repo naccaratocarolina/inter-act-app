@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\Http\Requests\CommentRequest;
+use App\Http\Requests\CommentRequest as CommentRequest;
 use App\Comment;
 use App\Article;
 use Carbon\Carbon;
@@ -23,7 +23,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to the given user.
+     * Display a listing of the resource that belongs to the authenticated user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -35,7 +35,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to the given user.
+     * Display a listing of the resource that belongs to tthe authenticated user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,7 +47,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Creates a new instance of the resource.
      *
      * @return \Illuminate\Http\Response
      */

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ArticleRequest as ArticleRequest;
 
 use App\User;
 use App\Article;
@@ -22,7 +24,7 @@ class ArticleController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to the given user.
+     * Display a listing of the resource that belongs to the authenticated user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -34,11 +36,41 @@ class ArticleController extends Controller
     }
 
     /**
+     * Display the article owner.
+     *
+     * @param  \App\Article  $article_id
+     * @return \Illuminate\Http\Response
+     */
+    public function indexArticleOwner($article_id) {
+      $article = Article::findOrFail($article_id);
+      $article_owner = $article->user;
+      return response()->json(['message' => 'Dono do artigo encontrado!', 'article_owner' => $article_owner]);
+    }
+
+    /**
+     * Display a listing of the resource that belongs to the users that the user making the request follows.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexFollowingArticles() {
+      $user = Auth::user();
+      //grab que users that $user is following
+      $following_array = $user->following;
+      $response = array();
+
+      foreach($following_array as $following) {
+        $articles = $following->articles;
+        array_push($response, $articles);
+      }
+      return response()->json(['articles' => $response]);
+    }
+
+    /**
      * Creates a new instance of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request)
+    public function createArticle(ArticleRequest $request)
     {
       $article = new Article;
       $article->createArticle($request);
@@ -65,7 +97,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function updateArticle(Request $request, $id)
+    public function updateArticle(ArticleRequest $request, $id)
     {
         $user = Auth::user();
         $article = Article::findOrFail($id);

@@ -38,7 +38,7 @@ class UserController extends Controller
 
     /**
      * Create a new User
-     * And assign a Role & Permission
+     * And assign a Role
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
@@ -95,21 +95,48 @@ class UserController extends Controller
        * @param  int  $following_id
        * @return \Illuminate\Http\Response
        */
-      public function actionFollow(Request $request, $id) {
+      public function actionFollow($following_id) {
         $user = Auth::user();
-        $other_user = User::findOrFail($id);
-        $action = $request->get('action');
+        $following = User::findOrFail($following_id);
 
-        switch ($action) {
-          case 'Follow':
-            $user->following()->attach($id);
-            return response()->json(['message' => 'Agora voce segue x ' . $other_user->name]);
-            break;
-          case 'Unfollow':
-            $user->following()->detach($id);
-            return response()->json(['message' => 'Voce parou de seguir x ' . $other_user->name]);
-            break;
+        if(!$user->following->contains($following->id)) {
+          //attach the ids
+          $user->following()->attach($following_id);
+          $following->followers()->attach($user->id);
+          //increments the following and follower count
+          User::where('id', $user->id)->increment('following_count');
+          User::where('id', $following->id)->increment('follower_count');
+          return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
         }
+        else {
+          //dettach the ids
+          $user->following()->detach($following->id);
+          $following->followers()->detach($user->id);
+          //decrements the following and follower count
+          User::where('id', $user->id)->decrement('following_count');
+          User::where('id', $following->id)->decrement('follower_count');
+          return response()->json(['message' => 'Voce parou de seguir x ' . $following->name]);
+        }
+      }
+
+      /**
+       * Function that check if an article was already followed
+       *
+       * @param  int  $id
+       * @return bool
+       */
+      public function hasFollow($following_id) {
+        $user = Auth::user();
+        $following = User::findOrFail($following_id);
+
+        $following_list = $user->following;
+
+        foreach($following_list as $following_user) {
+          if($following->id === $following_user->id) {
+            return 1;
+          }
+        }
+        return 0;
       }
 
       /**
@@ -150,28 +177,44 @@ class UserController extends Controller
        * @param  int  $article_id
        * @return \Illuminate\Http\Response
        */
-
-
-      public function actionLike(Request $request, $article_id) {
+      public function actionLike($article_id) {
         $user = Auth::user();
         $article = Article::findOrFail($article_id);
-        $action = $request->get('action');
 
-        switch ($action) {
-          case 'Like':
-            Article::where('id', $article_id)->increment('likes_count');
-            $user->like()->attach($article);
-            $article->is_liked = 1;
-            $article->save();
-            return response()->json(['Voce deu um like <3', 'is_liked' => $article->is_liked]);
-            break;
-          case 'Unlike':
-            Article::where('id', $article_id)->decrement('likes_count');
-            $user->like()->detach($article);
-            $article->is_liked = 0;
-            $article->save();
-            return response()->json(['Voce removeu o seu like :()', 'is_liked' => $article->is_liked]);
-            break;
+        if(!$user->like->contains($article->id)) {
+          //attach the ids
+          $user->like()->attach($article_id);
+          //increments the likes count
+          Article::where('id', $article_id)->increment('likes_count');
+          $article = Article::findOrFail($article_id);
+          return response()->json(['message' => 'Voce deu um like <3', 'likes_count'=> $article->likes_count] );
         }
+        else {
+          //attach the ids
+          $user->like()->detach($article_id);
+          //decrements the likes count
+          Article::where('id', $article_id)->decrement('likes_count');
+          $article = Article::findOrFail($article_id);
+          return response()->json(['message' => 'Voce removeu o seu like :(', 'likes_count'=> $article->likes_count] );
+        }
+      }
+
+      /**
+       * Function that check if an article was already liked
+       *
+       * @param  int  $article_id
+       * @return bool
+       */
+      public function hasLike($article_id) {
+        $user = Auth::user();
+        $article_like = Article::findOrFail($article_id);
+        $articles = $user->like;
+
+        foreach($articles as $article) {
+          if($article_like->id === $article->id) {
+            return 1;
+          }
+        }
+        return 0;
       }
 }
