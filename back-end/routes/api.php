@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Routes that do not need permissions
+| Routes that do not need permissions.
 |--------------------------------------------------------------------------
 */
 //Article Controller
@@ -37,7 +37,7 @@ Route::get('indexAllComment','CommentController@indexAllComment');
 
 /*
 |--------------------------------------------------------------------------
-| Routes that require a logged in user
+| Routes that require a logged in user.
 |--------------------------------------------------------------------------
 */
 Route::group(['middleware' => 'auth:api'], function() {
