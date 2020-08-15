@@ -24,6 +24,11 @@ export class ArticleService {
     return this.http.get(this.apiUrl + 'indexAllArticles', this.httpHeaders);
   }
 
+  public indexUserArticles():Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'indexUserArticles', this.httpHeaders);
+  }
+
   public indexArticleOwner(article_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'indexArticleOwner/' + article_id, this.httpHeaders);

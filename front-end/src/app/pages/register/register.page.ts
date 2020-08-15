@@ -21,13 +21,15 @@ export class RegisterPage implements OnInit {
     });
    }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  //Creates a new user instance with registered user marker by default
   submitRegister(registerForm) {
     if(registerForm.status == "VALID") {
       this.authService.register(registerForm.value).subscribe((response) => {
         console.log(response.message);
+        //saves the user's token on local storage
+        localStorage.setItem('token', response.data.token);
 
         //redirects to home page
         this.router.navigate(['/home']);

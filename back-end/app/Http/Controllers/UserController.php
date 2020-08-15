@@ -38,7 +38,7 @@ class UserController extends Controller
 
     /**
      * Create a new User
-     * And assign a Role & Permission
+     * And assign a Role
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */

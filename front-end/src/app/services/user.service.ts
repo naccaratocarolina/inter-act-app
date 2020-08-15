@@ -19,27 +19,32 @@ export class UserService {
   }
 
   constructor(public http:HttpClient) { }
-  
+
+  //Display a listing of all users
   public indexUser():Observable<any> {
     return this.http.get(this.apiUrl + 'indexUser', this.httpHeaders);
   }
 
+  //Create a new User with registered-user marker as default
   public createUser(form):Observable<any> {
     return this.http.post(this.apiUrl + 'createUser', form, this.httpHeaders);
   }
 
-  public showUser(id):Observable<any> {
+  //Display the user matching the id given
+  public showUser(user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.get(this.apiUrl + 'showUser/' + id, this.httpHeaders);
+    return this.http.get(this.apiUrl + 'showUser/' + user_id, this.httpHeaders);
   }
 
-  public updateUser(form, id):Observable<any> {
+  //Update the specified user in storage
+  public updateUser(form, user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.put(this.apiUrl + 'updateUser/' + id, form, this.httpHeaders);
+    return this.http.put(this.apiUrl + 'updateUser/' + user_id, form, this.httpHeaders);
   }
 
-  public destroyUser(id):Observable<any> {
+  //Remove the specified user from storage
+  public destroyUser(user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.delete(this.apiUrl + 'destroyUser/' + id, this.httpHeaders);
+    return this.http.delete(this.apiUrl + 'destroyUser/' + user_id, this.httpHeaders);
   }
 }

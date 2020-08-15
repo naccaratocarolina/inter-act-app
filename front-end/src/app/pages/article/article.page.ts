@@ -11,8 +11,8 @@ import { LikeService } from '../../services/like.service';
 export class ArticlePage implements OnInit {
 
   public article_owner = [];
-  public article_id:number;
   public articleContent = [];
+  public article_id:number;
   public count:number;
   heartIcon: string;
   heartBool: boolean;
