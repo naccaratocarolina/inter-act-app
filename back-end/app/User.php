@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Article;
 use App\Comment;
 use App\Role;
+use App\Input;
 
 class User extends Authenticatable
 {
@@ -120,12 +121,12 @@ class User extends Authenticatable
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
 
-        IF(!Storage::exists('localPhoto/')){
+        If(!Storage::exists( 'localPhoto/')){
           Storage::makeDirectory('localPhoto/', 0775, true);
         }
         $file = $request->file('profile_picture');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $path = $file->storeAs('localPhoto/',$fileName);
         $this->profile_picture = $path;
         $this->save();
 

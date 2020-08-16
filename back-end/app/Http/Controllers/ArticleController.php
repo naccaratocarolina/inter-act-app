@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\ArticleRequest as ArticleRequest;
 use App\User;
 use App\Article;
+use App\Input;
 
 class ArticleController extends Controller
 {
@@ -67,9 +69,13 @@ class ArticleController extends Controller
      */
     public function updatePhotoArticle(Request $request, $id)
     {
-      $article = Article::find($id);
+      $user = Auth::user();
+      $article = Article::findOrFail($id);
+      if($article->user_id == $user->id) { //if the user making the request own the article
       $article->updatePhotoArticle($request);
       return response()->json(['message' => 'Foto editada!', 'article' => $article]);
+      }
+      return response()->json(['Voce nao pode editar a imagem desse artigo!']);
     }
 
     /**

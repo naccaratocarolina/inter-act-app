@@ -48,7 +48,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
-  Route::post('updatePhotoArticle/{id}', 'ArticleController@updatePhotoArticle')->middleware('role');
+  Route::post('updatePhotoArticle/{id}', 'ArticleController@updatePhotoArticle');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
 

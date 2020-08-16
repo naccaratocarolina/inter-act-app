@@ -7,7 +7,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Http\Requests\UserRequest as UserRequest;
-
+use App\Input;
 use App\User;
 use App\Role;
 use App\Article;
