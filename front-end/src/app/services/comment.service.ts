@@ -27,9 +27,9 @@ export class CommentService {
     }
 
   //Creates a new comment
-    public postCommentOnArticle (article_id):Observable<any> {
+    public postCommentOnArticle (article_id, form):Observable<any> {
       this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-      return this.http.post(this.apiUrl + 'postCommentOnArticle/' + article_id, null, this.httpHeaders);
+      return this.http.post(this.apiUrl + 'postCommentOnArticle/' + article_id, form, this.httpHeaders);
     }
 
   //Update the specified comment in storage

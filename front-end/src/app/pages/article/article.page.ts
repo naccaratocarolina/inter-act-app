@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { LikeService } from '../../services/like.service';
 import { CommentService } from '../../services/comment.service';
+import { UserService } from '../../services/user.service';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-article',
@@ -9,18 +12,27 @@ import { CommentService } from '../../services/comment.service';
   styleUrls: ['./article.page.scss'],
 })
 export class ArticlePage implements OnInit {
-
+  
   public article_owner = [];
   public articleContent = [];
   public article_id:number;
   public count:number;
   heartIcon: string;
   heartBool: boolean;
+  userBool = false;
   public articleComments:any;
   public numOfComments:number;
+  commentForm: FormGroup;
+  public comment = [];
+  public loggedUser = [];
 
-  constructor(public articleService:ArticleService, public likeService:LikeService, public commentService:CommentService) {
+
+  constructor(public articleService:ArticleService, public likeService:LikeService, public commentService:CommentService, public userService:UserService, public formBuilder:FormBuilder) {
     this.article_id = JSON.parse(localStorage.getItem('article_id'));
+
+    this.commentForm = this.formBuilder.group({
+      commentary: [null, [Validators.required]]
+    });
    }
 
   ngOnInit() { }
@@ -34,7 +46,6 @@ export class ArticlePage implements OnInit {
       });
     }
     this.numOfComments = this.articleComments.length;
-    console.log(this.articleComments);
   }
 
   public showComments(article_id){
@@ -73,6 +84,7 @@ export class ArticlePage implements OnInit {
     this.articleService.indexArticleOwner(article_id).subscribe((response) => {
       console.log(response.message);
       this.article_owner = response.article_owner;
+      this.userBool = true;
     });
   }
 
@@ -111,6 +123,23 @@ export class ArticlePage implements OnInit {
   public redirectProfile(profile_id) {
     localStorage.setItem('profile_id', JSON.stringify(profile_id));
     window.location.replace('/profile');
+  }
+
+  submitForm(article_id,form) {
+    this.commentService.postCommentOnArticle(article_id, form.value).subscribe((response) => {
+      console.log(response.message);
+      form.reset();
+      this.showComments(article_id);
+      this.getLoggedUser(response.comment.user_id); 
+    });
+  }
+
+  getLoggedUser(user_id) {
+    this.userService.showUser(user_id).subscribe((response) =>{
+      this.loggedUser = response.user;
+      console.log(response.message);
+      console.log(this.loggedUser);
+    });
   }
 
   goBack() {

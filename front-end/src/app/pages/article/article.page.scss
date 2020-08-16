@@ -24,7 +24,7 @@ h1 {
     width: 100%;
 }
 
-.userimg {
+.userimg, .loggedUserImg {
     width: 2.25em;
     height: 2.25em;
     border-radius: 1.25em;
@@ -32,6 +32,16 @@ h1 {
     margin-left: 1.4em;
     margin-right: 0.8em;
 }
+
+.loggedUserImg {
+    width: 2.25em;
+    height: 2.25em;
+    border-radius: 1.25em;
+    object-fit: cover;
+    margin-left: 1.4em;
+    margin-right: 0;
+   /*  margin-bottom: 0.5em; */
+} 
 
 h6 {
     font-size: 0.96em;
@@ -87,3 +97,36 @@ ion-icon {
     font-family: Roboto, sans-serif;
     font-size: 1em;
 }
+
+.addcomment {
+    display: flex;
+    align-items: center;
+}
+
+.sendcomment{
+    margin-top: 10px;
+}
+
+ion-textarea{
+
+    --placeholder-font-weight :normal;
+    --padding-bottom: 0;
+    --padding-top: 10px;
+    padding-left: 10px;
+    --padding-end: 10px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    width: 200px; 
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9em;
+    border: solid;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: gray;
+}
+
+form, ion-item {
+    width: 100%;
+}
+
+

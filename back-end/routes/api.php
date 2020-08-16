@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
   //Article Controller
   Route::get('indexAllArticles','ArticleController@indexAllArticles');
   Route::get('showArticle/{id}', 'ArticleController@showArticle');
+  Route::get('indexArticleOwner/{id}', 'ArticleController@indexArticleOwner');
 
   //Passport Controller
   Route::post('register', 'API\PassportController@register')->name('register');
@@ -31,12 +32,15 @@ use Illuminate\Support\Facades\Route;
   //User Controller
   Route::get('indexUser', 'UserController@indexUser');
   Route::post('createUser', 'UserController@createUser');
+  Route::get('showUser/{id}', 'UserController@showUser');
 
   //Role Controller
   Route::post('createRole', 'RoleController@createRole');
 
   //Comment Controller
   Route::get('indexAllComment','CommentController@indexAllComment');
+  Route::get('indexArticleComment/{article_id}','CommentController@indexArticleComment');
+  Route::get('indexCommentOwner/{id}', 'CommentController@indexCommentOwner');
 
 /*
 |--------------------------------------------------------------------------
@@ -50,7 +54,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   //Article Controller
   Route::get('indexUserArticles/{id}','ArticleController@indexUserArticles');
   Route::get('indexFollowingArticles', 'ArticleController@indexFollowingArticles');
-  Route::get('indexArticleOwner/{id}', 'ArticleController@indexArticleOwner');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
   Route::post('updatePhotoArticle/{id}', 'ArticleController@updatePhotoArticle');
@@ -59,8 +62,6 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //Comment Controller
   Route::get('indexUserComment/{user_id}','CommentController@indexUserComment');
-  Route::get('indexArticleComment/{article_id}','CommentController@indexArticleComment');
-  Route::get('indexCommentOwner/{id}', 'CommentController@indexCommentOwner');
   Route::get('showComment/{id}','CommentController@showComment');
   Route::post('postCommentOnArticle/{article_id}','CommentController@postCommentOnArticle');
   Route::put('updateComment/{id}','CommentController@updateComment')->middleware('owner');
@@ -74,13 +75,12 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('moderator');
 
   //User Controller
-  Route::get('showUser/{id}', 'UserController@showUser');
   Route::get('actionLike/{article_id}', 'UserController@actionLike');
   Route::get('actionFollow/{following_id}', 'UserController@actionFollow');
-  Route::get('followingCounter', 'UserController@followingCounter');
-  Route::get('followersCounter', 'UserController@followersCounter');
   Route::get('hasFollow/{following_id}', 'UserController@hasFollow');
   Route::get('hasLike/{article_id}', 'UserController@hasLike');
+  Route::get('followingCounter', 'UserController@followingCounter');
+  Route::get('followersCounter', 'UserController@followersCounter');
   Route::post('updatePhotoUser/{id}', 'UserController@updatePhotoUser');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');

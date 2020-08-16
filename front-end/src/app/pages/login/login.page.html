@@ -4,7 +4,7 @@
     <form [formGroup]="loginForm" (ngSubmit)="submitLogin(loginForm)" >
       <ion-input class='input' placeholder="Email" type="email" formControlName='email'></ion-input>
       <ion-input class='input' placeholder="Senha" type="password" formControlName='password'></ion-input>
-      <ion-button class='button' [disabled]="!loginForm" type="submit"><h1>Entrar</h1></ion-button>
+      <ion-button class='button' [disabled]="loginForm.invalid" type="submit"><h1>Entrar</h1></ion-button>
       <h2>Ainda não possui uma conta?<span (click)='registerRedirect()'> Clique aqui.</span></h2>
     </form>
   </section>
