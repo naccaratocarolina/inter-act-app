@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use App\Http\Requests\CommentRequest;
+use App\Http\Requests\CommentRequest as CommentRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Carbon\Carbon;
 use App\Users;
@@ -38,12 +38,11 @@ class Comment extends Model
         return $this->belongsTo('App\Article');
     }
 
-    //creat new comment by user
-    public function createComment(Request $request, $article_id) { //grab the user id that is making the request
-      $this->user_id = $request->id; //and saves it in the article table
-      $this->article_id = $article_id; //and saves it in the article table
+    public function postCommentOnArticle(CommentRequest $request, $article_id) {
+      $user = Auth::user();
+      $this->user_id = $user->id;
+      $this->article_id = $article_id;
 
-      //$current = Carbon::now();
       $this->commentary = $request->commentary;
       $this->save();
     }
