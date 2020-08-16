@@ -23,7 +23,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to the authenticated user.
+     * Display a listing of the resource that belongs to given user.
      *
      * @return \Illuminate\Http\Response
      */
@@ -35,7 +35,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to tthe authenticated user.
+     * Display a listing of the resource witch was assigned to the given article.
      *
      * @return \Illuminate\Http\Response
      */
