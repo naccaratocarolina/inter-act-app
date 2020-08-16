@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import {AuthService} from './services/Auth/auth.service'
-import {Router} from '@angular/router';
+import { AuthService } from './services/Auth/auth.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,18 +13,8 @@ import {Router} from '@angular/router';
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = []
-  userToken = localStorage.getItem('token')
-
-
-  logout(title){
-    if (title=='Sair'){
-      this.authService.logout().subscribe((response) => {
-        localStorage.removeItem('token');
-        this.showSidemenu(this.userToken);
-        this.router.navigate(['/home']).then(()=>window.location.reload());
-      })
-    }
-  }
+  public loggedUser = [];
+  userToken = localStorage.getItem('token');
 
   showSidemenu(userToken) {
     if (userToken) {
@@ -91,5 +80,24 @@ export class AppComponent implements OnInit {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
     this.showSidemenu(this.userToken);
+    this.getLoggedUser();
+  }
+
+  //Pega o usuario logado
+  public getLoggedUser() {
+    this.authService.getDetails().subscribe((response) => {
+      this.loggedUser = response.user;
+    });
+  }
+
+  //Realiza o logout do usuario
+  public logout(title){
+    if (title == 'Sair'){
+      this.authService.logout().subscribe((response) => {
+        localStorage.removeItem('token');
+        this.showSidemenu(this.userToken);
+        this.router.navigate(['/home']).then(()=>window.location.reload());
+      })
+    }
   }
 }

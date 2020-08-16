@@ -23,22 +23,18 @@ export class LoginPage implements OnInit {
   ngOnInit() {
   }
 
-  //Performs the user's login on the platform
-  submitLogin(loginForm) {
+  //Realiza o login do usuario na plataforma
+  public submitLogin(loginForm) {
     if(loginForm.status == "VALID") {
         this.authService.login(loginForm.value).subscribe((response) => {
           console.log(response.message);
-          console.log(response.data);
-          //saves the user's token on local storage
           localStorage.setItem('token', response.data.token);
-
-          //redirects to home page
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home']).then(()=>window.location.reload());
         });
     }
   }
 
-  //Redirects to the registration page
+  //Redireciona para a pagina de registro
   registerRedirect() {
     this.router.navigateByUrl('/register')
   }

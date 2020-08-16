@@ -8,29 +8,29 @@ import { HttpClient } from '@angular/common/http';
 
 /**
  *
- * This service is exclusive for the Moderator.
+ * Essa service eh exclusiva para o moderador.
  *
  */
 
 export class RoleService {
 
-  constructor(public http:HttpClient) { }
+  //URL da API
+  apiUrl: string = "http://localhost:8000/api/";
 
-    //URL da API
-    apiUrl: string = "http://localhost:8000/api/";
-
-    //Headers do request
-    httpHeaders: object = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      }
+  //Headers do request
+  httpHeaders: object = {
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
     }
+  }
 
-  //Add a role to the authenticated user
-    public addRole(role_id):Observable<any> {
-      this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-      return this.http.post(this.apiUrl + 'addRole/' + role_id, null, this.httpHeaders)
+  constructor( public http:HttpClient ) { }
+
+  //Moderador pode atribuir um marcador de moderador a um usuario registrado na plataforma
+  public addRole(role_id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.post(this.apiUrl + 'addRole/' + role_id, null, this.httpHeaders)
   }
 
 }

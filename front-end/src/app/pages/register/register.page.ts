@@ -24,7 +24,7 @@ export class RegisterPage implements OnInit {
   ngOnInit() { }
 
   //Creates a new user instance with registered user marker by default
-  submitRegister(registerForm) {
+  public submitRegister(registerForm) {
     if(registerForm.status == "VALID") {
       this.authService.register(registerForm.value).subscribe((response) => {
         console.log(response.message);

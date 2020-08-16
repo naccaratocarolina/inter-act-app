@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ArticlePageRoutingModule } from './article-routing.module';
 
 import { ArticlePage } from './article.page';
+import { CommentComponent } from '../../components/comment/comment.component';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ArticlePage } from './article.page';
     ArticlePageRoutingModule,
     ReactiveFormsModule
   ],
-  declarations: [ArticlePage]
+  entryComponents: [CommentComponent],
+  declarations: [ArticlePage, CommentComponent]
 })
 export class ArticlePageModule {}

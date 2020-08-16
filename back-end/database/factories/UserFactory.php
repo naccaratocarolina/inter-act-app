@@ -9,7 +9,7 @@ $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
-        'profile_picture' =>  $faker->imageUrl($width = 640, $height = 480),
+        'profile_picture' =>  $faker->imageUrl($width = 500, $height = 640),
         'description' => $faker->sentence($nbWords = 10, $variableNbWords = true),
         'following_count' => $faker->numberBetween($min = 0, $max = 100),
         'follower_count' => $faker->numberBetween($min = 0, $max = 100),

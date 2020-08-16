@@ -20,27 +20,15 @@ export class FollowService {
 
   constructor(public http:HttpClient) { }
 
-  //Function that can attach or detach the relationship of one user following another
+  //Usuario logado realiza a acao de seguir ou parar de seguir outro usuario
   public actionFollow(following_id):Observable<any>{
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'actionFollow/' + following_id, this.httpHeaders);
   }
 
-  //Function that check if an user was already followed
+  //Checa se o usuario logado ja seguiu ou nao outro usuario
   public hasFollow(following_id):Observable<any>{
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'hasFollow/' + following_id, this.httpHeaders);
-  }
-  
-  //Counts how many followers the user has
-  public followingCounter(user_id):Observable<any>{
-    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.get(this.apiUrl + 'followingCounter/' + user_id, this.httpHeaders);
-  }
-
-  //Counts how many people the user follows
-  public followersCounter(user_id):Observable<any>{
-    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.get(this.apiUrl + 'followersCounter/' + user_id, this.httpHeaders);
   }
 }

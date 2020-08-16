@@ -19,25 +19,24 @@ export class AuthService {
 
   constructor( public http:HttpClient ) { }
 
-  //register a new User
+  //Cadastra um novo usuario na plataforma com o marcador de registered-user como default
   public register(request_form): Observable<any> {
     return this.http.post(this.apiUrl + 'register', request_form, this.httpHeaders);
   }
 
-  //login an existent User
+  //Realiza o login de um usuario ja cadastrado na plataforma
   public login(request_form): Observable<any> {
     return this.http.post(this.apiUrl + 'login', request_form, this.httpHeaders);
   }
 
+  //Pega as informacoes do usuario logado
   public getDetails(): Observable<any> {
-    //Authorization->Bearer . token
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.post(this.apiUrl + 'getDetails', this.httpHeaders);
+    return this.http.get(this.apiUrl + 'getDetails', this.httpHeaders);
   }
 
-  //logout of an existent User
+  //Realiza o logout do usuario na plataforma
   public logout(): Observable<any> {
-    //Authorization->Bearer . token
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'logout', this.httpHeaders);
   }

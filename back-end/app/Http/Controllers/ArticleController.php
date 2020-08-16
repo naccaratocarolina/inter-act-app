@@ -77,7 +77,6 @@ class ArticleController extends Controller
       return response()->json(['message' => 'Artigo criado!', 'article' => $article]);
     }
 
-
     /**
      * Display the specified resource.
      *
@@ -88,24 +87,6 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
         return response()->json(['message' => 'Artigo encontrado!', 'article' => $article]);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatePhotoArticle(Request $request, $id)
-    {
-      $user = Auth::user();
-      $article = Article::findOrFail($id);
-      if($article->user_id == $user->id) { //if the user making the request own the article
-      $article->updatePhotoArticle($request);
-      return response()->json(['message' => 'Foto editada!', 'article' => $article]);
-      }
-      return response()->json(['Voce nao pode editar a imagem desse artigo!']);
     }
 
     /**
@@ -127,6 +108,24 @@ class ArticleController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePhotoArticle(Request $request, $id)
+    {
+      $user = Auth::user();
+      $article = Article::findOrFail($id);
+      if($article->user_id == $user->id) { //if the user making the request own the article
+      $article->updatePhotoArticle($request);
+      return response()->json(['message' => 'Foto editada!', 'article' => $article]);
+      }
+      return response()->json(['Voce nao pode editar a imagem desse artigo!']);
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Article  $article
@@ -141,22 +140,5 @@ class ArticleController extends Controller
         return response()->json(['message' => 'Artigo deletado!', 'article' => $article]);
       }
       return response()->json(['Voce nao pode deletar esse artigo!']);
-    }
-
-    /**
-     * Counts the likes of an article.
-     *
-     * @param  int $id
-     * @return object message, count
-     */
-    public function likesCounter($id) {
-      $article = Article::findOrFail($id);
-      $count = $article->isLikedBy->count();
-      if($count == 1) {
-        return response()->json(['message' => 'O seu artigo tem ' . $count . ' curtida', 'count' => $count]);
-      }
-      else {
-        return response()->json(['message' => 'O seu artigo tem ' . $count . ' curtidas', 'count' => $count]);
-      }
     }
 }

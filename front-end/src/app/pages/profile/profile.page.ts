@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IonicStorageModule } from "@ionic/storage";
 import { Router } from '@angular/router';
-import {UserService} from '../../services/user.service';
-import {ArticleService} from '../../services/article.service';
-import {FollowService} from '../../services/follow.service';
+import { UserService } from '../../services/user.service';
+import { ArticleService } from '../../services/article.service';
+import { FollowService } from '../../services/follow.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,15 +11,14 @@ import {FollowService} from '../../services/follow.service';
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage implements OnInit {
-
+  userData = [];
   postsAll:any;
   followText:string;
   profile_id:number;
-  userData = [];
   followBool:boolean;
 
   constructor(
-    private router:Router, 
+    private router:Router,
     public userService:UserService,
     public articleService:ArticleService,
     public followService:FollowService,
@@ -27,15 +26,20 @@ export class ProfilePage implements OnInit {
     this.profile_id = JSON.parse(localStorage.getItem('profile_id'));
    }
 
-  ngOnInit() {
+  ngOnInit() { }
+
+  //Chamada das funcoes para quando o usuario entrar na pagina
+  public ionViewWillEnter() {
+    this.showUser(this.profile_id);
+    this.hasFollow(this.profile_id);
   }
 
-  public showUserArticles(profile_id){
-    this.articleService.indexUserArticles(profile_id).subscribe((response) => {
-      this.postsAll = response.articles;
-    })
+  //Chamada das funcoes para quando o usuario sair da pagina
+  public ionViewWillLeave() {
+    localStorage.setItem('profile_id',null)
   }
 
+  //Pega o usuario conforme o seu id
   public showUser(profile_id){
     this.userService.showUser(profile_id).subscribe((response) =>{
       this.userData = response.user;
@@ -44,16 +48,14 @@ export class ProfilePage implements OnInit {
     })
   }
 
-  public ionViewWillEnter() {
-    this.showUser(this.profile_id);
-    this.hasFollow(this.profile_id);
+  //Faz o display dos artigos do usuario atraves do seu id
+  public showUserArticles(profile_id){
+    this.articleService.indexUserArticles(profile_id).subscribe((response) => {
+      this.postsAll = response.articles;
+    })
   }
 
-  public ionViewWillLeave() {
-    localStorage.setItem('profile_id',null)
-  }
-
-  //Like or dislike an article
+  //Realiza a acao de seguir ou parar de seguir outro usuario
   public actionFollow(user_id) {
     this.followService.actionFollow(user_id).subscribe((response) => {
     this.hasFollow(user_id);
@@ -62,30 +64,31 @@ export class ProfilePage implements OnInit {
   });
 }
 
-//Check if the article war already liked by the logged user or not
-public hasFollow(user_id) {
-  this.followService.hasFollow(user_id).subscribe((response) => {
-    if (response) {
-      this.followBool = true;
-    }
-    else {
-      this.followBool = false;
-    }
-    this.showFollow();
-  });
-}
+  //Checa se determinado usuario ja foi seguido ou nao pelo usuario logado
+  public hasFollow(user_id) {
+    this.followService.hasFollow(user_id).subscribe((response) => {
+      if (response) {
+        this.followBool = true;
+      }
+      else {
+        this.followBool = false;
+      }
+      this.showFollow();
+    });
+  }
 
-//Display the icon checking if it has already been liked or not
-public showFollow() {
-  if (this.followBool) {
-    this.followText = 'Seguindo';
-  } else {
-    this.followText = 'Seguir';
+  //Faz o display do texto do botao de seguir/seguindo conforme a checagem da funcao hasFollow
+  public showFollow() {
+    if (this.followBool) {
+      this.followText = 'Seguindo';
+    } else {
+      this.followText = 'Seguir';
+    }
+  }
+
+  //Redireciona para a pagina do artigo carregando o id do artigo clicado
+  public redirectArticle(article_id) {
+    localStorage.setItem('article_id', JSON.stringify(article_id));
+    this.router.navigate(['/article']);
   }
 }
-
-public redirectArticle(article_id) {
-  localStorage.setItem('article_id', JSON.stringify(article_id));
-  this.router.navigate(['/article']);
-}
-  }

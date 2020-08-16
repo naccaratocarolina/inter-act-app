@@ -21,37 +21,11 @@
   </ion-segment>
 
   <ion-slides #slides pager="false" [options]="sliderOptions" (ionSlideDidChange)="slideShanged(slides)" (ionSlidesDidLoad)="slideShanged(slides)">
-    <ion-slide>
-      <ion-grid>
-        <ion-row *ngFor="let All of postsAll">
-          <ion-col size="small" class="image"><img src="{{All.image}}"></ion-col>
-          <ion-col>
-            <h6 class="title">{{All.title}}</h6>
-            <p>{{All.subtitle}}</p>
-            <ion-row (click) = "redirectArticle(All.id)">
-              <h6>Continuar Lendo</h6>
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </ion-row>
-          </ion-col>
-          <hr>
-        </ion-row>
-      </ion-grid>
+    <ion-slide class="slide">
+      <app-article-home *ngFor="let All of postsAll" [All]="All"></app-article-home>
     </ion-slide>
-    <ion-slide>
-      <ion-grid>
-        <ion-row *ngFor="let Following of postFollowing">
-          <ion-col size="small" class="image"><img src="{{Following.image}}"></ion-col>
-          <ion-col>
-            <h6 class="title">{{Following.title}}</h6>
-            <p>{{Following.subtitle}}</p>
-            <ion-row (click) = "redirectArticle(Following.id)">
-              <h6>Continuar Lendo</h6>
-              <ion-icon name="arrow-forward-outline"></ion-icon>
-            </ion-row>
-          </ion-col>
-          <hr>
-        </ion-row>
-    </ion-grid>
-  </ion-slide>
+    <ion-slide class="slide">
+      <app-article-home *ngFor="let Following of postFollowing" [All]="Following"></app-article-home>
+    </ion-slide>
   </ion-slides>
 </ion-content>

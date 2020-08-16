@@ -20,53 +20,48 @@ export class ArticleService {
 
   constructor(public http:HttpClient) { }
 
-  //Display a listing of all articles
+  //Faz o display de todos os artigos
   public indexAllArticles ():Observable<any> {
     return this.http.get(this.apiUrl + 'indexAllArticles', this.httpHeaders);
   }
 
-  //Display a listing of the resource that belongs to the authenticated user
+  //Faz o display de todos os artigos que foram postados pelo user_id dado
   public indexUserArticles(user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'indexUserArticles/' + user_id, this.httpHeaders);
   }
 
-  //Display the article owner
+  //Localiza o usuario que postou o artigo dado
   public indexArticleOwner(article_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'indexArticleOwner/' + article_id, this.httpHeaders);
   }
 
-  //Display a listing of articles that belongs to the users that the user making the request follows
+  //Faz o display dos artigos postados pelo usuario que esta logado na plataforma
   public indexFollowingArticles():Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'indexFollowingArticles', this.httpHeaders);
   }
 
-  public likesCounter(id):Observable<any> {
-    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.get(this.apiUrl + 'likesCounter/' + id, this.httpHeaders);
-  }
-
-  // /Display the specified article
+  //Localiza o artigo especifido atravez do id dado
   public showArticle(id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'showArticle/' + id, this.httpHeaders);
   }
 
-  //Creates a new instance of article
+  //Usuario logado cria um novo artigo
   public createArticle(form):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.post(this.apiUrl + 'createArticle', form, this.httpHeaders);
   }
 
-  //Update the specified article in storage
+  //Usuario logado atualiza um artigo ja existente
   public updateArticle(form, id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.put(this.apiUrl + 'updateArticle/' + id, form, this.httpHeaders);
   }
 
-  //Remove the specified article from storage
+  //Usuario logado deleta um artigo
   public destroyArticle(id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.delete(this.apiUrl + 'destroyArticle/' + id, this.httpHeaders);

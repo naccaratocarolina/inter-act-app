@@ -30,24 +30,22 @@
     <ion-row>
       <ion-col size="small">
         <ion-button size="small" fill="clear" (click)="actionLike(articleContent.id)">
-          <!-- <ion-icon color="danger" name={{heartIcon}}></ion-icon> -->
-          <ion-icon *ngIf="userBool" color="danger" name="heart-outline"></ion-icon>
-          <ion-icon *ngIf="!userBool" color="danger" name={{heartIcon}}></ion-icon>
+          <ion-icon color="danger" name={{heartIcon}}></ion-icon>
+          <!--<ion-icon *ngIf="userBool" color="danger" name="heart-outline"></ion-icon>
+          <ion-icon *ngIf="!userBool" color="danger" name={{heartIcon}}></ion-icon>-->
         </ion-button>
       </ion-col>
       <ion-col><h5 class="likes">{{count}}</h5></ion-col>
     </ion-row>
   </ion-grid>
   <p class='numofcomments'>{{numOfComments}} comentários</p>
-  <section *ngFor='let comment of articleComments'>
-    <p class='comment'><span class='username'>{{comment.username}}: </span>{{comment.commentary}}</p>
-  </section>
+  <app-comment *ngFor='let comment of articleComments' [comment]="comment"></app-comment>
   <ion-row>
     <ion-col size="small">
       <img  class="loggedUserImg" src="{{loggedUser.profile_picture}}" alt="Minha Figura">
     </ion-col>
     <ion-col class="addcomment">
-      <form [formGroup] = "commentForm" (ngSubmit) = "submitForm(article_id, commentForm)">
+      <form [formGroup] = "commentForm" (ngSubmit) = "postCommentOnArticle(article_id, commentForm)">
         <ion-item lines="none">
           <ion-textarea  rows="2" type="text" placeholder="Adicionar um comentário..." formControlName="commentary"></ion-textarea>
             <ion-button class="sendcomment" size="small" clear slot="end" color="secondary" type="submit" [disabled]="commentForm.invalid">
@@ -56,7 +54,5 @@
         </ion-item>
       </form>	
     </ion-col>
-      
-    
   </ion-row>
 </ion-content>

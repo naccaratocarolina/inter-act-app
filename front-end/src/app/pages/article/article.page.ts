@@ -2,9 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { LikeService } from '../../services/like.service';
 import { CommentService } from '../../services/comment.service';
-import { UserService } from '../../services/user.service';
+import { AuthService } from "../../services/Auth/auth.service";
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-
 
 @Component({
   selector: 'app-article',
@@ -12,22 +11,24 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
   styleUrls: ['./article.page.scss'],
 })
 export class ArticlePage implements OnInit {
-  
-  public article_owner = [];
-  public articleContent = [];
   public article_id:number;
   public count:number;
+  public numOfComments:number;
+  public articleComments = [];
+  public articleContent = [];
+  public article_owner = [];
+  public loggedUser = [];
+  public comment = [];
+  commentForm: FormGroup;
   heartIcon: string;
   heartBool: boolean;
-  userBool = false;
-  public articleComments:any;
-  public numOfComments:number;
-  commentForm: FormGroup;
-  public comment = [];
-  public loggedUser = [];
 
-
-  constructor(public articleService:ArticleService, public likeService:LikeService, public commentService:CommentService, public userService:UserService, public formBuilder:FormBuilder) {
+  constructor(
+    public articleService:ArticleService,
+    public likeService:LikeService,
+    public commentService:CommentService,
+    public authService: AuthService,
+    public formBuilder:FormBuilder) {
     this.article_id = JSON.parse(localStorage.getItem('article_id'));
 
     this.commentForm = this.formBuilder.group({
@@ -37,6 +38,47 @@ export class ArticlePage implements OnInit {
 
   ngOnInit() { }
 
+  //Chamada das funcoes para quando o usuario entrar na pagina
+  public ionViewWillEnter() {
+    this.getLoggedUser();
+    this.showArticle();
+    this.hasLike(this.article_id);
+    this.showComments(this.article_id);
+  }
+
+  //Chamada das funcoes para quando o usuario sair da pagina
+  public ionViewWillLeave() {
+    this.articleContent = [];
+    this.article_owner = [];
+    localStorage.setItem('article_id',null)
+  }
+
+  //Pega o usuario logado
+  public getLoggedUser() {
+    this.authService.getDetails().subscribe((response) => {
+      this.loggedUser = response.user;
+    });
+  }
+
+  //Faz o display do artigo conforme o seu id
+  public showArticle(){
+    this.articleService.showArticle(this.article_id).subscribe((response) =>{
+      console.log(response.message);
+      this.articleContent = response.article;
+      this.count = response.article.likes_count;
+      this.indexArticleOwner(this.article_id);
+    });
+  }
+
+  //Pega o dono do artigo confirme o article_id
+  public indexArticleOwner(article_id) {
+    this.articleService.indexArticleOwner(article_id).subscribe((response) => {
+      console.log(response.message);
+      this.article_owner = response.article_owner;
+    });
+  }
+
+  //Faz o display do dono do comentario
   public assignCommentToUser(){
     for (let i=0; i<this.articleComments.length; i++){
       let id = this.articleComments[i].id
@@ -48,6 +90,7 @@ export class ArticlePage implements OnInit {
     this.numOfComments = this.articleComments.length;
   }
 
+  //Printa todos os comentarios correspondendes ao artigo
   public showComments(article_id){
     this.commentService.indexArticleComment(article_id).subscribe((response) =>{
       this.articleComments = response.comments;
@@ -56,39 +99,16 @@ export class ArticlePage implements OnInit {
     });
   }
 
-
-  public ionViewWillEnter() {
-    this.showArticle();
-    this.hasLike(this.article_id);
-    this.showComments(this.article_id);
-  }
-
-  public ionViewWillLeave() {
-    this.articleContent = [];
-    this.article_owner = [];
-    localStorage.setItem('article_id',null)
-  }
-
-  //Get the article by its id
-  public showArticle(){
-    this.articleService.showArticle(this.article_id).subscribe((response) =>{
+  //Usuario logado posta um novo comentario
+  public postCommentOnArticle(article_id,form) {
+    this.commentService.postCommentOnArticle(article_id, form.value).subscribe((response) => {
       console.log(response.message);
-      this.articleContent = response.article;
-      this.count = response.article.likes_count;
-      this.indexArticleOwner(this.article_id);
+      form.reset();
+      this.showComments(article_id);
     });
   }
 
-  //Get the article owner also by its id
-  public indexArticleOwner(article_id) {
-    this.articleService.indexArticleOwner(article_id).subscribe((response) => {
-      console.log(response.message);
-      this.article_owner = response.article_owner;
-      this.userBool = true;
-    });
-  }
-
-  //Like or dislike an article
+  //Realiza a acao de like ou dislike de um artigo
   public actionLike(article_id) {
       this.likeService.actionLike(article_id).subscribe((response) => {
       console.log(response.message);
@@ -97,7 +117,7 @@ export class ArticlePage implements OnInit {
     });
   }
 
-  //Check if the article war already liked by the logged user or not
+  //Verifica de o usuario logado ja deu like ou nao no artigo e salva essa informacao
   public hasLike(article_id) {
     this.likeService.hasLike(article_id).subscribe((response) => {
       if (response) {
@@ -110,7 +130,7 @@ export class ArticlePage implements OnInit {
     });
   }
 
-  //Display the icon checking if it has already been liked or not
+  //Faz o display do icone de like conforme o artigo ja foi curtido ou nao
   public showHeart() {
     if (this.heartBool) {
       this.heartIcon = 'heart';
@@ -119,29 +139,13 @@ export class ArticlePage implements OnInit {
     }
   }
 
-  //Redirects to the user's profile
+  //Redireciona para a pagina de perfil e salva o id do usuario clicado
   public redirectProfile(profile_id) {
     localStorage.setItem('profile_id', JSON.stringify(profile_id));
     window.location.replace('/profile');
   }
 
-  submitForm(article_id,form) {
-    this.commentService.postCommentOnArticle(article_id, form.value).subscribe((response) => {
-      console.log(response.message);
-      form.reset();
-      this.showComments(article_id);
-      this.getLoggedUser(response.comment.user_id); 
-    });
-  }
-
-  getLoggedUser(user_id) {
-    this.userService.showUser(user_id).subscribe((response) =>{
-      this.loggedUser = response.user;
-      console.log(response.message);
-      console.log(this.loggedUser);
-    });
-  }
-
+  //Acao do botao de voltar na header
   goBack() {
     window.history.back();
   }

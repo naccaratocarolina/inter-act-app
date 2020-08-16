@@ -18,17 +18,17 @@ export class LikeService {
     }
   }
 
-  constructor(public http:HttpClient) { }
+  constructor( public http:HttpClient ) { }
 
-  //Function that check if an article was already liked
-  public hasLike(article_id):Observable<any> {
-    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.get(this.apiUrl + 'hasLike/' + article_id, this.httpHeaders);
-  }
-
-  //Function that creates the relationship of one user liking an article
+  //Usuario logado realiza a acao de dar like ou remover o like de determinado artigo
   public actionLike(article_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'actionLike/' + article_id, this.httpHeaders);
+  }
+
+  //Checa se o usuario logado ja curtiu ou nao determinado artigo
+  public hasLike(article_id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'hasLike/' + article_id, this.httpHeaders);
   }
 }
