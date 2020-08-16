@@ -8,7 +8,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
 use Laravel\Passport\HasApiTokens;
+use Illuminate\Support\Facades\Storage;
 
+use App\Input;
 use App\Article;
 use App\Comment;
 use App\Role;
@@ -112,14 +114,21 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Http\Response
      */
-    public function createUser(UserRequest $request)
+    public function createUser(Request $request)
     {
         //atributos do user
         $this->name = $request->name;
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
-        $this->profile_picture = $request->profile_picture;
         $this->description = $request->description;
+        
+        If(!Storage::exists( 'localPhoto/')){
+          Storage::makeDirectory('localPhoto/', 0775, true);
+        }
+        $file = $request->file('profile_picture');
+        $fileName = rand().'.'.$file->getClientOriginalExtension();
+        $path = $file->storeAs('localPhoto/',$fileName);
+        $this->profile_picture = $path;
         $this->save();
 
         //always assign a registered user marker to a newly created user
@@ -134,6 +143,28 @@ class User extends Authenticatable
         }
     }
 
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePhotoUser(Request $request)
+    {
+      if($request->profile_picture){
+        IF(!Storage::exists('localPhoto/')){
+          Storage::delete('profile_picture'. $this->photo);
+          Storage::makeDirectory('localPhoto/', 0775, true);
+        }
+        $file = $request->file('profile_picture');
+        $fileName = rand().'.'.$file->getClientOriginalExtension();
+        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $this->profile_picture = $path;
+        $this->save();
+      }
+    } 
     /**
      * Update the specified resource in storage.
      *
@@ -152,9 +183,6 @@ class User extends Authenticatable
        }
        if($request->password){
          $this->password = bcrypt($request->password);
-       }
-       if($request->profile_picture){
-         $this->profile_picture = $request->profile_picture;
        }
        if($request->description){
          $this->description = $request->description;

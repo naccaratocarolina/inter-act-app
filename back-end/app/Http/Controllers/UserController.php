@@ -42,7 +42,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function createUser(UserRequest $request)
+     public function createUser(Request $request)
      {
        $user = new User;
        $user->createUser($request);
@@ -59,6 +59,20 @@ class UserController extends Controller
     {
       $user = User::findOrFail($id);
       return response()->json(['message' => 'User encontrado!', 'user' => $user]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePhotoUser(Request $request, $id)
+    {
+      $user = User::find($id);
+      $user->updatePhotoUser($request);
+      return response()->json(['message' => 'Foto editada!', 'user' => $user]);
     }
 
     /**
