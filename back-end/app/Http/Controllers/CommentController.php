@@ -47,17 +47,27 @@ class CommentController extends Controller
     }
 
     /**
+     * Display the article owner.
+     *
+     * @param  \App\Comment  $comment_id
+     * @return \Illuminate\Http\Response
+     */
+    public function indexCommentOwner($id) {
+      $comment = Comment::findOrFail($id);
+      $comment_owner = $comment->user;
+      return response()->json(['message' => 'Dono do comentario encontrado!', 'comment_owner' => $comment_owner]);
+    }
+
+    /**
      * Creates a new instance of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function createComment(CommentRequest $request, $article_id)
-    {
-        $article = Article::findOrFail($article_id);
+    public function postCommentOnArticle(CommentRequest $request, $article_id) {
         $comment = new Comment;
-        $comment->createComment($request, $article_id);
+        $comment->postCommentOnArticle($request, $article_id);
         return response()->json(['message' => 'Comentário criado!', 'comment' => $comment]);
-    }
+      }
 
 
     /**

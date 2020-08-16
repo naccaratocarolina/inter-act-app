@@ -58,9 +58,10 @@ Route::group(['middleware' => 'auth:api'], function() {
 
   //Comment Controller
   Route::get('indexUserComment','CommentController@indexUserComment')->middleware('role');
-  Route::get('indexArticleComment','CommentController@indexArticleComment')->middleware('role');
+  Route::get('indexCommentOwner/{id}', 'CommentController@indexCommentOwner');
+  Route::get('indexArticleComment/{article_id}','CommentController@indexArticleComment');
   Route::get('showComment/{id}','CommentController@showComment')->middleware('role');
-  Route::post('createComment','CommentController@createComment');
+  Route::post('postCommentOnArticle/{article_id}','CommentController@postCommentOnArticle');
   Route::put('updateComment/{id}','CommentController@updateComment')->middleware('role');
   Route::delete('destroyComment/{id}','CommentController@destroyComment')->middleware('role');
 

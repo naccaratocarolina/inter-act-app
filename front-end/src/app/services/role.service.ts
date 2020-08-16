@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -9,19 +11,26 @@ import { Injectable } from '@angular/core';
  * This service is exclusive for the Moderator.
  *
  */
+
 export class RoleService {
 
-  constructor() { }
+  constructor(public http:HttpClient) { }
 
-  //Display a listing of the all roles
+    //URL da API
+    apiUrl: string = "http://localhost:8000/api/";
 
-  //Show the form for creating a new role
+    //Headers do request
+    httpHeaders: object = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    }
 
   //Add a role to the authenticated user
+    public addRole(role_id):Observable<any> {
+      this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+      return this.http.post(this.apiUrl + 'addRole/' + role_id, null, this.httpHeaders)
+  }
 
-  //Display the specified roles
-
-  //Update the specified role in storage
-
-  //Remove the specified role from storage
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { LikeService } from '../../services/like.service';
-
+import { CommentService } from '../../services/comment.service';
 
 @Component({
   selector: 'app-article',
@@ -16,16 +16,40 @@ export class ArticlePage implements OnInit {
   public count:number;
   heartIcon: string;
   heartBool: boolean;
+  public articleComments:any;
+  public numOfComments:number;
 
-  constructor(public articleService:ArticleService, public likeService:LikeService) {
+  constructor(public articleService:ArticleService, public likeService:LikeService, public commentService:CommentService) {
     this.article_id = JSON.parse(localStorage.getItem('article_id'));
    }
 
   ngOnInit() { }
 
+  public assignCommentToUser(){
+    for (let i=0; i<this.articleComments.length; i++){
+      let id = this.articleComments[i].id
+      this.commentService.indexCommentOwner(id).subscribe((response) =>{
+        console.log(response.comment_owner.name)
+        this.articleComments[i].username = response.comment_owner.name;
+      });
+    }
+    this.numOfComments = this.articleComments.length;
+    console.log(this.articleComments);
+  }
+
+  public showComments(article_id){
+    this.commentService.indexArticleComment(article_id).subscribe((response) =>{
+      this.articleComments = response.comments;
+      console.log(this.articleComments);
+      this.assignCommentToUser();
+    });
+  }
+
+
   public ionViewWillEnter() {
     this.showArticle();
     this.hasLike(this.article_id);
+    this.showComments(this.article_id);
   }
 
   public ionViewWillLeave() {
