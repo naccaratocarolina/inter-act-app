@@ -68,7 +68,21 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request, $id)
+    public function updatePhotoUser(Request $request, $id)
+    {
+      $user = User::find($id);
+      $user->updatePhotoUser($request);
+      return response()->json(['message' => 'Foto editada!', 'user' => $user]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+     public function updateUser(UserRequest $request, $id)
      {
        $user = User::find($id);
        $user->updateUser($request);

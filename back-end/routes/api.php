@@ -53,8 +53,14 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('indexArticleOwner/{id}', 'ArticleController@indexArticleOwner');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
+<<<<<<< HEAD
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('owner');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('owner');
+=======
+  Route::post('updatePhotoArticle/{id}', 'ArticleController@updatePhotoArticle');
+  Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
+  Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
+>>>>>>> back_alexandra_uploadVal
 
   //Comment Controller
   Route::get('indexUserComment/{user_id}','CommentController@indexUserComment');
@@ -80,6 +86,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('followersCounter', 'UserController@followersCounter');
   Route::get('hasFollow/{following_id}', 'UserController@hasFollow');
   Route::get('hasLike/{article_id}', 'UserController@hasLike');
+  Route::post('updatePhotoUser/{id}', 'UserController@updatePhotoUser');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });
