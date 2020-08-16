@@ -114,22 +114,26 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Http\Response
      */
-    public function createUser(Request $request)
+    public function createUser(UserRequest $request)
     {
         //atributos do user
         $this->name = $request->name;
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
-        
-        If(!Storage::exists( 'localPhoto/')){
-          Storage::makeDirectory('localPhoto/', 0775, true);
-        }
-        $file = $request->file('profile_picture');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/',$fileName);
-        $this->profile_picture = $path;
         $this->save();
+
+        if($request->profile_picture) {
+          If(!Storage::exists( 'localPhoto/')){
+            Storage::makeDirectory('localPhoto/', 0775, true);
+          }
+          
+          $file = $request->file('profile_picture');
+          $fileName = rand().'.'.$file->getClientOriginalExtension();
+          $path = $file->storeAs('localPhoto/',$fileName);
+          $this->profile_picture = $path;
+          $this->save();
+        }
 
         //always assign a registered user marker to a newly created user
         $registeredUser = Role::where('marker', 'registered-user')->first();
@@ -153,9 +157,9 @@ class User extends Authenticatable
      */
     public function updatePhotoUser(Request $request)
     {
-      if($request->profile_picture){
+      if($request->profile_picture) {
         IF(!Storage::exists('localPhoto/')){
-          Storage::delete('profile_picture'. $this->photo);
+          Storage::delete('profile_picture'. $this->profile_picture);
           Storage::makeDirectory('localPhoto/', 0775, true);
         }
         $file = $request->file('profile_picture');
@@ -164,7 +168,7 @@ class User extends Authenticatable
         $this->profile_picture = $path;
         $this->save();
       }
-    } 
+    }
     /**
      * Update the specified resource in storage.
      *

@@ -42,7 +42,7 @@ class UserController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-     public function createUser(Request $request)
+     public function createUser(UserRequest $request)
      {
        $user = new User;
        $user->createUser($request);
