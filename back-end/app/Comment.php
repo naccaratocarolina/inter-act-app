@@ -38,6 +38,11 @@ class Comment extends Model
         return $this->belongsTo('App\Article');
     }
 
+    /**
+     * Creates a new instance of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function postCommentOnArticle(CommentRequest $request, $article_id) {
       $user = Auth::user();
       $this->user_id = $user->id;
@@ -47,7 +52,13 @@ class Comment extends Model
       $this->save();
     }
 
-    //update comment by user
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Comment  $comment
+     * @return \Illuminate\Http\Response
+     */
     public function updateComment(Request $request) {
         $current = Carbon::now();
         if($request->commentary){

@@ -69,7 +69,6 @@ class CommentController extends Controller
       return response()->json(['message' => 'Comentário criado!', 'comment' => $comment]);
     }
 
-
     /**
      * Update the specified resource in storage.
      *
