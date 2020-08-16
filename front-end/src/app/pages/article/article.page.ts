@@ -55,6 +55,7 @@ export class ArticlePage implements OnInit {
   public ionViewWillLeave() {
     this.articleContent = [];
     this.article_owner = [];
+    localStorage.setItem('article_id',null)
   }
 
   //Get the article by its id

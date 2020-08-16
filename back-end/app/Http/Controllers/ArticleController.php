@@ -28,9 +28,9 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexUserArticles()
+    public function indexUserArticles($id)
     {
-        $user = Auth::user();
+        $user = User::findOrFail($id);
         $articles = $user->articles; //grab the user's articles
         return response()->json(['articles' => $articles]);
     }

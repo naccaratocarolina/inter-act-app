@@ -26,9 +26,9 @@ export class ArticleService {
   }
 
   //Display a listing of the resource that belongs to the authenticated user
-  public indexUserArticles():Observable<any> {
+  public indexUserArticles(user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.get(this.apiUrl + 'indexUserArticles', this.httpHeaders);
+    return this.http.get(this.apiUrl + 'indexUserArticles/' + user_id, this.httpHeaders);
   }
 
   //Display the article owner

@@ -1,22 +1,22 @@
 <ion-content>
 
   <section class='profile'>
-    <img class='profile-pic' src = '../../../assets/hussein.jpg'>
-    <ion-button class='follow' (click)='toggleFollow()'>{{followText}}</ion-button>
+    <img class='profile-pic' src = "{{userData.profile_picture}}">
+    <ion-button class='follow' (click)='actionFollow(this.profile_id)'>{{followText}}</ion-button>
   </section>
 
 <section class='card'>
   <ion-card>
-    <h1>Hussein Latif</h1>
-    <h2>Não deixe para amanhã o que você pode comer hoje! Cozinhe comigo e seja feliz!</h2>
+    <h1>{{userData.name}}</h1>
+    <h2>{{userData.description}}</h2>
     <section class='followinfo'>
       <section class='followers'>
         <h3>Seguidores</h3>
-        <h4>356</h4>
+        <h4>{{userData.follower_count}}</h4>
       </section>
       <section class='following'> 
         <h3>Seguindo</h3>
-        <h4>98</h4>
+        <h4>{{userData.following_count}}</h4>
       </section>
     </section>
     <section class='articles'>
@@ -26,7 +26,7 @@
           <ion-col>
             <h6 class="title">{{All.title}}</h6>
             <p>{{All.subtitle}}</p>
-            <ion-row (click) = "redirectArticle()">
+            <ion-row (click) = "redirectArticle(All.id)">
               <h6 class='continue'>Continuar Lendo</h6>
               <ion-icon name="arrow-forward-outline"></ion-icon>
             </ion-row>

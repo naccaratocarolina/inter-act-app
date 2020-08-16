@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import {AuthService} from './services/Auth/auth.service'
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,17 +13,23 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
-  public appPages = [
-    {
-      title: 'Login',
-      url: 'login',
-      icon: 'person'
-    },
-    {
-      title: 'Registre-se',
-      url: 'register',
-      icon: 'checkbox'
-    },
+  public appPages = []
+  userToken = localStorage.getItem('token')
+
+
+  logout(title){
+    if (title=='Sair'){
+      this.authService.logout().subscribe((response) => {
+        localStorage.removeItem('token');
+        this.showSidemenu(this.userToken);
+        this.router.navigate(['/home']).then(()=>window.location.reload());
+      })
+    }
+  }
+
+  showSidemenu(userToken) {
+    if (userToken) {
+      this.appPages =[
     {
       title: 'Perfil',
       url: 'profile',
@@ -41,14 +49,31 @@ export class AppComponent implements OnInit {
       title: 'Sair',
       url: '/folder/Archived',
       icon: 'log-out-outline'
-    },
-  ];
-
+    }]
+    } else { this.appPages = [
+      {
+        title: 'Login',
+        url: 'login',
+        icon: 'person'
+      },
+      {
+        title: 'Registre-se',
+        url: 'register',
+        icon: 'checkbox'
+      },
+      {
+        title: 'Home',
+        url: 'home',
+        icon: 'home'
+      }]}
+  }
 
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    public authService:AuthService,
+    private router:Router,
   ) {
     this.initializeApp();
   }
@@ -65,5 +90,6 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
+    this.showSidemenu(this.userToken);
   }
 }

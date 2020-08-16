@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ArticleService } from '../../services/article.service';
 import { IonicStorageModule } from "@ionic/storage";
 import { Router } from '@angular/router';
+import {UserService} from '../../services/user.service';
+import {ArticleService} from '../../services/article.service';
+import {FollowService} from '../../services/follow.service';
 
 @Component({
   selector: 'app-profile',
@@ -10,74 +12,80 @@ import { Router } from '@angular/router';
 })
 export class ProfilePage implements OnInit {
 
-  constructor(private router:Router) { }
+  postsAll:any;
+  followText:string;
+  profile_id:number;
+  userData = [];
+  followBool:boolean;
 
-postsAll:any;
-followText:string;
+  constructor(
+    private router:Router, 
+    public userService:UserService,
+    public articleService:ArticleService,
+    public followService:FollowService,
+    ) {
+    this.profile_id = JSON.parse(localStorage.getItem('profile_id'));
+   }
 
   ngOnInit() {
-    this.toggleFollow()
-    this.postsAll = [
-      {
-        id: '1',
-        user_id: '',
-        title: 'Saladinha fit do Hussein',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: '../../../assets/salada.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '2',
-        user_id: '',
-        title: 'Yoga em casa',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: '../../../assets/yoga.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '3',
-        user_id: '',
-        title: 'Mixto Quiente',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: '../../../assets/food.jpg',
-        category: '',
-        date: '',
-      },
-      {
-        id: '4',
-        user_id: '',
-        title: 'Street Dance',
-        subtitle: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.",
-        text: '',
-        image: '../../../assets/streetdance.jpg',
-        category: '',
-        date: '',
-      },
-    ];
   }
 
-
-  followBool=false
-
-  toggleFollow(){
-    this.followBool=!this.followBool
-    if (this.followBool)
-    {this.followText='Seguindo'}
-       else {this.followText='Seguir'}
+  public showUserArticles(profile_id){
+    this.articleService.indexUserArticles(profile_id).subscribe((response) => {
+      this.postsAll = response.articles;
+    })
   }
 
-
-  followUser () {
-    this.toggleFollow()
+  public showUser(profile_id){
+    this.userService.showUser(profile_id).subscribe((response) =>{
+      this.userData = response.user;
+      console.log(response.message);
+      this.showUserArticles(this.profile_id);
+    })
   }
 
-  public redirectArticle() {
-    this.router.navigate(['/article']);
+  public ionViewWillEnter() {
+    this.showUser(this.profile_id);
+    this.hasFollow(this.profile_id);
   }
 
+  public ionViewWillLeave() {
+    localStorage.setItem('profile_id',null)
+  }
+
+  //Like or dislike an article
+  public actionFollow(user_id) {
+    this.followService.actionFollow(user_id).subscribe((response) => {
+    this.hasFollow(user_id);
+    this.showUser(user_id);
+    console.log(response.message)
+  });
+}
+
+//Check if the article war already liked by the logged user or not
+public hasFollow(user_id) {
+  this.followService.hasFollow(user_id).subscribe((response) => {
+    if (response) {
+      this.followBool = true;
+    }
+    else {
+      this.followBool = false;
+    }
+    this.showFollow();
+  });
+}
+
+//Display the icon checking if it has already been liked or not
+public showFollow() {
+  if (this.followBool) {
+    this.followText = 'Seguindo';
+  } else {
+    this.followText = 'Seguir';
+  }
+}
+
+public redirectArticle(article_id) {
+  localStorage.setItem('article_id', JSON.stringify(article_id));
+  this.router.navigate(['/article']);
+}
   }

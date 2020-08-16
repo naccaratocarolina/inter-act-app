@@ -1,6 +1,6 @@
-
 h1 {
     font-family: 'Comfortaa', cursive;
+    font-size: 1.5em;
     text-transform: capitalize;
     margin: auto;
     padding: auto;
@@ -17,9 +17,16 @@ h1 {
 }
 
 .button {
-    margin: 8em auto auto auto;
+    margin: 17em auto auto auto;
     --border-radius: 10em;
-    --color: var(--ion-color-primary);
+
+
+    border: solid;
+    border-width: 0.125em;
+    border-color: white;
+    border-radius: 10em;
+    width: auto;
+    height: 3.125em;
 }
 
 .redir {

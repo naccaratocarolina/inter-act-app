@@ -121,7 +121,7 @@ class UserController extends Controller
           User::where('id', $user->id)->increment('following_count');
           User::where('id', $following->id)->increment('follower_count');
           $following = User::findOrFail($following_id);
-          return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
+          return response()->json(['message' => 'Agora voce segue ' . $following->name]);
         }
         else {
           //dettach the ids
@@ -131,7 +131,7 @@ class UserController extends Controller
           User::where('id', $user->id)->decrement('following_count');
           User::where('id', $following->id)->decrement('follower_count');
           $following = User::findOrFail($following_id);
-          return response()->json(['message' => 'Voce parou de seguir x ' . $following->name]);
+          return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
         }
       }
 
