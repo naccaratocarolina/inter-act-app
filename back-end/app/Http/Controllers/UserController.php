@@ -68,7 +68,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(UserRequest $request, $id)
+     public function updateUser(Request $request, $id)
      {
        $user = User::find($id);
        $user->updateUser($request);
@@ -106,6 +106,7 @@ class UserController extends Controller
           //increments the following and follower count
           User::where('id', $user->id)->increment('following_count');
           User::where('id', $following->id)->increment('follower_count');
+          $following = User::findOrFail($following_id);
           return response()->json(['message' => 'Agora voce segue x ' . $following->name]);
         }
         else {
@@ -115,6 +116,7 @@ class UserController extends Controller
           //decrements the following and follower count
           User::where('id', $user->id)->decrement('following_count');
           User::where('id', $following->id)->decrement('follower_count');
+          $following = User::findOrFail($following_id);
           return response()->json(['message' => 'Voce parou de seguir x ' . $following->name]);
         }
       }

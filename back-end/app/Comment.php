@@ -38,15 +38,14 @@ class Comment extends Model
         return $this->belongsTo('App\Article');
     }
 
-    //creat new comment by user
     public function postCommentOnArticle(CommentRequest $request, $article_id) {
-        $user = Auth::user();
-        $this->user_id = $user->id;
-        $this->article_id = $article_id;
-  
-        $this->commentary = $request->commentary;
-        $this->save();
-      }
+      $user = Auth::user();
+      $this->user_id = $user->id;
+      $this->article_id = $article_id;
+
+      $this->commentary = $request->commentary;
+      $this->save();
+    }
 
     //update comment by user
     public function updateComment(Request $request) {

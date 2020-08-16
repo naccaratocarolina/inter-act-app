@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CommentRequest as CommentRequest;
 use App\Comment;
 use App\Article;
 use Carbon\Carbon;
+use App\User;
 use Auth;
 
 class CommentController extends Controller
@@ -23,26 +23,26 @@ class CommentController extends Controller
     }
 
     /**
-     * Display a listing of the resource that belongs to the authenticated user.
+     * Display a listing of the resource that belongs to given user.
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexUserComment()
+    public function indexUserComment($user_id)
     {
-        $user = Auth::user();
+        $user = User::findOrFail($user_id);
         $comments = $user->comments; //grab the user's comments
         return response()->json(['comments' => $comments]);
     }
 
     /**
-     * Display a listing of the resource that belongs to tthe authenticated user.
+     * Display a listing of the resource witch was assigned to the given article.
      *
      * @return \Illuminate\Http\Response
      */
     public function indexArticleComment($article_id)
     {
         $article = Article::findOrFail($article_id);
-        $comments = $article->comments; //grab the user's comments
+        $comments = $article->comments;
         return response()->json(['comments' => $comments]);
     }
 
@@ -64,10 +64,10 @@ class CommentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function postCommentOnArticle(CommentRequest $request, $article_id) {
-        $comment = new Comment;
-        $comment->postCommentOnArticle($request, $article_id);
-        return response()->json(['message' => 'Comentário criado!', 'comment' => $comment]);
-      }
+      $comment = new Comment;
+      $comment->postCommentOnArticle($request, $article_id);
+      return response()->json(['message' => 'Comentário criado!', 'comment' => $comment]);
+    }
 
 
     /**
@@ -109,6 +109,5 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         Comment::destroy($id);
         return response()->json(['message' => 'Comentário deletado!', 'comment' => $comment]);
-
     }
 }

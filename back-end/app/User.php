@@ -12,6 +12,7 @@ use Laravel\Passport\HasApiTokens;
 use App\Article;
 use App\Comment;
 use App\Role;
+use Auth;
 
 class User extends Authenticatable
 {
@@ -166,5 +167,29 @@ class User extends Authenticatable
          $this->roles()->attach($request->role);
          $this->save();
        }
+     }
+
+     /**
+      * Function that check if the authenticated user is owner of the article.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      * @param  int  $article_id
+      * @return bool
+      */
+     public function isArticleOwner($article_id) {
+       $user = Auth::user();
+       return (bool) $user->articles->contains('id', $article_id);
+     }
+
+     /**
+      * Function that check if the authenticated user is owner of the article.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      * @param  int  $article_id
+      * @return bool
+      */
+     public function isCommentOwner($comment_id) {
+       $user = Auth::user();
+       return (bool) $user->comments->contains('id', $comment_id);
      }
 }

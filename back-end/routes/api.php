@@ -48,22 +48,22 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
-  Route::get('indexUserArticles','ArticleController@indexUserArticles')->middleware('role');
+  Route::get('indexUserArticles','ArticleController@indexUserArticles');
   Route::get('indexFollowingArticles', 'ArticleController@indexFollowingArticles');
-  Route::get('indexArticleOwner/{article_id}', 'ArticleController@indexArticleOwner');
+  Route::get('indexArticleOwner/{id}', 'ArticleController@indexArticleOwner');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
-  Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
-  Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
+  Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('owner');
+  Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('owner');
 
   //Comment Controller
-  Route::get('indexUserComment','CommentController@indexUserComment')->middleware('role');
-  Route::get('indexCommentOwner/{id}', 'CommentController@indexCommentOwner');
+  Route::get('indexUserComment/{user_id}','CommentController@indexUserComment');
   Route::get('indexArticleComment/{article_id}','CommentController@indexArticleComment');
-  Route::get('showComment/{id}','CommentController@showComment')->middleware('role');
+  Route::get('indexCommentOwner/{id}', 'CommentController@indexCommentOwner');
+  Route::get('showComment/{id}','CommentController@showComment');
   Route::post('postCommentOnArticle/{article_id}','CommentController@postCommentOnArticle');
-  Route::put('updateComment/{id}','CommentController@updateComment')->middleware('role');
-  Route::delete('destroyComment/{id}','CommentController@destroyComment')->middleware('role');
+  Route::put('updateComment/{id}','CommentController@updateComment')->middleware('owner');
+  Route::delete('destroyComment/{id}','CommentController@destroyComment')->middleware('owner');
 
   //Role Controller
   Route::get('indexRole', 'RoleController@indexRole')->middleware('moderator');

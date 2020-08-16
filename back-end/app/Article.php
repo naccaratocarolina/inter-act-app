@@ -60,7 +60,6 @@ class Article extends Model
       date_default_timezone_set('America/Sao_Paulo');
       $now = Carbon::now();
       $this->date = $now->toFormattedDateString();
-      $this->save();
 
       $this->save();
     }
