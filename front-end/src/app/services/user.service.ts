@@ -22,29 +22,29 @@ export class UserService {
 
   constructor(public http:HttpClient) { }
 
-  //Display a listing of all users
+  //Faz o display de todos os usuarios
   public indexUser():Observable<any> {
     return this.http.get(this.apiUrl + 'indexUser', this.httpHeaders);
   }
 
-  //Create a new User with registered-user marker as default
+  //Cria um novo usuario com o marcador de registered-user como default
   public createUser(form):Observable<any> {
     return this.http.post(this.apiUrl + 'createUser', form, this.httpHeaders);
   }
 
-  //Display the user matching the id given
+  //Localiza o usuario conforme o seu id
   public showUser(user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'showUser/' + user_id, this.httpHeaders);
   }
 
-  //Update the specified user in storage
+  //Edita o usuario especifico no storage
   public updateUser(form, user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.put(this.apiUrl + 'updateUser/' + user_id, form, this.httpHeaders);
   }
 
-  //Remove the specified user from storage
+  //Remove o usuario especifico do storage
   public destroyUser(user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.delete(this.apiUrl + 'destroyUser/' + user_id, this.httpHeaders);
