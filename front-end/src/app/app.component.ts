@@ -90,6 +90,14 @@ export class AppComponent implements OnInit {
     });
   }
 
+  //Redireciona para a pagina de perfil e salva o id do usuario clicado
+  public redirectProfile(title, profile_id) {
+    if (title == 'Perfil'){
+      localStorage.setItem('profile_id', JSON.stringify(profile_id));
+      window.location.replace('/profile');
+   }
+  }
+
   //Realiza o logout do usuario
   public logout(title){
     if (title == 'Sair'){
