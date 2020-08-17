@@ -1,8 +1,7 @@
 <ion-content>
-
   <section class='profile'>
     <img class='profile-pic' src = "{{userData.profile_picture}}">
-    <ion-button class='follow' (click)='actionFollow(this.profile_id)'>{{followText}}</ion-button>
+    <ion-button *ngIf="userToken" class='follow' (click)='actionFollow(this.profile_id)'>{{followText}}</ion-button>
   </section>
 
 <section class='card'>

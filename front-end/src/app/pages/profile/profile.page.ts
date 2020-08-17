@@ -16,6 +16,7 @@ export class ProfilePage implements OnInit {
   followText:string;
   profile_id:number;
   followBool:boolean;
+  userToken = localStorage.getItem("token");
 
   constructor(
     private router:Router,
@@ -90,5 +91,10 @@ export class ProfilePage implements OnInit {
   public redirectArticle(article_id) {
     localStorage.setItem('article_id', JSON.stringify(article_id));
     this.router.navigate(['/article']);
+  }
+
+  //Acao do botao de voltar na header
+  goBack() {
+    window.history.back();
   }
 }
