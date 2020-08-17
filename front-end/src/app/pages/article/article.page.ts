@@ -25,9 +25,6 @@ export class ArticlePage implements OnInit {
   public heartIcon: string;
   public heartBool: boolean;
   public userToken = localStorage.getItem("token");
-  //
-  public canEdit = false;
-  //public textEditForm:string = '';
 
   constructor(
     public articleService:ArticleService,
@@ -40,15 +37,9 @@ export class ArticlePage implements OnInit {
     this.commentForm = this.formBuilder.group({
       commentary: [null, [Validators.required]]
     });
-
-    this.commentEditForm = this.formBuilder.group({
-      commentary: [null, [Validators.required]]
-    });
    }
 
-  ngOnInit() {
-    console.log(this.textEditForm);
-  }
+  ngOnInit() { }
 
   //Chamada das funcoes para quando o usuario entrar na pagina
   public ionViewWillEnter() {
@@ -116,17 +107,6 @@ export class ArticlePage implements OnInit {
     this.commentService.postCommentOnArticle(article_id, form.value).subscribe((response) => {
       console.log(response.message);
       form.reset();
-      this.showComments(article_id);
-    });
-  }
-
-  //Edita um comentario postado
-  public updateComment(comment_id, commentEditForm, article_id) {
-    this.canEdit = false;
-    this.commentService.updateComment(comment_id, commentEditForm.value).subscribe((response) => {
-      console.log(response.message);
-      textEditForm = '';
-      commentEditForm.reset();
       this.showComments(article_id);
     });
   }
