@@ -1,0 +1,14 @@
+<ion-grid>
+  <ion-row>
+    <ion-col size="small" class="image"><img src="{{All.image}}"></ion-col>
+    <ion-col>
+      <h6 class="title">{{All.title}}</h6>
+      <p>{{All.subtitle}}</p>
+      <ion-row (click) = "redirectArticle(All.id)">
+        <h6 class='continue'>Continuar Lendo</h6>
+        <ion-icon name="arrow-forward-outline"></ion-icon>
+      </ion-row>
+    </ion-col>
+    <hr>
+  </ion-row>
+</ion-grid>
