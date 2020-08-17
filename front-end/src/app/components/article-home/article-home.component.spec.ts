@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ArticleHomeComponent } from './article-home.component';
 
+//componentes do artigo na pagina home
 describe('ArticleHomeComponent', () => {
   let component: ArticleHomeComponent;
   let fixture: ComponentFixture<ArticleHomeComponent>;

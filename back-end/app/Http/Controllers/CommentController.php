@@ -16,6 +16,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Show all comment
     public function indexAllComment()
     {
         $comments = Comment::orderBy('id', 'desc')->get();
@@ -27,6 +28,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Show all comment that user make
     public function indexUserComment($user_id)
     {
         $user = User::findOrFail($user_id);
@@ -39,6 +41,7 @@ class CommentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Show all comment in this article
     public function indexArticleComment($article_id)
     {
         $article = Article::findOrFail($article_id);
@@ -52,6 +55,7 @@ class CommentController extends Controller
      * @param  \App\Comment  $comment_id
      * @return \Illuminate\Http\Response
      */
+    //Show all comment the owner make in article
     public function indexCommentOwner($id) {
       $comment = Comment::findOrFail($id);
       $comment_owner = $comment->user;

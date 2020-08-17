@@ -5,6 +5,7 @@
 use App\Article;
 use Faker\Generator as Faker;
 
+//make fake informantion for DB
 $factory->define(Article::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence($nbWords = 5, $variableNbWords = true),

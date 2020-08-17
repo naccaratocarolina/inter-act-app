@@ -25,6 +25,7 @@ class UserRequest extends FormRequest
    *
    * @return array
    */
+  //check if information is valid
   public function rules()
   {
       return [
@@ -32,7 +33,7 @@ class UserRequest extends FormRequest
         'email' => 'required|email|unique:users',
         'password' => 'required|string',
         'description' => 'required|string',
-        'profile_picture' =>'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
+        'profile_picture' =>'file|image|mimes:jpeg,png,gif,webp|max:2048',
       ];
   }
 

@@ -25,6 +25,7 @@ class CommentRequest extends FormRequest
      *
      * @return array
      */
+    //check if information is valid
     public function rules()
     {
         return[
@@ -33,7 +34,9 @@ class CommentRequest extends FormRequest
         ];
             
     }
+    // protect against error
     protected function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json($validator->errors(), 422));
     }
+    
 }

@@ -23,6 +23,7 @@ class ArticleRequest extends FormRequest
      *
      * @return array
      */
+    //check if information is valid
      public function rules()
         {
             return[
@@ -36,10 +37,12 @@ class ArticleRequest extends FormRequest
 
         }
 
+        //proct aginst some erro
         protected function failedValidation(Validator $validator) {
             throw new HttpResponseException(response()->json($validator->errors(), 422));
         }
 
+        //return if information isnt valid
         public function messages(){
             return[
                 'title.aplha' => 'Somente caracteres afabéticos ',

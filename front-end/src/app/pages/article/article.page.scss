@@ -1,3 +1,4 @@
+//butão para retorno na pagina anterior
 ion-back-button, ion-title {
     color: #0D8FE3;
 }
@@ -13,6 +14,7 @@ ion-grid, ion-row, ion-col {
     padding: 0;
 }
 
+// estilização titulo artigo
 ion-title, h1 {
     font-family: 'Comfortaa', cursive;
 }
@@ -24,6 +26,7 @@ h1 {
     width: 100%;
 }
 
+//imagem do
 .userimg, .loggedUserImg {
     width: 2.25em;
     height: 2.25em;
@@ -32,7 +35,7 @@ h1 {
     margin-left: 1.4em;
     margin-right: 0.8em;
 }
-
+//imagem do 
 .loggedUserImg {
     width: 2.25em;
     height: 2.25em;
@@ -54,6 +57,7 @@ h6 {
     color: #939393;
 }
 
+//texto paragrafo
 p {
     margin-right: 1.5em;
     margin-left: 1.5em;
@@ -72,6 +76,7 @@ ion-icon {
     font-size: 1.5em;
 }
 
+//botão like
 .likes {
     margin-top: 0.7em;
     margin-bottom: 0;
@@ -87,6 +92,7 @@ ion-icon {
     font-size: 1em;
 }
 
+//estilizaçãocomentarios e quantidade
 .comment {
     font-family: Roboto, sans-serif;
     font-size: 1em;
@@ -98,6 +104,7 @@ ion-icon {
     font-size: 1em;
 }
 
+//estilização adicionar comentario
 .addcomment {
     display: flex;
     align-items: center;
@@ -107,6 +114,7 @@ ion-icon {
     margin-top: 10px;
 }
 
+//caixa de cometario
 ion-textarea{
 
     --placeholder-font-weight :normal;

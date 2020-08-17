@@ -1,3 +1,4 @@
+//estilização do card
 ion-card {
     border-radius: 2em;
     text-align: center;
@@ -6,7 +7,7 @@ ion-card {
     margin: 0;
     box-shadow: none;
 }
-
+//estilização do card de seguindo
 .followers, .following {
     display: flex;
     flex-direction: column;
@@ -35,7 +36,7 @@ ion-card {
     text-transform: capitalize;
     font-size: 1.1em;
 }
-
+//estilização do artigo(titulo, imagem e linhas)
 .articles {
     margin-top: 2em;
 }

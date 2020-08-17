@@ -14,7 +14,7 @@ export class ArticleHomeComponent implements OnInit {
 
   ngOnInit() {}
 
-  //redirects to the create article page
+  //redireciona para pagina que cria artigo
   public redirectArticle(article_id) {
     localStorage.setItem('article_id', JSON.stringify(article_id));
     this.router.navigate(['/article']);

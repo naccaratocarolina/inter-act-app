@@ -14,6 +14,7 @@ class ModeratorMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
+    // check if user have the make of moderator e permite some exclusive actions
     public function handle($request, Closure $next)
     {
       $user = Auth::user();
@@ -21,7 +22,7 @@ class ModeratorMiddleware
         return $next($request);
       }
       else {
-        return response()->json(['Somente o moderador pode realizar essa acao!']);
+        return response()->json(['Somente o moderador pode realizar essa ação!']);
       }
     }
 }

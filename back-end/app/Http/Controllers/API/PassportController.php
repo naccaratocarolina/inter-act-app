@@ -16,6 +16,7 @@ use DB;
 
 class PassportController extends Controller
 {
+  //function that register the user
   public function register(UserRequest $request) {
     $user = new User;
     $user->createUser($request);
@@ -25,6 +26,7 @@ class PassportController extends Controller
     return response()->json(["message" => "Seja bem-vindx!","data" => ["user" => $user, "token" => $token]], 200);
   }
 
+  //function that make the login of user
   public function login() {
     if(Auth::attempt(['email' => request('email'), 'password' => request('password')])) {
       $user = Auth::user();
@@ -35,12 +37,13 @@ class PassportController extends Controller
       return response()->json(["message" => "Email ou senha inválidos!", "data" => [null]], 500);
     }
   }
-
+  //function that get more details of user
   public function getDetails() {
     $user = Auth::user();
     return response()->json(["user" => $user], 200);
   }
 
+  //function that make the logou of user
   public function logout() {
     $accessToken = Auth::user()->token();
     DB::table('oauth_refresh_tokens')->where('access_token_id', $accessToken->id)->update(['revoked' => true]);

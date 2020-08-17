@@ -125,13 +125,14 @@ class User extends Authenticatable
         $this->description = $request->description;
         $this->save();
 
+        //upload the image give by user
         if($request->profile_picture) {
-          If(!Storage::exists( 'localPhoto/')){
-            Storage::makeDirectory('localPhoto/', 0775, true);
+          If(!Storage::exists( 'localPhoto/UserPhoto/')){
+            Storage::makeDirectory('localPhoto/UserPhoto/', 0775, true);
           }
           $photo=base64_decode($request->profile_picture);
           $fileName = uniqid();
-          $path = storage_path('/app/localPhoto/'.$fileName);
+          $path = storage_path('/app/localPhoto/UserPhoto/'.$fileName);
           file_put_contents($path, $photo);
           $this->profile_picture = $path;
           $this->save();
@@ -160,13 +161,13 @@ class User extends Authenticatable
     public function updatePhotoUser(UserRequest $request)
     {
       if($request->profile_picture) {
-        If(!Storage::exists( 'localPhoto/')){
-          Storage::makeDirectory('localPhoto/', 0775, true);
+        If(!Storage::exists( 'localPhoto/UserPhoto/')){
+          Storage::makeDirectory('localPhoto/UserPhoto/', 0775, true);
         }
-        Storage::delete('localPhoto/'. $this->profile_picture);
+        Storage::delete('localPhoto/UserPhoto/'. $this->profile_picture);
         $image=base64_decode($request->profile_picture);
         $fileName = uniqid();
-        $path = storage_path('/app/localPhoto/'.$fileName);
+        $path = storage_path('/app/localPhoto/UserPhoto/'.$fileName);
         file_put_contents($path, $image);
         $this->profile_picture = $path;
         $this->save();

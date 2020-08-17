@@ -17,6 +17,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Show all articles
     public function indexAllArticles()
     {
         $articles = Article::orderBy('id', 'desc')->get();
@@ -28,6 +29,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Show all articles by user id
     public function indexUserArticles($id)
     {
         $user = User::findOrFail($id);
@@ -41,6 +43,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article_id
      * @return \Illuminate\Http\Response
      */
+    //Show all articles by owner
     public function indexArticleOwner($article_id) {
       $article = Article::findOrFail($article_id);
       $article_owner = $article->user;
@@ -52,6 +55,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //Show all articles that user follow
     public function indexFollowingArticles() {
       $user = Auth::user();
       //grab que users that $user is following
@@ -70,8 +74,10 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    //create a new article
     public function createArticle(ArticleRequest $request)
     {
+      $user = Auth::user();
       $article = new Article;
       $article->createArticle($request);
       return response()->json(['message' => 'Artigo criado!', 'article' => $article]);
@@ -83,6 +89,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
+    //Show article by article id
     public function showArticle($id)
     {
         $article = Article::findOrFail($id);
@@ -96,11 +103,12 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
+    //Update the article by article id
     public function updateArticle(ArticleRequest $request, $id)
     {
       $user = Auth::user();
       $article = Article::findOrFail($id);
-      if($article->user_id == $user->id) { //if the user making the request own the article
+      if($article->user_id === $user->id) { //if the user making the request own the article
         $article->updateArticle($request);
         return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
       }
@@ -114,6 +122,7 @@ class ArticleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    //Update the  article photo by article id
     public function updatePhotoArticle(ArticleRequest $request, $id)
     {
       $user = Auth::user();
@@ -131,6 +140,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
+    //Destroy the article by article id
     public function destroyArticle($id)
     {
       $user = Auth::user();

@@ -15,6 +15,7 @@ class RoleMiddleware
      * @param  \Closure  $next
      * @return mixed
      */
+    //check if user is authorizat do this action
     public function handle($request, Closure $next)
     {
         $user = Auth::user();

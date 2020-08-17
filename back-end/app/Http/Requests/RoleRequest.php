@@ -24,6 +24,7 @@ class RoleRequest extends FormRequest
      *
      * @return array
      */
+    //check if information is valid
     public function rules()
     {
         return [

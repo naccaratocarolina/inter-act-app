@@ -3,6 +3,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { ArticleProfileComponent } from './article-profile.component';
 
+// componentes do artigo na pagina de perfil
 describe('ArticleProfileComponent', () => {
   let component: ArticleProfileComponent;
   let fixture: ComponentFixture<ArticleProfileComponent>;

@@ -37,6 +37,7 @@ export class EditArticlePage implements OnInit {
     console.log(form.value);
   }
 
+  //redireciona para pagina home
   public redirectHome() {
     this.router.navigate(['/home']);
   }

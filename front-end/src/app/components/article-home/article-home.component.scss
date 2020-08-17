@@ -1,10 +1,13 @@
+//cor da barra de ferramentas
 ion-toolbar {
     --background: #0D8FE3;
 }
 
+
 ion-menu-button {
     --color: #ffffff;
 }
+
 
 ion-button {
     --color: #ffffff;
@@ -37,10 +40,12 @@ ion-segment {
     margin-bottom: 2em;
 }
 
+//slider da pagina
 ion-slides {
     font-family: 'Montserrat', sans-serif;
 }
 
+//ajusta a imagem do artigo
 .image {
     padding-left: 1em;
     padding-right: 0.8em;
@@ -54,6 +59,7 @@ img {
     margin-top: 1.5em;
 }
 
+//titulo do artigo
 .title {
     font-weight: bold;
     color: #4F4F4F;
@@ -61,7 +67,7 @@ img {
     padding-bottom: 0.5em;
     font-size: 0.8em;
 }
-
+//subtitulo do artigo
 p{
     padding-bottom: 0.6em;
 }
@@ -71,6 +77,7 @@ h6, p {
     font-size: 0.8em;
 }
 
+//posicionamento do artigo e suas componentes e cor da letra
 .title, h6, p {
     text-align: left;
 }

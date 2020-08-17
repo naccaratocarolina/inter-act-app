@@ -39,6 +39,7 @@ class CadastreNotification extends Notification
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage
      */
+    //Notifi the user your new cadastre
     public function toMail($notifiable)
     {
         return (new MailMessage)

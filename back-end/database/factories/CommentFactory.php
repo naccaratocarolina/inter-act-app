@@ -5,6 +5,7 @@
 use App\Comment;
 use Faker\Generator as Faker;
 
+//make fake informantion for DB
 $factory->define(Comment::class, function (Faker $faker) {
     return [
         'commentary' => $faker->sentence($nbWords = 10, $variableNbWords = true),

@@ -5,6 +5,7 @@
 use App\User;
 use Faker\Generator as Faker;
 
+//make fake informantion for DB
 $factory->define(User::class, function (Faker $faker) {
     return [
         'name' => $faker->name,

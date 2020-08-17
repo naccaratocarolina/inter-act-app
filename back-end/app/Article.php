@@ -66,17 +66,20 @@ class Article extends Model
       $this->category = $request->category;
       $this->save();
 
+      //upload the image give by user
       if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::makeDirectory('localPhoto/', 0775, true);
+        IF(!Storage::exists('localPhoto/ArticlePhoto/')){
+          Storage::makeDirectory('localPhoto/ArticlePhoto/', 0775, true);
         }
         $photo=base64_decode($request->image);
         $fileName = uniqid();
-        $path = storage_path('/app/localPhoto/'.$fileName);
+        $path = storage_path('/app/localPhoto/ArticlePhoto/'.$fileName);
         file_put_contents($path, $photo);
         $this->image = $path;
+        $this->save();
       }
 
+      //return the day of post
       date_default_timezone_set('America/Sao_Paulo');
       $now = Carbon::now();
       $this->date = $now->toFormattedDateString();
@@ -94,19 +97,20 @@ class Article extends Model
     public function updatePhotoArticle(ArticleRequest $request)
     {
       if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::makeDirectory('localPhoto/', 0775, true);
+        IF(!Storage::exists('localPhoto/ArticlePhoto/')){
+          Storage::makeDirectory('localPhoto/ArticlePhoto/', 0775, true);
         }
-        Storage::delete('localPhoto/'. $this->image);
+        Storage::delete( $this->image);
         $photo=base64_decode($request->image);
         $fileName = uniqid();
-        $path = storage_path('/app/localPhoto/'.$fileName);
+        $path = storage_path('/app/localPhoto/ArticlePhoto/'.$fileName);
         file_put_contents($path, $photo);
         $this->image = $path;
       }
 
       $this->save();
     }
+    // C:\Users\55219\Desktop\EJCM\InterAct\inter-act-app\back-end\storage\/app/localPhoto/UserPhoto/5f3abc248712f
 
 
     /**
