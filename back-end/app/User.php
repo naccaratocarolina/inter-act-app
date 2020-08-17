@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Validation\Validator;
 
 use App\Input;
 use App\Article;
@@ -156,13 +157,14 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoUser(Request $request)
+    public function updatePhotoUser(UserRequest $request)
     {
       if($request->profile_picture) {
-        IF(!Storage::exists('localPhoto/')){
-          Storage::delete('profile_picture'. $this->profile_picture);
+          
+        IF(!Storage::exists('localPhoto/')){;
           Storage::makeDirectory('localPhoto/', 0775, true);
         }
+        Storage::delete('profile_picture'. $this->profile_picture);
         $file = $request->file('profile_picture');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
         $path = $file->storeAs('localPhoto/' ,$fileName);
@@ -177,9 +179,9 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request)
+     public function updateUser(UserRequest $request)
      {
-       //atualiza os campos do user
+       //atualize user camps
        if($request->name){
           $this->name = $request->name;
        }
@@ -194,7 +196,7 @@ class User extends Authenticatable
        }
        $this->save();
 
-       //altera os roles
+       //change the roles
        if($request->role) {
          $this->roles()->attach($request->role);
          $this->save();

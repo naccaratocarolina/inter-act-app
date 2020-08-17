@@ -23,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 //Article Controller
 Route::get('indexAllArticles','ArticleController@indexAllArticles');
 Route::get('showArticle/{id}', 'ArticleController@showArticle');
+Route::get('indexUserArticles','ArticleController@indexUserArticles');
 
 //Passport Controller
 Route::post('register', 'API\PassportController@register')->name('register');
@@ -48,19 +49,13 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
-  Route::get('indexUserArticles','ArticleController@indexUserArticles');
   Route::get('indexFollowingArticles', 'ArticleController@indexFollowingArticles');
   Route::get('indexArticleOwner/{id}', 'ArticleController@indexArticleOwner');
   Route::get('likesCounter/{id}', 'ArticleController@likesCounter');
   Route::post('createArticle','ArticleController@createArticle');
-<<<<<<< HEAD
-  Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('owner');
-  Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('owner');
-=======
   Route::post('updatePhotoArticle/{id}', 'ArticleController@updatePhotoArticle');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
->>>>>>> back_alexandra_uploadVal
 
   //Comment Controller
   Route::get('indexUserComment/{user_id}','CommentController@indexUserComment');
