@@ -19,9 +19,12 @@ export class ArticlePage implements OnInit {
   public article_owner = [];
   public loggedUser = [];
   public comment = [];
-  commentForm: FormGroup;
-  heartIcon: string;
-  heartBool: boolean;
+  public commentForm: FormGroup;
+  public heartIcon: string;
+  public heartBool: boolean;
+  public userToken = localStorage.getItem("token");
+  
+
 
   constructor(
     public articleService:ArticleService,
@@ -36,7 +39,9 @@ export class ArticlePage implements OnInit {
     });
    }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    
+  }
 
   //Chamada das funcoes para quando o usuario entrar na pagina
   public ionViewWillEnter() {
@@ -117,9 +122,10 @@ export class ArticlePage implements OnInit {
     });
   }
 
-  //Verifica de o usuario logado ja deu like ou nao no artigo e salva essa informacao
+  //Verifica se o usuario logado ja deu like ou nao no artigo e salva essa informacao
   public hasLike(article_id) {
-    this.likeService.hasLike(article_id).subscribe((response) => {
+    if (this.userToken) { 
+      this.likeService.hasLike(article_id).subscribe((response) => {
       if (response) {
         this.heartBool = true;
       }
@@ -128,6 +134,10 @@ export class ArticlePage implements OnInit {
       }
       this.showHeart();
     });
+    } else {
+      this.heartBool = false;
+      this.showHeart();
+    }
   }
 
   //Faz o display do icone de like conforme o artigo ja foi curtido ou nao
@@ -136,7 +146,7 @@ export class ArticlePage implements OnInit {
       this.heartIcon = 'heart';
     } else {
       this.heartIcon = 'heart-outline';
-    }
+    } 
   }
 
   //Redireciona para a pagina de perfil e salva o id do usuario clicado
