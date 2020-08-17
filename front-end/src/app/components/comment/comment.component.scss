@@ -16,3 +16,12 @@ p {
     font-family: Roboto, sans-serif;
     font-size: 1em;
 }
+
+.comment-container {
+  background: transparent;
+  padding: 0;
+}
+
+ion-item {
+  --background: inherit;
+}

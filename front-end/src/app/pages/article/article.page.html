@@ -40,19 +40,39 @@
   </ion-grid>
   <p class='numofcomments'>{{numOfComments}} comentários</p>
   <app-comment *ngFor='let comment of articleComments' [comment]="comment"></app-comment>
-  <ion-row>
-    <ion-col size="small">
+  <ion-row [canEdit]="canEdit" *ngIf="!canEdit" class="comment-input-container">
+    <ion-col>
       <img  class="loggedUserImg" src="{{loggedUser.profile_picture}}" alt="Minha Figura">
     </ion-col>
-    <ion-col class="addcomment">
+    <ion-col>
+      <form [formGroup]="commentForm" (ngSubmit) = "postCommentOnArticle(article_id, commentForm)">
+        <ion-textarea rows="1" type="text" placeholder="Adicionar um comentário..." formControlName="commentary"></ion-textarea>
+      </form>
+    </ion-col>
+    <ion-col>
       <form [formGroup] = "commentForm" (ngSubmit) = "postCommentOnArticle(article_id, commentForm)">
-        <ion-item lines="none">
-          <ion-textarea  rows="2" type="text" placeholder="Adicionar um comentário..." formControlName="commentary"></ion-textarea>
-            <ion-button class="sendcomment" size="small" clear slot="end" color="secondary" type="submit" [disabled]="commentForm.invalid">
-              <ion-icon name="send"></ion-icon>
-            </ion-button>
-        </ion-item>
-      </form>	
+        <ion-button type="submit" size="small" fill="clear">
+          <ion-icon name="send" color="secondary"></ion-icon>
+        </ion-button>
+      </form>
+    </ion-col>
+  </ion-row>
+  <!-- AAAAA -->
+  <ion-row [canEdit]="canEdit" *ngIf="canEdit" class="comment-input-container">
+    <ion-col>
+      <img  class="loggedUserImg" src="{{loggedUser.profile_picture}}" alt="Minha Figura">
+    </ion-col>
+    <ion-col>
+      <form [formGroup]="commentEditForm" (ngSubmit) = "updateComment(comment_id, commentEditForm, article_id)">
+        <ion-textarea rows="1" type="text" placeholder="{{textEditForm}}" formControlName="commentary"></ion-textarea>
+      </form>
+    </ion-col>
+    <ion-col>
+      <form [formGroup] = "commentEditForm" (ngSubmit) = "updateComment(comment_id, commentEditForm, article_id)">
+        <ion-button type="submit" size="small" fill="clear">
+          <ion-icon name="send" color="secondary"></ion-icon>
+        </ion-button>
+      </form>
     </ion-col>
   </ion-row>
 </ion-content>

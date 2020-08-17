@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { LikeService } from '../../services/like.service';
 import { CommentService } from '../../services/comment.service';
@@ -20,11 +21,13 @@ export class ArticlePage implements OnInit {
   public loggedUser = [];
   public comment = [];
   public commentForm: FormGroup;
+  public commentEditForm: FormGroup;
   public heartIcon: string;
   public heartBool: boolean;
   public userToken = localStorage.getItem("token");
-  
-
+  //
+  public canEdit = false;
+  //public textEditForm:string = '';
 
   constructor(
     public articleService:ArticleService,
@@ -37,10 +40,14 @@ export class ArticlePage implements OnInit {
     this.commentForm = this.formBuilder.group({
       commentary: [null, [Validators.required]]
     });
+
+    this.commentEditForm = this.formBuilder.group({
+      commentary: [null, [Validators.required]]
+    });
    }
 
-  ngOnInit() { 
-    
+  ngOnInit() {
+    console.log(this.textEditForm);
   }
 
   //Chamada das funcoes para quando o usuario entrar na pagina
@@ -55,7 +62,13 @@ export class ArticlePage implements OnInit {
   public ionViewWillLeave() {
     this.articleContent = [];
     this.article_owner = [];
-    localStorage.setItem('article_id',null)
+    //localStorage.setItem('article_id',null)
+  }
+
+  public ionViewDidLoad() {
+    this.events.subscribe('canEdit', (canEdit) => {
+
+    });
   }
 
   //Pega o usuario logado
@@ -113,6 +126,25 @@ export class ArticlePage implements OnInit {
     });
   }
 
+  //Edita um comentario postado
+  public updateComment(comment_id, commentEditForm, article_id) {
+    this.canEdit = false;
+    this.commentService.updateComment(comment_id, commentEditForm.value).subscribe((response) => {
+      console.log(response.message);
+      textEditForm = '';
+      commentEditForm.reset();
+      this.showComments(article_id);
+    });
+  }
+
+  //Deleta um comentario atraves do seu id
+  public destroyComment(comment_id, article_id) {
+    this.commentService.destroyComment(comment_id).subscribe((response) => {
+      console.log(response.message);
+      this.showComments(article_id);
+    });
+  }
+
   //Realiza a acao de like ou dislike de um artigo
   public actionLike(article_id) {
       this.likeService.actionLike(article_id).subscribe((response) => {
@@ -124,7 +156,7 @@ export class ArticlePage implements OnInit {
 
   //Verifica se o usuario logado ja deu like ou nao no artigo e salva essa informacao
   public hasLike(article_id) {
-    if (this.userToken) { 
+    if (this.userToken) {
       this.likeService.hasLike(article_id).subscribe((response) => {
       if (response) {
         this.heartBool = true;
@@ -146,7 +178,7 @@ export class ArticlePage implements OnInit {
       this.heartIcon = 'heart';
     } else {
       this.heartIcon = 'heart-outline';
-    } 
+    }
   }
 
   //Redireciona para a pagina de perfil e salva o id do usuario clicado

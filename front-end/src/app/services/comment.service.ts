@@ -45,9 +45,9 @@ export class CommentService {
   }
 
   //Usuario logado atualiza um comentario
-  public updateComment (id):Observable<any> {
+  public updateComment (id, form):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.put(this.apiUrl + 'updateComment/' + id, this.httpHeaders);
+    return this.http.put(this.apiUrl + 'updateComment/' + id, form, this.httpHeaders);
   }
 
   //Usuario logado deleta um comentario
