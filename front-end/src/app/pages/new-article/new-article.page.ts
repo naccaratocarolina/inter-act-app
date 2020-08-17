@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-new-article',
@@ -18,13 +19,14 @@ export class NewArticlePage implements OnInit {
 
   constructor(
     public formbuilder: FormBuilder,
+    public articleService:ArticleService,
     private router: Router) {
 
     this.newArticleForm = this.formbuilder.group({
-      title: [null],
-      subtitle: [null],
-      description: [null],
-      category: [null],
+      title: [null, [Validators.required]],
+      subtitle: [null, [Validators.required]],
+      description: [null, [Validators.required]],
+      category: [null, [Validators.required]],
       image: [null]
     });
    }
@@ -32,12 +34,16 @@ export class NewArticlePage implements OnInit {
   ngOnInit() {
   }
 
-  submitForm(form) {
-    console.log(form);
-    console.log(form.value);
-  }
 
   public redirectHome() {
     this.router.navigate(['/home']);
+  }
+
+  submitForm(form) {
+    this.articleService.createArticle(form.value).subscribe((response) => {
+      console.log(response.message)
+      form.reset();
+      this.redirectHome();
+    })
   }
 }

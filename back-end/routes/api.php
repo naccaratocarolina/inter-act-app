@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Route;
   Route::get('indexAllArticles','ArticleController@indexAllArticles');
   Route::get('showArticle/{id}', 'ArticleController@showArticle');
   Route::get('indexArticleOwner/{id}', 'ArticleController@indexArticleOwner');
+  Route::get('indexUserArticles/{id}','ArticleController@indexUserArticles');
 
   //Passport Controller
   Route::post('register', 'API\PassportController@register')->name('register');
@@ -52,7 +53,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('getDetails', 'API\PassportController@getDetails');
 
   //Article Controller
-  Route::get('indexUserArticles/{id}','ArticleController@indexUserArticles');
   Route::get('indexFollowingArticles', 'ArticleController@indexFollowingArticles');
   Route::post('createArticle','ArticleController@createArticle');
   Route::post('updatePhotoArticle/{id}', 'ArticleController@updatePhotoArticle');
