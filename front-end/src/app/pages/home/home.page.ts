@@ -12,7 +12,7 @@ import { Storage, IonicStorageModule } from "@ionic/storage";
 })
 export class HomePage implements OnInit {
 
-
+  userToken = localStorage.getItem("token");
   selectedSlide: any;
   segment = 0;
   sliderOptions = {
