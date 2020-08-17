@@ -126,15 +126,18 @@ class User extends Authenticatable
         $this->save();
 
         if($request->profile_picture) {
-          If(!Storage::exists( 'localPhoto/')){
-            Storage::makeDirectory('localPhoto/', 0775, true);
+          If(!Storage::exists( 'localPhoto/UserPhoto/')){
+            Storage::makeDirectory('localPhoto/UserPhoto/', 0775, true);
           }
           
           $file = $request->file('profile_picture');
           $fileName = rand().'.'.$file->getClientOriginalExtension();
-          $path = $file->storeAs('localPhoto/',$fileName);
+          $path = $file->storeAs('localPhoto/UserPhoto/',$fileName);
           $this->profile_picture = $path;
           $this->save();
+        }
+        else{
+          $url = Storage::url('localPhoto/UserPhoto/file.jpg');
         }
 
         //always assign a registered user marker to a newly created user
@@ -161,13 +164,14 @@ class User extends Authenticatable
     {
       if($request->profile_picture) {
           
-        IF(!Storage::exists('localPhoto/')){;
-          Storage::makeDirectory('localPhoto/', 0775, true);
+        IF(!Storage::exists('localPhoto/UserPhoto/')){;
+          Storage::makeDirectory('localPhoto/UserPhoto/', 0775, true);
         }
-        Storage::delete('profile_picture'. $this->profile_picture);
+        // Storage::disk('local')->delete('folder_path/file_name.jpg');
+        Storage::delete( $this->profile_picture);
         $file = $request->file('profile_picture');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $path = $file->storeAs('localPhoto/UserPhoto/' ,$fileName);
         $this->profile_picture = $path;
         $this->save();
       }
