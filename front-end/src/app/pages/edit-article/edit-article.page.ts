@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-edit-article',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 export class EditArticlePage implements OnInit {
 
   editArticleForm: FormGroup;
+  article_id = localStorage.getItem("article_id");
 
   customActionSheetOptions: any = {
     header: 'Categorias',
@@ -18,12 +20,13 @@ export class EditArticlePage implements OnInit {
 
   constructor(
     public formbuilder: FormBuilder,
+    public articleService:ArticleService,
     private router: Router) { 
 
       this.editArticleForm = this.formbuilder.group({
         title: [null],
         subtitle: [null],
-        description: [null],
+        text: [null],
         category: [null],
         image: [null]
       });
@@ -32,9 +35,12 @@ export class EditArticlePage implements OnInit {
   ngOnInit() {
   }
 
-  submitForm(form) {
-    console.log(form);
-    console.log(form.value);
+  submitForm(form, article_id) {
+    this.articleService.updateArticle(form.value, article_id).subscribe((response) =>{
+      console.log(response.message);
+      form.reset();
+      this.redirectHome();
+    });
   }
 
   public redirectHome() {

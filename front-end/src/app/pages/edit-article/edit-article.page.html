@@ -7,7 +7,7 @@
     </ion-buttons>
   
       <ion-buttons slot="end">
-        <form [formGroup]="editArticleForm" (ngSubmit)="submitForm(editArticleForm)">
+        <form [formGroup]="editArticleForm" (ngSubmit)="submitForm(editArticleForm, article_id)">
           <ion-button type="submit">
             Editar
           </ion-button>
@@ -21,7 +21,7 @@
 <ion-content>
   <div class="ion-padding">
 
-    <form [formGroup]="editArticleForm" (ngSubmit)="submitForm(editArticleForm)">
+    <form [formGroup]="editArticleForm" (ngSubmit)="submitForm(editArticleForm, article_id)">
       
      <ion-fab horizontal="end" vertical="bottom" slot="fixed">
         <ion-fab-button>
@@ -45,7 +45,7 @@
           <ion-input placeholder="Subtítulo:" type="text" formControlName="subtitle"></ion-input>
           
           <!-- <ion-label position="floating">Descrição:</ion-label> -->
-          <ion-textarea rows="1" placeholder="Descrição:" autoGrow="true" type="text" formControlName="description"></ion-textarea>
+          <ion-textarea rows="1" placeholder="Descrição:" autoGrow="true" type="text" formControlName="text"></ion-textarea>
           <ion-item>
             <ion-label color="medium">Categoria:</ion-label>
             <ion-select formControlName="category" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Escolher" cancel-text="Cancelar">

@@ -25,7 +25,7 @@ export class NewArticlePage implements OnInit {
     this.newArticleForm = this.formbuilder.group({
       title: [null, [Validators.required]],
       subtitle: [null, [Validators.required]],
-      description: [null, [Validators.required]],
+      text: [null, [Validators.required]],
       category: [null, [Validators.required]],
       image: [null]
     });
@@ -41,9 +41,9 @@ export class NewArticlePage implements OnInit {
 
   submitForm(form) {
     this.articleService.createArticle(form.value).subscribe((response) => {
-      console.log(response.message)
+      console.log(response.message);
       form.reset();
       this.redirectHome();
-    })
+    });
   }
 }
