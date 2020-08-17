@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Validation\Validator;
 
 use Carbon\Carbon;
 use App\User;
@@ -54,7 +55,7 @@ class Article extends Model
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request) {
+    public function createArticle(ArticleRequest $request) {
       //grab the user id that is making the request
       $user = Auth::user();
       $this->user_id = $user->id; //and saves it in the article table
@@ -67,17 +68,13 @@ class Article extends Model
 
       if($request->image){
         IF(!Storage::exists('localPhoto/')){
-          Storage::delete('image'. $this->image);
           Storage::makeDirectory('localPhoto/', 0775, true);
         }
-
-        $file = $request->file('image');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $photo=base64_decode($request->image);
+        $fileName = uniqid();
+        $path = storage_path('/app/localPhoto/'.$fileName);
+        file_put_contents($path, $photo);
         $this->image = $path;
-      }
-      else{
-        return response()->json(['message' => 'Falha ao carregar a imagem']);
       }
 
       date_default_timezone_set('America/Sao_Paulo');
@@ -94,20 +91,18 @@ class Article extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoArticle(Request $request)
+    public function updatePhotoArticle(ArticleRequest $request)
     {
       if($request->image){
         IF(!Storage::exists('localPhoto/')){
-          Storage::delete('image'. $this->image);
           Storage::makeDirectory('localPhoto/', 0775, true);
         }
-        $file = $request->file('image');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        Storage::delete('localPhoto/'. $this->image);
+        $photo=base64_decode($request->image);
+        $fileName = uniqid();
+        $path = storage_path('/app/localPhoto/'.$fileName);
+        file_put_contents($path, $photo);
         $this->image = $path;
-      }
-      else{
-        return response()->json(['message' => 'Falha ao carregar a imagem']);
       }
 
       $this->save();
@@ -121,7 +116,7 @@ class Article extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateArticle(Request $request) {
+    public function updateArticle(ArticleRequest $request) {
       if($request->title){
         $this->title = $request->title;
       }

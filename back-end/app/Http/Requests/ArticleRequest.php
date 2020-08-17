@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use App\Http\Requests\HttpResponseException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ArticleRequest extends FormRequest
 {
@@ -29,7 +29,7 @@ class ArticleRequest extends FormRequest
                 'title' => 'required|string',
                 'category' => 'required|string',
                 'description' => 'required|string',
-                'image' =>'required|file|image|mimes:jpeg,png,gif,webp|max:2048'
+                'image' =>'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
                 
                 
             ];
@@ -43,7 +43,7 @@ class ArticleRequest extends FormRequest
         public function messages(){
             return[
                 'title.aplha' => 'Somente caracteres afabéticos ',
-                'image.file' => 'Somente fotos no padrão jpeg,png,gif,webp|max:2048 ',
+                'image.image' => 'Foto inválida ',
             ];
         }
 }

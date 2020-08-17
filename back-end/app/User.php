@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Contracts\Validation\Validator;
 
 use App\Input;
 use App\Article;
@@ -128,10 +129,10 @@ class User extends Authenticatable
           If(!Storage::exists( 'localPhoto/')){
             Storage::makeDirectory('localPhoto/', 0775, true);
           }
-          
-          $file = $request->file('profile_picture');
-          $fileName = rand().'.'.$file->getClientOriginalExtension();
-          $path = $file->storeAs('localPhoto/',$fileName);
+          $photo=base64_decode($request->profile_picture);
+          $fileName = uniqid();
+          $path = storage_path('/app/localPhoto/'.$fileName);
+          file_put_contents($path, $photo);
           $this->profile_picture = $path;
           $this->save();
         }
@@ -156,16 +157,17 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoUser(Request $request)
+    public function updatePhotoUser(UserRequest $request)
     {
       if($request->profile_picture) {
-        IF(!Storage::exists('localPhoto/')){
-          Storage::delete('profile_picture'. $this->profile_picture);
+        If(!Storage::exists( 'localPhoto/')){
           Storage::makeDirectory('localPhoto/', 0775, true);
         }
-        $file = $request->file('profile_picture');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        Storage::delete('localPhoto/'. $this->profile_picture);
+        $image=base64_decode($request->profile_picture);
+        $fileName = uniqid();
+        $path = storage_path('/app/localPhoto/'.$fileName);
+        file_put_contents($path, $image);
         $this->profile_picture = $path;
         $this->save();
       }
@@ -177,7 +179,7 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request)
+     public function updateUser(UserRequest $request)
      {
        //atualiza os campos do user
        if($request->name){
