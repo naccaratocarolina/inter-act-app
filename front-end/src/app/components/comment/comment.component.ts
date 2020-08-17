@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ArticlePage } from '../../pages/article/article.page';
-import { Events } from 'ionic-angular';
+//import { Events } from 'ionic-angular';
 
 @Component({
   selector: 'app-comment',
@@ -10,7 +10,7 @@ import { Events } from 'ionic-angular';
 export class CommentComponent implements OnInit {
   @Input() comment;
   public article_id:number;
-  public canEdit:boolean = false;
+  public canEdit:boolean = true;
   public textEditForm:string = '';
   public comment_id:number;
 

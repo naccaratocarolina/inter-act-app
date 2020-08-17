@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { Injectable } from '@angular/core';
 import { ArticleService } from '../../services/article.service';
 import { LikeService } from '../../services/like.service';
@@ -63,12 +63,6 @@ export class ArticlePage implements OnInit {
     this.articleContent = [];
     this.article_owner = [];
     //localStorage.setItem('article_id',null)
-  }
-
-  public ionViewDidLoad() {
-    this.events.subscribe('canEdit', (canEdit) => {
-
-    });
   }
 
   //Pega o usuario logado
