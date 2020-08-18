@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Sair',
-      url: '/folder/Archived',
+      url: 'home',
       icon: 'log-out-outline'
     }]
     } else { this.appPages = [
