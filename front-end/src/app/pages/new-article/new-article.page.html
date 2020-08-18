@@ -30,7 +30,7 @@
           <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
         </ion-fab-button>
         <ion-fab-list side="top">
-          <ion-fab-button>
+          <ion-fab-button (click)="takePicture()">
             <ion-icon name="camera-outline"></ion-icon>
           </ion-fab-button>
           <ion-fab-button>
@@ -59,7 +59,12 @@
             </ion-select>
           </ion-item>
       </ion-list>
+      <img 
+      [src]="photo"
+      vertical="center"
+      horizontal="center">
     </form>
+    
 
   </div>
 </ion-content>
