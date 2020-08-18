@@ -1,13 +1,31 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start" (click)="goBack()">
+      <ion-icon  size="large" name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
-
-<ion-content class='bgImage'>
-  <section class='register'>
+<ion-content fullscreen class='bgImage'>
+  
+  <div class="ion-padding">
     <h1>Registrar-se</h1>
     <form [formGroup]="registerForm" (ngSubmit)="submitRegister(registerForm)">
-      <ion-input class='input' placeholder="Nome" type="text" formControlName='name'></ion-input>
-      <ion-input class='input' placeholder="Email" type="email" formControlName='email'></ion-input>
-      <ion-input class='input' placeholder="Senha" type="password" formControlName='password'></ion-input>
-      <ion-button class='button' [disabled]="registerForm.invalid" type="submit" color='transparent' size='large'><h2>Enviar</h2></ion-button>
+      <section>
+        <ion-label><h3>Nome</h3></ion-label>
+        <ion-input type="text" formControlName="name"></ion-input>
+      </section>
+      <section>
+        <ion-label><h3>Email</h3></ion-label>
+        <ion-input placeholder="ex: interact@exemplo.com" type="text" formControlName="email"></ion-input>
+      </section>   
+      <section>
+        <ion-label><h3>Senha</h3></ion-label>
+        <ion-input type="password" formControlName="password"></ion-input>
+      </section>
+      
+      <ion-button class='button' [disabled]="registerForm.invalid" type="submit" fill="clear" size='large'><h2>Enviar</h2></ion-button>
     </form>
-  </section>
+  </div>
+  <h6>Já possui uma conta? <span (click)='loginRedirect()'>Clique aqui.</span></h6>
 </ion-content>

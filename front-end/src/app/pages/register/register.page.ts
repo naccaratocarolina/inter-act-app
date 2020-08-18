@@ -37,4 +37,14 @@ export class RegisterPage implements OnInit {
     }
   }
 
+  //Redireciona pra página de login
+  loginRedirect() {
+    this.router.navigateByUrl('/login');
+  }
+
+  //volta pra página anterior
+  public goBack() {
+    window.history.back();
+  }
+
 }
