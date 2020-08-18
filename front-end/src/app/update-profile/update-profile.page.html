@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <form [formGroup]="updateProfileForm" (ngSubmit)="submitForm(updateProfileForm, loggedUser.id)">
-        <ion-button type="submit">
+        <ion-button type="submit" [disabled]="updateProfileForm.invalid">
           Salvar
         </ion-button>
       </form>
@@ -34,11 +34,11 @@
         </section>   
         <section>
           <ion-label><h3>Senha</h3></ion-label>
-          <ion-input type="password"placeholder="Digite a nova senha..." formControlName="password"></ion-input>
+          <ion-input type="password"placeholder="(6 a 36 caracteres)" formControlName="password"></ion-input>
         </section>
         <section>
           <ion-label><h3>Descrição</h3></ion-label>
-          <ion-textarea rows="1" autoGrow="true" placeholder="Ex: Receitas do Hussein!" type="text" formControlName="description"></ion-textarea>
+          <ion-textarea rows="1" autoGrow="true" placeholder="Ex: Receitas do Hussein! (12 a 83 caracteres)" type="text" formControlName="description"></ion-textarea>
         </section>
    </form>
  </div>

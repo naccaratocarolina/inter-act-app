@@ -13,8 +13,7 @@ export class NewArticlePage implements OnInit {
   newArticleForm: FormGroup;
 
   customActionSheetOptions: any = {
-    header: 'Categorias',
-    subHeader: 'Escolha uma categoria para o seu artigo'
+    header: 'Escolha uma categoria para o seu artigo',
   };
 
   constructor(
@@ -23,8 +22,8 @@ export class NewArticlePage implements OnInit {
     private router: Router) {
 
     this.newArticleForm = this.formbuilder.group({
-      title: [null, [Validators.required]],
-      subtitle: [null, [Validators.required]],
+      title: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(57)]],
+      subtitle: [null, [Validators.required, Validators.minLength(12), Validators.maxLength(83)]],
       text: [null, [Validators.required]],
       category: [null, [Validators.required]],
       image: [null]

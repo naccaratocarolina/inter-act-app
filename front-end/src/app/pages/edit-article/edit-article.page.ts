@@ -24,8 +24,8 @@ export class EditArticlePage implements OnInit {
     private router: Router) { 
 
       this.editArticleForm = this.formbuilder.group({
-        title: [null],
-        subtitle: [null],
+        title: [null, [Validators.minLength(5), Validators.maxLength(57)]],
+        subtitle: [null, [Validators.minLength(12), Validators.maxLength(83)]],
         text: [null],
         category: [null],
         image: [null]
