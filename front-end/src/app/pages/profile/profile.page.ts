@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ArticleService } from '../../services/article.service';
 import { FollowService } from '../../services/follow.service';
+import { AuthService } from '../../services/Auth/auth.service';
 import { Injectable } from '@angular/core';
 
 @Component({
@@ -18,12 +19,15 @@ export class ProfilePage implements OnInit {
   profile_id:number;
   followBool:boolean;
   userToken = localStorage.getItem("token");
+  loggedUserId:number;
+  viewingOwnProfile:boolean;
 
   constructor(
     private router:Router,
     public userService:UserService,
     public articleService:ArticleService,
     public followService:FollowService,
+    public authService:AuthService,
     ) {
     this.profile_id = JSON.parse(localStorage.getItem('profile_id'));
    }
@@ -34,11 +38,27 @@ export class ProfilePage implements OnInit {
   public ionViewWillEnter() {
     this.showUser(this.profile_id);
     this.hasFollow(this.profile_id);
+    this.getDetails();
   }
 
   //Chamada das funcoes para quando o usuario sair da pagina
   public ionViewWillLeave() {
     
+  }
+
+  //Pega os detalhes do usuario logado e compara com o profile_id. Seta o resultado em variavel booleana para uso no Ngif.
+  public getDetails(){
+    this.authService.getDetails().subscribe((response) => {
+      this.loggedUserId = response.user.id;
+      this.userViewingOwnProfile();  
+    })
+    
+  }
+
+  public userViewingOwnProfile(){
+    if (this.loggedUserId == this.profile_id){
+      this.viewingOwnProfile=false;
+    } else {this.viewingOwnProfile=true;}
   }
 
   //Pega o usuario conforme o seu id
@@ -47,6 +67,7 @@ export class ProfilePage implements OnInit {
       this.userData = response.user;
       console.log(response.message);
       this.showUserArticles(this.profile_id);
+      console.log(this.userData)
     })
   }
 

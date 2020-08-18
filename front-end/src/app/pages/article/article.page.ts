@@ -39,7 +39,12 @@ export class ArticlePage implements OnInit {
     });
    }
 
-  ngOnInit() { }
+  ngOnInit() { this.setVisitorPic(); }
+
+  public setVisitorPic(){
+    if (this.userToken){}
+    else {this.loggedUser.profile_picture = '../assets/logo_2_1.png'}
+  }
 
   //Chamada das funcoes para quando o usuario entrar na pagina
   public ionViewWillEnter() {

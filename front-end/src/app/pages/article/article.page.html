@@ -31,8 +31,6 @@
       <ion-col size="small">
         <ion-button size="small" fill="clear" (click)="actionLike(articleContent.id)">
           <ion-icon color="danger" name={{heartIcon}}></ion-icon>
-          <!--<ion-icon *ngIf="userBool" color="danger" name="heart-outline"></ion-icon>
-          <ion-icon *ngIf="!userBool" color="danger" name={{heartIcon}}></ion-icon>-->
         </ion-button>
       </ion-col>
       <ion-col><h5 class="likes">{{count}}</h5></ion-col>
@@ -44,12 +42,12 @@
     <ion-col>
       <img  class="loggedUserImg" src="{{loggedUser.profile_picture}}" alt="Minha Figura">
     </ion-col>
-    <ion-col>
+    <ion-col *ngIf='userToken'>
       <form [formGroup]="commentForm" (ngSubmit) = "postCommentOnArticle(article_id, commentForm)">
         <ion-textarea rows="1" type="text" placeholder="Adicionar um comentário..." formControlName="commentary"></ion-textarea>
       </form>
     </ion-col>
-    <ion-col>
+    <ion-col *ngIf='userToken'>
       <form [formGroup] = "commentForm" (ngSubmit) = "postCommentOnArticle(article_id, commentForm)">
         <ion-button type="submit" size="small" fill="clear">
           <ion-icon name="send" color="secondary"></ion-icon>
