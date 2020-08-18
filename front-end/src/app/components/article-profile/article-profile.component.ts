@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProfilePage } from '../../pages/profile/profile.page';
+import { AuthService } from "../../services/Auth/auth.service";
 
 @Component({
   selector: 'app-article-profile',
@@ -9,13 +10,21 @@ import { ProfilePage } from '../../pages/profile/profile.page';
 })
 export class ArticleProfileComponent implements OnInit {
   @Input() All;
-  profile_id:number;
+  public loggedUser = [];
 
-  constructor( private router:Router, public profilePage:ProfilePage ) {
-    this.profile_id = JSON.parse(localStorage.getItem('profile_id'));
+  constructor( private router:Router, public profilePage:ProfilePage, public authService: AuthService ) {
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getLoggedUser();
+  }
+
+  //Pega o usuario logado
+  public getLoggedUser() {
+    this.authService.getDetails().subscribe((response) => {
+      this.loggedUser = response.user;
+    });
+  }
 
   //Funcao que deleta um artigo
   public destroyArticle(article_id, profile_id) {
