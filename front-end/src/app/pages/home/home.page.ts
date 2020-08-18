@@ -74,6 +74,11 @@ export class HomePage implements OnInit {
     this.router.navigate(['/new-article']);
   }
 
+    //redirects to the register page
+    public redirectRegisterPage() {
+      this.router.navigate(['/register']);
+    }
+
   async segmentChanged(ev) {
     await this.selectedSlide.slideTo(this.segment)
   }

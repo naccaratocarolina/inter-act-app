@@ -27,6 +27,18 @@
       <app-article-home *ngFor="let All of postsAll" [All]="All"></app-article-home>
     </ion-slide>
     <ion-slide class="slide">
+      <ion-grid *ngIf="!userToken" class="message">
+        <ion-row>
+          <ion-col>
+            <ion-text>Veja seus posts preferidos em uma página exclusiva ao registrar-se no botão abaixo!</ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <ion-button size="small" (click) = "redirectRegisterPage()">Registrar!</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
       <app-article-home *ngFor="let Following of postFollowing" [All]="Following"></app-article-home>
     </ion-slide>
   </ion-slides>
