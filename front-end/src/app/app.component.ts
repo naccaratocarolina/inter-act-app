@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
 
   public setVisitorPic(){
     if (this.userToken){}
-    else {this.loggedUser.profile_picture = '../assets/logo_2_1.png'}
+    //else {this.loggedUser.profile_picture = '../assets/logo_2_1.png'}
   }
 
   //Pega o usuario logado
