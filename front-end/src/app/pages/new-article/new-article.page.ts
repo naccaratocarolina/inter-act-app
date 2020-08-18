@@ -36,7 +36,7 @@ export class NewArticlePage implements OnInit {
     console.log(form);
     console.log(form.value);
   }
-
+  //redireciona para pagina home
   public redirectHome() {
     this.router.navigate(['/home']);
   }
