@@ -158,7 +158,7 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoUser(Request $request)
+    public function updatePhotoUser(UserRequest $request)
     {
       if($request->profile_picture) {
         IF(!Storage::exists('localPhoto/')){
@@ -179,7 +179,7 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request)
+     public function updateUser(UserRequest $request)
      {
        //atualiza os campos do user
        if($request->name){

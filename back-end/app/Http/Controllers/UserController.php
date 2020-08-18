@@ -90,7 +90,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoUser(Request $request, $id)
+    public function updatePhotoUser(UserRequest $request, $id)
     {
       $user = User::find($id);
       $user->updatePhotoUser($request);
@@ -104,7 +104,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request, $id)
+     public function updateUser(UserRequest $request, $id)
      {
        $user = User::find($id);
        $user->updateUser($request);

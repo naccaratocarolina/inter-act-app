@@ -27,12 +27,24 @@ class UserRequest extends FormRequest
    */
   public function rules()
   {
+    if($this->isMethod('post')) {
       return [
         'name' => 'required|string',
         'email' => 'required|email|unique:users',
-        'password' => 'required|string',
+        'password' => 'required|string|max:36|min:6',
         'profile_picture'=>'file|image|mimes:jpeg,png,gif,webp|max:2048',
       ];
+    }
+
+    if($this->isMethod('put')) {
+      return [
+        'name' => 'string',
+        'email' => 'email|unique:users',
+        'password' => 'string|max:36|min:6',
+        'description' => 'string|max:84|min:5',
+        'profile_picture'=>'file|image|mimes:jpeg,png,gif,webp|max:2048',
+      ];
+    }
   }
 
   /**

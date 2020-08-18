@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
-use App\Http\Requests\HttpResponseException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class ArticleRequest extends FormRequest
 {
@@ -25,19 +25,24 @@ class ArticleRequest extends FormRequest
      */
      public function rules()
         {
+          if($this->isMethod('post')) {
             return[
-                'title' => 'required|string',
+                'title' => 'required|string|max:57|min:5',
+                'subtitle' => 'required|string|max:83|min:12',
+                'text' => 'required|string',
                 'category' => 'required|string',
-                'description' => 'required|string',
-                'image' =>'required|file|image|mimes:jpeg,png,gif,webp|max:2048'
-                
-                
+                'image' =>'file|image|mimes:jpeg,png,gif,webp|max:2048'
             ];
-
-        }
-
-        protected function failedValidation(Validator $validator) {
-            throw new HttpResponseException(response()->json($validator->errors(), 422));
+          }
+          if($this->isMethod('put')) {
+            return[
+              'title' => 'string|max:57|min:5',
+              'subtitle' => 'string|max:83|min:12',
+              'text' => 'string',
+              'category' => 'string',
+              'image' =>'file|image|mimes:jpeg,png,gif,webp|max:2048'
+            ];
+          }
         }
 
         public function messages(){
@@ -45,5 +50,10 @@ class ArticleRequest extends FormRequest
                 'title.aplha' => 'Somente caracteres afabéticos ',
                 'image.file' => 'Somente fotos no padrão jpeg,png,gif,webp|max:2048 ',
             ];
+        }
+
+        protected function failedValidation(Validator $validator) {
+          throw new HttpResponseException(response()->json($validator->errors(),
+          422));
         }
 }
