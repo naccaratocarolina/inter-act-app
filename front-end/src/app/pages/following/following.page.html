@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" fill="clear">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Seguindo</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor='let following of followingUsers'>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-grid class="user-container">
+          <ion-col size="auto" class="img-container"><img class="loggedUserImg" src="{{following.profile_picture}}"></ion-col>
+          <ion-col>
+            {{following.name}}
+          </ion-col>
+        </ion-grid>
+      </ion-item>
+      
+      <ion-item-options side="end">
+        <ion-item-option color="primary">
+          <ion-icon (click)="removeFollow(following.id, following_id)" slot="icon-only" name="people-circle"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

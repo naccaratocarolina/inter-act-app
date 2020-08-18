@@ -26,10 +26,18 @@ class RoleRequest extends FormRequest
      */
     public function rules()
     {
+      if($this->isMethod('post')) {
         return [
             'name' => 'required|string',
             'marker' => 'required|string',
         ];
+      }
+      if($this->isMethod('put')) {
+        return [
+            'name' => 'string',
+            'marker' => 'string',
+        ];
+      }
     }
 
     protected function failedValidation(Validator $validator) {

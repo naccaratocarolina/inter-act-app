@@ -59,7 +59,7 @@ class Comment extends Model
      * @param  \App\Comment  $comment
      * @return \Illuminate\Http\Response
      */
-    public function updateComment(Request $request) {
+    public function updateComment(CommentRequest $request) {
         $current = Carbon::now();
         if($request->commentary){
             $this->commentary = $request->commentary;

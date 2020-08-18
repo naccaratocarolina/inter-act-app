@@ -17,11 +17,11 @@ class CreateArticlesTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('subtitle');
-            $table->longText('text')->nullable();
+            $table->longText('text');
             $table->string('image')->nullable();
             $table->string('category');
             $table->string('date')->nullable();
-            $table->integer('likes_count')->default(0);
+            $table->unsignedInteger('likes_count')->default(0);
             $table->boolean('is_liked')->default(0);
             $table->unsignedBigInteger('user_id')->nullable();
             $table->timestamps();

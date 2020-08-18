@@ -122,6 +122,8 @@ class User extends Authenticatable
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
+        $this->follower_count = $this->followers->count();
+        $this->following_count = $this->following->count();
         $this->save();
 
         if($request->profile_picture) {
@@ -156,7 +158,7 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoUser(Request $request)
+    public function updatePhotoUser(UserRequest $request)
     {
       if($request->profile_picture) {
         IF(!Storage::exists('localPhoto/')){
@@ -177,7 +179,7 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(Request $request)
+     public function updateUser(UserRequest $request)
      {
        //atualiza os campos do user
        if($request->name){

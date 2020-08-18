@@ -18,8 +18,8 @@ export class UpdateProfilePage implements OnInit {
     this.updateProfileForm = this.formBuilder.group ({
       name: [null],
       email: [null, [Validators.email]],
-      password: [null],
-      description: [null],
+      password: [null, [Validators.minLength(6), Validators.maxLength(36)]],
+      description: [null, [Validators.minLength(12), Validators.maxLength(83)]],
       image: [null],
     })
   }

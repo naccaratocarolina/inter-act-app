@@ -1,21 +1,34 @@
+ion-toolbar {
+    --background: transparent;
+    --ion-color-base: transparent !important;
+}
+
+ ion-icon {
+    color: white;
+}
+
 .bgImage {
     --background: rgb(255, 255, 255) url("../../../assets/bg_image_people.jpg") no-repeat center center / cover;
   }
 
-  .register {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
-    margin-top: 9em;
+ion-label h3 {
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
 }
+section {
+    padding-bottom: 1em;
+    background-color: rgba(0,0,0,0);
+} 
 
   h1{
     color: #ffffff;
     font-size: 2.5em;
     text-shadow: 1px 1px 2px rgb(51, 51, 51); 
     font-family: 'Comfortaa', cursive;
-    margin-bottom: 1.5em;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    text-align: center;
 }
 
 h2 {
@@ -29,36 +42,26 @@ h2 {
     font-weight: bold;
 }
 
-::placeholder{
-    color:#393393;
-  }
-  
+h6 {
+    color: white;
+    text-align: center;
+    font-size: 0.80em;
+    font-family: 'Comfortaa', cursive;
+    margin-top: 3em;
+}
+
+span {
+    text-decoration: underline;
+}
+    
 
 .button {
-    margin-top: 5em;
-    margin-bottom: 3em;
-    --border-radius: 10em;
-    --color: var(--ion-color-primary);
+    width: 100%;
 }
 
-.input {
+ion-input {
     border-bottom: 0.14em solid #ffffff;
-    width: 75%;
-    color: #E1E4EB
-}
-
-.input {
-    text-align: left;
-    --placeholder-font-weight: bold;
-    --placeholder-color: #000000;
-    margin-left:auto;
-    margin-right:auto;
-    display:block;
-}
-
-.register {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    text-align: center;
+    color: #ffffff;
+    --padding-top: 0.3125em;
+    --placeholder-opacity: 0.8;
 }

@@ -8,7 +8,7 @@
   
       <ion-buttons slot="end">
         <form [formGroup]="newArticleForm" (ngSubmit)="submitForm(newArticleForm)">
-          <ion-button type="submit">
+          <ion-button type="submit" [disabled]="newArticleForm.invalid">
             Postar
           </ion-button>
         </form>
@@ -41,15 +41,16 @@
 
       <ion-list>
           
-        
-          <!-- <ion-label size="small" position="fixed">Título:</ion-label> -->
-          <ion-input placeholder="Título:" type="text-area" formControlName="title"></ion-input>
-          <ion-input placeholder="Subtítulo:" type="text" formControlName="subtitle"></ion-input>
-          
-          <!-- <ion-label position="floating">Descrição:</ion-label> -->
-          <ion-textarea rows="1" placeholder="Descrição:" autoGrow="true" type="text" formControlName="text"></ion-textarea>
+
+          <ion-input placeholder=" (5 a 57 caracteres)" type="text-area" formControlName="title">
+            <ion-label><h2>Título:</h2></ion-label>
+          </ion-input>
+          <ion-input placeholder=" (12 a 84 caracteres)" type="text" formControlName="subtitle">
+            <ion-label><h2>Subtítulo:</h2></ion-label>
+          </ion-input>
+          <ion-textarea placeholder ="Descrição:" rows="1" autoGrow="true" type="text" formControlName="text"></ion-textarea>
           <ion-item>
-            <ion-label color="medium">Categoria:</ion-label>
+            <ion-label>Categoria:</ion-label>
             <ion-select formControlName="category" [interfaceOptions]="customActionSheetOptions" interface="action-sheet" placeholder="Escolher" cancel-text="Cancelar">
               <ion-select-option value="Arte">Arte</ion-select-option>
               <ion-select-option value="Atividade física">Atividade física</ion-select-option>

@@ -27,6 +27,18 @@ export class UserService {
     return this.http.get(this.apiUrl + 'indexUser', this.httpHeaders);
   }
 
+  //Funcao que lista usuarios filtrando por pessoas que o usuario autenticado segue
+  public indexFollowingUsers(following_id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'indexFollowingUsers/' + following_id, this.httpHeaders)
+  }
+
+  //Funcao que lista usuarios filtrando por seguidores do usuario autenticado
+  public indexFollowersUsers(follower_id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'indexFollowersUsers/' + follower_id, this.httpHeaders);
+  }
+
   //Cria um novo usuario com o marcador de registered-user como default
   public createUser(form):Observable<any> {
     return this.http.post(this.apiUrl + 'createUser', form, this.httpHeaders);

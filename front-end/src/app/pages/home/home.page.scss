@@ -94,3 +94,12 @@ hr {
   display: flex;
   flex-direction: column;
 }
+
+.message {
+    margin-top: 170px;
+}
+
+.message ion-button {
+    text-transform: capitalize;
+}
+

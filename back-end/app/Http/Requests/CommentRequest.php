@@ -27,11 +27,9 @@ class CommentRequest extends FormRequest
      */
     public function rules()
     {
-        return[
-                
-            'commentary' => 'required|string',
-        ];
-            
+      return[
+        'commentary' => 'required|string',
+      ];
     }
     protected function failedValidation(Validator $validator) {
         throw new HttpResponseException(response()->json($validator->errors(), 422));

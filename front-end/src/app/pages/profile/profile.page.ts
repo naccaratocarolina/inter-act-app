@@ -43,7 +43,7 @@ export class ProfilePage implements OnInit {
 
   //Chamada das funcoes para quando o usuario sair da pagina
   public ionViewWillLeave() {
-    
+
   }
 
   //Pega os detalhes do usuario logado e compara com o profile_id. Seta o resultado em variavel booleana para uso no Ngif.
@@ -125,5 +125,15 @@ export class ProfilePage implements OnInit {
   //Acao do botao de voltar na header
   goBack() {
     window.history.back();
+  }
+
+  public redirectFollowing(following_id) {
+    localStorage.setItem('following_id', JSON.stringify(following_id));
+    this.router.navigate(['/following']);
+  }
+
+  public redirectFollowers(follower_id) {
+    localStorage.setItem('follower_id', JSON.stringify(follower_id));
+    this.router.navigate(['/followers']);
   }
 }
