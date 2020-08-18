@@ -31,7 +31,8 @@ class UserRequest extends FormRequest
         'name' => 'required|string',
         'email' => 'required|email|unique:users',
         'password' => 'required|string',
-        'profile_picture' =>'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
+        'description' => 'required|string',
+        'profile_picture' =>'file|image|mimes:jpeg,png,gif,webp|max:2048',
       ];
   }
 
@@ -44,7 +45,7 @@ class UserRequest extends FormRequest
     public function messages() {
         return [
           'email.email' =>'Insira um email válido',
-          'email.unique' =>'Este email já existe',
+          'email.unique' =>'Esta conta já existe',
           'profile_picture.image' => 'Fotos inválida',
           
         ];

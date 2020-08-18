@@ -68,16 +68,18 @@ class Article extends Model
       $this->save();
 
       if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::makeDirectory('localPhoto/', 0775, true);
+        IF(!Storage::exists('localPhoto/ArticlePhoto/')){
+          Storage::makeDirectory('localPhoto/ArticlePhoto/', 0775, true);
         }
-
         $file = $request->file('image');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $path = $file->storeAs('localPhoto/ArticlePhoto/' ,$fileName);
         $this->image = $path;
-        $this->save();
       }
+      else{
+        $this->profile_picture = $request->file('default.jpg');
+      }
+      $this->save();
       date_default_timezone_set('America/Sao_Paulo');
       $now = Carbon::now();
       $this->date = $now->toFormattedDateString();
@@ -95,15 +97,28 @@ class Article extends Model
     public function updatePhotoArticle(ArticleRequest $request)
     {
       if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::makeDirectory('localPhoto/', 0775, true);
+        
+        IF(!Storage::exists('localPhoto/ArticlePhoto/')){
+          Storage::makeDirectory('localPhoto/ArticlePhoto/', 0775, true);
         }
-        Storage::delete('localPhoto'. $this->image);
+        Storage::delete($this->image);
         $file = $request->file('image');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $path = $file->storeAs('localPhoto/ArticlePhoto/' ,$fileName);
         $this->image = $path;
       }
+      $this->save();
+    }
+
+    public function deletePhotoArticle(ArticleRequest $request)
+    {
+      
+      IF(!Storage::exists('localPhoto/ArticlePhoto/')){
+        Storage::makeDirectory('localPhoto/ArticlePhoto/', 0775, true);
+      }
+      Storage::delete($this->image);
+      $this->profile_picture = $request->file('default.jpg');
+      
       $this->save();
     }
 

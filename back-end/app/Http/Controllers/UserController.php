@@ -70,9 +70,27 @@ class UserController extends Controller
      */
     public function updatePhotoUser(UserRequest $request, $id)
     {
+      // $user = Auth::user();
+      // $user = User::findOrFail($id);
+      // if($user->user_id == $user->id) { //if the user making the request own the user
+      //   $user->updatePhotoUser($request);
+      //   return response()->json(['message' => 'Foto editada!', 'user' => $user]);
+      // }
+      // else{
+      //   return response()->json(['Você não pode editar a imagem desse usuario!']);
+      // }
+      $user = Auth::user();
       $user = User::findOrFail($id);
       $user->updatePhotoUser($request);
       return response()->json(['message' => 'Foto editada!', 'user' => $user]);
+    }
+
+    public function deletePhotoUser(Request $request, $id)
+    {
+      $user = User::findOrFail($id);
+      $user->deletePhotoUser($request);
+      return response()->json(['message' => 'foto deletada!', 'user' => $user]);
+
     }
 
     /**

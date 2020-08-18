@@ -134,11 +134,11 @@ class User extends Authenticatable
           $fileName = rand().'.'.$file->getClientOriginalExtension();
           $path = $file->storeAs('localPhoto/UserPhoto/',$fileName);
           $this->profile_picture = $path;
-          $this->save();
         }
         else{
-          $url = Storage::url('localPhoto/UserPhoto/file.jpg');
+          $this->profile_picture = $request->file('localPhoto/UserPhoto/default');
         }
+        $this->save();
 
         //always assign a registered user marker to a newly created user
         $registeredUser = Role::where('marker', 'registered-user')->first();
@@ -167,7 +167,6 @@ class User extends Authenticatable
         IF(!Storage::exists('localPhoto/UserPhoto/')){;
           Storage::makeDirectory('localPhoto/UserPhoto/', 0775, true);
         }
-        // Storage::disk('local')->delete('folder_path/file_name.jpg');
         Storage::delete( $this->profile_picture);
         $file = $request->file('profile_picture');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
@@ -176,6 +175,18 @@ class User extends Authenticatable
         $this->save();
       }
     }
+
+    public function deletePhotoUser(Request $request)
+    {
+      IF(!Storage::exists('localPhoto/UserPhoto/')){;
+        Storage::makeDirectory('localPhoto/UserPhoto/', 0775, true);
+      }
+      Storage::delete( $this->profile_picture);
+      // $this->profile_picture = $request->file('default.jpg');
+      $this->save();
+
+    }
+
     /**
      * Update the specified resource in storage.
      *

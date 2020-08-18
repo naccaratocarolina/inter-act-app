@@ -27,9 +27,11 @@ class ArticleRequest extends FormRequest
         {
             return[
                 'title' => 'required|string',
+                'subtitle' => 'required|string',
                 'category' => 'required|string',
-                'description' => 'required|string',
-                'image' =>'required|file|image|mimes:jpeg,png,gif,webp|max:2048',
+                'text' => 'required|string',
+                'image' =>'file|image|mimes:jpeg,png,gif,webp|max:2048',
+                'date' => 'string',
                 
                 
             ];
@@ -44,6 +46,7 @@ class ArticleRequest extends FormRequest
             return[
                 'title.aplha' => 'Somente caracteres afabéticos ',
                 'image.image' => 'Foto inválida ',
+                'date.number' => 'Somente numeros'
             ];
         }
 }

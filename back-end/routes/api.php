@@ -56,6 +56,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('updatePhotoArticle/{id}', 'ArticleController@updatePhotoArticle');
   Route::put('updateArticle/{id}','ArticleController@updateArticle')->middleware('role');
   Route::delete('destroyArticle/{id}','ArticleController@destroyArticle')->middleware('role');
+  Route::delete('detelePhotoArticle/{id}', 'ArticleController@deletePhotoArticle');
 
   //Comment Controller
   Route::get('indexUserComment/{user_id}','CommentController@indexUserComment');
@@ -84,4 +85,5 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('updatePhotoUser/{id}', 'UserController@updatePhotoUser');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
+  Route::delete('detelePhotoUser/{id}', 'UserController@deletePhotoUser');
 });
