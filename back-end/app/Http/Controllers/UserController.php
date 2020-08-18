@@ -8,6 +8,8 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use App\Http\Requests\UserRequest as UserRequest;
 
+use Illuminate\Support\Facades\Storage;
+
 use App\User;
 use App\Role;
 use App\Article;
@@ -94,8 +96,10 @@ class UserController extends Controller
     {
       $user = User::find($id);
       $user->updatePhotoUser($request);
-      return response()->json(['message' => 'Foto editada!', 'user' => $user]);
+      $photo = ($user->profile_picture);
+      return Storage::download($photo);
     }
+    
 
     /**
      * Update the specified resource in storage.

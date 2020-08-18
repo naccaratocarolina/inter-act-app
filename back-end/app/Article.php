@@ -62,6 +62,7 @@ class Article extends Model
       $this->title = $request->title;
       $this->subtitle = $request->subtitle;
       $this->text = $request->text;
+      $this->image = $request->image;
       $this->category = $request->category;
       $this->likes_count = $this->isLikedBy->count();
       $this->save();
@@ -70,20 +71,18 @@ class Article extends Model
       $this->date = $now->toFormattedDateString();
       $this->save();
 
-      if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::delete('image'. $this->image);
-          Storage::makeDirectory('localPhoto/', 0775, true);
-        }
-
-        $file = $request->file('image');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
-        $this->image = $path;
-      }
-      else{
-        return response()->json(['message' => 'Falha ao carregar a imagem']);
-      }
+      // atualiza sava foto do artigo
+      // if($request->image){
+      //   IF(!Storage::exists('localPhoto/ArticlePhoto')){
+      //     Storage::makeDirectory('localPhoto/ArticlePhoto', 0775, true);
+      //   }
+      //   $file = $request->file('image');
+      //   $photo = base64_decode($file);
+      //   $fileName = uniqid();
+      //   $path = $file->storeAs('localPhoto/ArticlePhoto',$fileName);
+      //   $this->image = $path;
+      // }
+      // $this->save();
 
       date_default_timezone_set('America/Sao_Paulo');
       $now = Carbon::now();
@@ -102,20 +101,16 @@ class Article extends Model
     public function updatePhotoArticle(Request $request)
     {
       if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::delete('image'. $this->image);
-          Storage::makeDirectory('localPhoto/', 0775, true);
+        IF(!Storage::exists('localPhoto/ArticlePhoto')){
+          Storage::makeDirectory('localPhoto/ArticlePhoto', 0775, true);
         }
+        Storage::delete( $this->image);
         $file = $request->file('image');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $path = $file->storeAs('localPhoto/ArticlePhoto',$fileName);
         $this->image = $path;
+        $this->save();
       }
-      else{
-        return response()->json(['message' => 'Falha ao carregar a imagem']);
-      }
-
-      $this->save();
     }
 
 

@@ -84,4 +84,5 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::post('updatePhotoUser/{id}', 'UserController@updatePhotoUser');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
+  Route::delete('deletePhotoUser/{id}', 'UserController@deletePhotoUser');
 });

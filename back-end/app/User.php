@@ -122,21 +122,24 @@ class User extends Authenticatable
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
+        $this->profile_picture = $request->profile_picture;
         $this->follower_count = $this->followers->count();
         $this->following_count = $this->following->count();
         $this->save();
 
-        if($request->profile_picture) {
-          If(!Storage::exists( 'localPhoto/')){
-            Storage::makeDirectory('localPhoto/', 0775, true);
-          }
+        // upload foto user
+        // if($request->profile_picture) {
+        //   If(!Storage::exists( 'localPhoto/UserPhoto')){
+        //     Storage::makeDirectory('localPhoto/UserPhoto', 0775, true);
+        //   }
 
-          $file = $request->file('profile_picture');
-          $fileName = rand().'.'.$file->getClientOriginalExtension();
-          $path = $file->storeAs('localPhoto/',$fileName);
-          $this->profile_picture = $path;
-          $this->save();
-        }
+        //   $file = $request->file('profile_picture');
+        //   $fileName = rand().'.'.$file->getClientOriginalExtension();
+        //   $path = $file->storeAs('localPhoto/UserPhoto',$fileName);
+        //   $profile_picture = $path;
+        // }
+        
+        $this->save();
 
         //always assign a registered user marker to a newly created user
         $registeredUser = Role::where('marker', 'registered-user')->first();
@@ -162,16 +165,18 @@ class User extends Authenticatable
     {
       if($request->profile_picture) {
         IF(!Storage::exists('localPhoto/')){
-          Storage::delete('profile_picture'. $this->profile_picture);
           Storage::makeDirectory('localPhoto/', 0775, true);
         }
+        Storage::delete( $this->profile_picture);
         $file = $request->file('profile_picture');
         $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
+        $path = $file->storeAs('localPhoto/UserPhoto',$fileName);
         $this->profile_picture = $path;
         $this->save();
       }
     }
+
+    
     /**
      * Update the specified resource in storage.
      *

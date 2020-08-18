@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArticleRequest as ArticleRequest;
+use Illuminate\Support\Facades\Storage;
 
 use App\User;
 use App\Article;
@@ -102,7 +103,7 @@ class ArticleController extends Controller
        $article = Article::findOrFail($id);
        $article->updateArticle($request);
        return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
-     }
+      }
 
      /**
       * Update the specified resource in storage.
@@ -114,12 +115,10 @@ class ArticleController extends Controller
      public function updatePhotoArticle(Request $request, $id)
      {
        $user = Auth::user();
-       $article = Article::findOrFail($id);
-       if($article->user_id == $user->id) { //if the user making the request own the article
-       $article->updatePhotoArticle($request);
-       return response()->json(['message' => 'Foto editada!', 'article' => $article]);
-       }
-       return response()->json(['Voce nao pode editar a imagem desse artigo!']);
+        $article = Article::findOrFail($id);
+        $article->updateArticle($request);
+        $photo = ($article->image);
+        return Storage::download($photo);
      }
 
      /**
