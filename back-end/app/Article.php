@@ -59,10 +59,12 @@ class Article extends Model
       $user = Auth::user();
       $this->user_id = $user->id; //and saves it in the article table
 
+      if($request->image) {
+        $this->image = $request->image;
+      }
       $this->title = $request->title;
       $this->subtitle = $request->subtitle;
       $this->text = $request->text;
-      $this->image = $request->image;
       $this->category = $request->category;
       $this->likes_count = $this->isLikedBy->count();
       $this->save();

@@ -118,14 +118,18 @@ class User extends Authenticatable
     public function createUser(UserRequest $request)
     {
         //atributos do user
+        if($request->profile_picture) {
+          $this->profile_picture = $request->profile_picture;
+        }
+        
         $this->name = $request->name;
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
-        $this->profile_picture = $request->profile_picture;
         $this->follower_count = $this->followers->count();
         $this->following_count = $this->following->count();
         $this->save();
+        
 
         // upload foto user
         // if($request->profile_picture) {
