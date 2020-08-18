@@ -54,7 +54,7 @@ class Article extends Model
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(ArticleRequest $request) {
+    public function createArticle(Request $request) {
       //grab the user id that is making the request
       $user = Auth::user();
       $this->user_id = $user->id; //and saves it in the article table
@@ -99,7 +99,7 @@ class Article extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoArticle(ArticleRequest $request)
+    public function updatePhotoArticle(Request $request)
     {
       if($request->image){
         IF(!Storage::exists('localPhoto/')){
@@ -126,7 +126,7 @@ class Article extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateArticle(ArticleRequest $request) {
+    public function updateArticle(Request $request) {
       if($request->title){
         $this->title = $request->title;
       }

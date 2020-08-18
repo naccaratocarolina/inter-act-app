@@ -70,7 +70,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(ArticleRequest $request)
+    public function createArticle(Request $request)
     {
       $article = new Article;
       $article->createArticle($request);
@@ -96,7 +96,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-     public function updateArticle(ArticleRequest $request, $id)
+     public function updateArticle(Request $request, $id)
      {
        $user = Auth::user();
        $article = Article::findOrFail($id);
@@ -111,7 +111,7 @@ class ArticleController extends Controller
       * @param  int  $id
       * @return \Illuminate\Http\Response
       */
-     public function updatePhotoArticle(ArticleRequest $request, $id)
+     public function updatePhotoArticle(Request $request, $id)
      {
        $user = Auth::user();
        $article = Article::findOrFail($id);
