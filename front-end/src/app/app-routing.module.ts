@@ -42,6 +42,14 @@ const routes: Routes = [
   {
     path: 'update-profile',
     loadChildren: () => import('./pages/update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
+  },
+  {
+    path: 'following',
+    loadChildren: () => import('./pages/following/following.module').then( m => m.FollowingPageModule)
+  },
+  {
+    path: 'followers',
+    loadChildren: () => import('./pages/followers/followers.module').then( m => m.FollowersPageModule)
   }
 ];
 

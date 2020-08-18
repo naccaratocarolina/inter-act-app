@@ -37,6 +37,28 @@ class UserController extends Controller
     }
 
     /**
+     * Display a listing of the following users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexFollowingUsers($user_id) {
+      $user = User::findOrFail($user_id);
+      $following = $user->following;
+      return response()->json(['message' => 'Pessoas que vc segue encontradas!','following' => $following]);
+    }
+
+    /**
+     * Display a listing of the followers users.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexFollowersUsers($user_id) {
+      $user = User::findOrFail($user_id);
+      $followers = $user->followers;
+      return response()->json(['message' => 'Seguidores encontrados!','followers' => $followers]);
+    }
+
+    /**
      * Create a new User
      * And assign a Role
      * @param  \Illuminate\Http\Request  $request
@@ -133,6 +155,17 @@ class UserController extends Controller
           $following = User::findOrFail($following_id);
           return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
         }
+      }
+
+      public function removeFollow($following_id) {
+        $user = Auth::user();
+        $following = User::findOrFail($following_id);
+        $user->following()->detach($following->id);
+        $following->followers()->detach($user->id);
+        User::where('id', $user->id)->decrement('following_count');
+        User::where('id', $following->id)->decrement('follower_count');
+        $following = User::findOrFail($following_id);
+        return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
       }
 
       /**

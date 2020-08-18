@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" fill="clear">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Seguidores</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item *ngFor='let follower of followerUsers'>
+    <ion-grid class="user-container">
+      <ion-col size="auto" class="img-container"><img class="loggedUserImg" src="{{follower.profile_picture}}"></ion-col>
+      <ion-col>
+        {{follower.name}}
+      </ion-col>
+    </ion-grid>
+  </ion-item>
+</ion-content>

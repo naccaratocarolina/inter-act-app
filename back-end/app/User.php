@@ -122,6 +122,8 @@ class User extends Authenticatable
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
+        $this->follower_count = $this->followers->count();
+        $this->following_count = $this->following->count();
         $this->save();
 
         if($request->profile_picture) {
