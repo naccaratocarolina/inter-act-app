@@ -26,7 +26,7 @@ class CheckOwnerMiddleware
         if($user->isArticleOwner($request->id) || $user->isCommentOwner($request->id)) {
           return $next($request);
         }
-        return response()->json('Esse comentario/artigo nao eh seu!', 401);
+        return response()->json('Esse comentario ou artigo nao eh seu!', 401);
        }
     }
 }
