@@ -43,3 +43,11 @@ ion-icon{
     padding-left: 0.2em;
     padding-top: 0.15em;
 }
+
+.chips-container {
+  position: absolute;
+  right: 0;
+  ion-icon {
+    font-size: 1.4em;
+  }
+}
