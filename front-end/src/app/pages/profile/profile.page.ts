@@ -37,7 +37,7 @@ export class ProfilePage implements OnInit {
 
   //Chamada das funcoes para quando o usuario sair da pagina
   public ionViewWillLeave() {
-    localStorage.setItem('profile_id',null)
+    
   }
 
   //Pega o usuario conforme o seu id

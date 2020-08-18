@@ -30,8 +30,8 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'Configurações',
-      url: 'config',
+      title: 'Editar Perfil',
+      url: 'update-profile',
       icon: 'settings'
     },
     {

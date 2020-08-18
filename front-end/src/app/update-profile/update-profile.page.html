@@ -1,0 +1,46 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="redirectHome()">
+        Fechar
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <form [formGroup]="updateProfileForm" (ngSubmit)="submitForm(updateProfileForm, loggedUser.id)">
+        <ion-button type="submit">
+          Salvar
+        </ion-button>
+      </form>
+    </ion-buttons>
+    <ion-title>Editar Perfil</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen class="bgImage">
+
+ <ion-button class="edit">
+  <ion-icon name="camera-outline"></ion-icon>
+ </ion-button>
+ <div class="ion-padding">
+   
+    <form [formGroup]="updateProfileForm" (ngSubmit)="submitForm(updateProfileForm, loggedUser.id)">
+        <section>
+          <ion-label><h3>Nome</h3></ion-label>
+          <ion-input placeholder="{{loggedUser.name}}" type="text" formControlName="name"></ion-input>
+        </section>
+        <section>
+          <ion-label><h3>Email</h3></ion-label>
+          <ion-input type="text" placeholder="{{loggedUser.email}}" formControlName="email"></ion-input>
+        </section>   
+        <section>
+          <ion-label><h3>Senha</h3></ion-label>
+          <ion-input type="password"placeholder="********************" formControlName="password"></ion-input>
+        </section>
+        <section>
+          <ion-label><h3>Descrição</h3></ion-label>
+          <ion-textarea rows="1" autoGrow="true" placeholder="Ex: Receitas do Hussein!" type="text" formControlName="description"></ion-textarea>
+        </section>
+   </form>
+ </div>
+
+</ion-content>

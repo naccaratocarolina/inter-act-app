@@ -38,6 +38,10 @@ const routes: Routes = [
   {
     path: 'edit-article',
     loadChildren: () => import('./pages/edit-article/edit-article.module').then( m => m.EditArticlePageModule)
+  },
+  {
+    path: 'update-profile',
+    loadChildren: () => import('./update-profile/update-profile.module').then( m => m.UpdateProfilePageModule)
   }
 ];
 
