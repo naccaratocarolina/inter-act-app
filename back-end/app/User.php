@@ -128,7 +128,7 @@ class User extends Authenticatable
           If(!Storage::exists( 'localPhoto/')){
             Storage::makeDirectory('localPhoto/', 0775, true);
           }
-          
+
           $file = $request->file('profile_picture');
           $fileName = rand().'.'.$file->getClientOriginalExtension();
           $path = $file->storeAs('localPhoto/',$fileName);

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ArticleService } from '../../services/article.service';
 import { FollowService } from '../../services/follow.service';
+import { Injectable } from '@angular/core';
 
 @Component({
   selector: 'app-profile',
@@ -85,6 +86,13 @@ export class ProfilePage implements OnInit {
     } else {
       this.followText = 'Seguir';
     }
+  }
+
+  public destroyArticle(article_id, profile_id) {
+    this.articleService.destroyArticle(article_id).subscribe((response) => {
+      console.log(response.message);
+      this.showUserArticles(profile_id);
+    });
   }
 
   //Redireciona para a pagina do artigo carregando o id do artigo clicado

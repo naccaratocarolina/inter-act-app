@@ -9,6 +9,14 @@
         <ion-icon size="big" name="arrow-forward-outline"></ion-icon>
       </ion-row>
     </ion-col>
+    <div class="chips-container">
+      <ion-chip color="light">
+        <ion-icon name="settings" color="primary" (click)="redirectEditArticle(All.id)"></ion-icon>
+      </ion-chip>
+      <ion-chip color="light">
+        <ion-icon name="close-circle" color="danger" (click)="destroyArticle(All.id, loggedUser.id)"></ion-icon>
+      </ion-chip>
+    </div>
     <hr>
   </ion-row>
 </ion-grid>
