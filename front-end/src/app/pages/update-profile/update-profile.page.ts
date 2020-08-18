@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../services/Auth/auth.service';
-import { UserService } from '../services/user.service';
+import { AuthService } from '../../services/Auth/auth.service';
+import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -14,7 +14,7 @@ export class UpdateProfilePage implements OnInit {
   updateProfileForm: FormGroup;
   public loggedUser = [];
 
-  constructor(public formBuilder: FormBuilder, public authService: AuthService, public userService: UserService, private router: Router) { 
+  constructor(public formBuilder: FormBuilder, public authService: AuthService, public userService: UserService, private router: Router) {
     this.updateProfileForm = this.formBuilder.group ({
       name: [null],
       email: [null, [Validators.email]],
@@ -50,5 +50,4 @@ export class UpdateProfilePage implements OnInit {
   public redirectHome() {
     this.router.navigate(['/home']);
   }
-
 }

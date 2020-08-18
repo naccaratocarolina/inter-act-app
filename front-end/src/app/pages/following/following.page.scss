@@ -1,0 +1,36 @@
+* {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.loggedUserImg {
+    width: 2.25em;
+    height: 2.25em;
+    border-radius: 1.25em;
+    object-fit: cover;
+    margin-left: 1.4em;
+    margin-top: 0.6em;
+}
+
+.user-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+ion-list {
+  height: auto;
+  padding: 0;
+}
+
+ion-button {
+  position: absolute;
+}
+
+img {
+  margin-right: 1em;
+}
+
+ion-item {
+  --background: inherit;
+  height: auto;
+}

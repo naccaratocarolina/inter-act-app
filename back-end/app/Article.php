@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use App\Http\Requests\ArticleRequest;
+use App\Http\Requests\ArticleRequest as ArticleRequest;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
@@ -54,7 +54,7 @@ class Article extends Model
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request) {
+    public function createArticle(ArticleRequest $request) {
       //grab the user id that is making the request
       $user = Auth::user();
       $this->user_id = $user->id; //and saves it in the article table
@@ -63,6 +63,11 @@ class Article extends Model
       $this->subtitle = $request->subtitle;
       $this->text = $request->text;
       $this->category = $request->category;
+      $this->likes_count = $this->isLikedBy->count();
+      $this->save();
+      date_default_timezone_set('America/Sao_Paulo');
+      $now = Carbon::now();
+      $this->date = $now->toFormattedDateString();
       $this->save();
 
       if($request->image){
@@ -94,7 +99,7 @@ class Article extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updatePhotoArticle(Request $request)
+    public function updatePhotoArticle(ArticleRequest $request)
     {
       if($request->image){
         IF(!Storage::exists('localPhoto/')){
@@ -121,7 +126,7 @@ class Article extends Model
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateArticle(Request $request) {
+    public function updateArticle(ArticleRequest $request) {
       if($request->title){
         $this->title = $request->title;
       }

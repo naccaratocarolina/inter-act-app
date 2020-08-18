@@ -70,7 +70,7 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function createArticle(Request $request)
+    public function createArticle(ArticleRequest $request)
     {
       $article = new Article;
       $article->createArticle($request);
@@ -96,49 +96,43 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function updateArticle(Request $request, $id)
-    {
-      $user = Auth::user();
-      $article = Article::findOrFail($id);
-      if($article->user_id == $user->id) { //if the user making the request own the article
-        $article->updateArticle($request);
-        return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
-      }
-      return response()->json(['Voce nao pode editar esse artigo!']);
-    }
+     public function updateArticle(ArticleRequest $request, $id)
+     {
+       $user = Auth::user();
+       $article = Article::findOrFail($id);
+       $article->updateArticle($request);
+       return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
+     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatePhotoArticle(Request $request, $id)
-    {
-      $user = Auth::user();
-      $article = Article::findOrFail($id);
-      if($article->user_id == $user->id) { //if the user making the request own the article
-      $article->updatePhotoArticle($request);
-      return response()->json(['message' => 'Foto editada!', 'article' => $article]);
-      }
-      return response()->json(['Voce nao pode editar a imagem desse artigo!']);
-    }
+     /**
+      * Update the specified resource in storage.
+      *
+      * @param  \Illuminate\Http\Request  $request
+      * @param  int  $id
+      * @return \Illuminate\Http\Response
+      */
+     public function updatePhotoArticle(ArticleRequest $request, $id)
+     {
+       $user = Auth::user();
+       $article = Article::findOrFail($id);
+       if($article->user_id == $user->id) { //if the user making the request own the article
+       $article->updatePhotoArticle($request);
+       return response()->json(['message' => 'Foto editada!', 'article' => $article]);
+       }
+       return response()->json(['Voce nao pode editar a imagem desse artigo!']);
+     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
-     */
-    public function destroyArticle($id)
-    {
-      $user = Auth::user();
-      $article = Article::findOrFail($id);
-      if($article->user_id == $user->id) {
-        Article::destroy($id);
-        return response()->json(['message' => 'Artigo deletado!', 'article' => $article]);
-      }
-      return response()->json(['Voce nao pode deletar esse artigo!']);
-    }
+     /**
+      * Remove the specified resource from storage.
+      *
+      * @param  \App\Article  $article
+      * @return \Illuminate\Http\Response
+      */
+     public function destroyArticle($id)
+     {
+       $user = Auth::user();
+       $article = Article::findOrFail($id);
+       Article::destroy($id);
+       return response()->json(['message' => 'Artigo deletado!', 'article' => $article]);
+     }
 }

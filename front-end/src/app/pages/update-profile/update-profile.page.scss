@@ -14,11 +14,11 @@ ion-title {
     font-size: 1em;
     font-weight: bold;
     padding: 0;
-    color: white;  
+    color: white;
 }
 
 .bgImage {
-    --background: #fff url(../../assets/carol2.jpg) no-repeat center center / cover;
+  --background: #fff url(../../../assets/carol2.jpg) no-repeat center center / cover;
 }
 
 ion-list {
@@ -49,11 +49,10 @@ ion-label h3 {
 }
 
 ion-input, ion-textarea{
-    
     --placeholder-color: white;
     --placeholder-opacity: 0.7;
     font-family: 'Montserrat', sans-serif;
-    border: solid white; 
+    border: solid white;
     border-width: 0.1em;
     border-radius: 5px;
     margin-top: 0.7em;
@@ -63,4 +62,4 @@ ion-input, ion-textarea{
 section {
     padding-bottom: 2em;
     background-color: rgba(0,0,0,0);
-} 
+}

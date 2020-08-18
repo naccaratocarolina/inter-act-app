@@ -20,11 +20,11 @@
     <h1>{{userData.name}}</h1>
     <h2>{{userData.description}}</h2>
     <section class='followinfo'>
-      <section class='followers'>
+      <section class='followers' (click)="redirectFollowers(userData.id)">
         <h3>Seguidores</h3>
         <h4>{{userData.follower_count}}</h4>
       </section>
-      <section class='following'> 
+      <section class='following' (click)="redirectFollowing(userData.id)"> 
         <h3>Seguindo</h3>
         <h4>{{userData.following_count}}</h4>
       </section>
