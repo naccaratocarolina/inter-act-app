@@ -14,14 +14,19 @@ export class UpdateProfilePage implements OnInit {
   updateProfileForm: FormGroup;
   public loggedUser = [];
 
-  constructor(public formBuilder: FormBuilder, public authService: AuthService, public userService: UserService, private router: Router) {
-    this.updateProfileForm = this.formBuilder.group ({
-      name: [null],
-      email: [null, [Validators.email]],
-      password: [null, [Validators.minLength(6), Validators.maxLength(36)]],
-      description: [null, [Validators.minLength(12), Validators.maxLength(83)]],
-      image: [null],
-    })
+  constructor(
+    public formBuilder: FormBuilder,
+    public authService: AuthService,
+    public userService: UserService,
+    private router: Router) {
+      //Inicializa o formulario de edicao de perfil
+      this.updateProfileForm = this.formBuilder.group ({
+        name: [null],
+        email: [null, [Validators.email]],
+        password: [null, [Validators.minLength(6), Validators.maxLength(36)]],
+        description: [null, [Validators.minLength(12), Validators.maxLength(83)]],
+        image: [null],
+      });
   }
 
   ngOnInit() {
@@ -35,6 +40,7 @@ export class UpdateProfilePage implements OnInit {
     });
   }
 
+  //Envia o formulario de edicao de usuario
   submitForm(form, user_id) {
     this.userService.updateUser(form.value, user_id).subscribe((response) =>{
       console.log(response.message);
@@ -43,10 +49,12 @@ export class UpdateProfilePage implements OnInit {
     });
   }
 
+  //Redireciona para a pagina de perfil
   public redirectProfile() {
     this.router.navigate(['/profile']);
   }
 
+  //Redireciona para a pagina principal
   public redirectHome() {
     this.router.navigate(['/home']);
   }

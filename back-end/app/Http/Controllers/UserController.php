@@ -139,9 +139,6 @@ class UserController extends Controller
           //attach the ids
           $user->following()->attach($following_id);
           $following->followers()->attach($user->id);
-          //increments the following and follower count
-          User::where('id', $user->id)->increment('following_count');
-          User::where('id', $following->id)->increment('follower_count');
           $following = User::findOrFail($following_id);
           return response()->json(['message' => 'Agora voce segue ' . $following->name]);
         }
@@ -149,14 +146,17 @@ class UserController extends Controller
           //dettach the ids
           $user->following()->detach($following->id);
           $following->followers()->detach($user->id);
-          //decrements the following and follower count
-          User::where('id', $user->id)->decrement('following_count');
-          User::where('id', $following->id)->decrement('follower_count');
           $following = User::findOrFail($following_id);
           return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
         }
       }
 
+      /**
+       * Function that detach the relationship of one user following another
+       *
+       * @param  int  $following_id
+       * @return \Illuminate\Http\Response
+       */
       public function removeFollow($following_id) {
         $user = Auth::user();
         $following = User::findOrFail($following_id);

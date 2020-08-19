@@ -32,5 +32,4 @@ export class RoleService {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.post(this.apiUrl + 'addRole/' + role_id, null, this.httpHeaders)
   }
-
 }

@@ -21,8 +21,9 @@ export class EditArticlePage implements OnInit {
   constructor(
     public formbuilder: FormBuilder,
     public articleService:ArticleService,
-    private router: Router) { 
+    private router: Router) {
 
+      //Inicializa o formulario de edicao do artigo
       this.editArticleForm = this.formbuilder.group({
         title: [null, [Validators.minLength(5), Validators.maxLength(57)]],
         subtitle: [null, [Validators.minLength(12), Validators.maxLength(83)]],
@@ -32,9 +33,9 @@ export class EditArticlePage implements OnInit {
       });
     }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
+  //Envia o formulario de edicao do artigo
   submitForm(form, article_id) {
     this.articleService.updateArticle(form.value, article_id).subscribe((response) =>{
       console.log(response.message);
@@ -43,8 +44,8 @@ export class EditArticlePage implements OnInit {
     });
   }
 
+  //Redireciona para a pagina principal
   public redirectHome() {
     this.router.navigate(['/home']);
   }
-
 }

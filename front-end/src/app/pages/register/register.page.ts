@@ -14,6 +14,7 @@ export class RegisterPage implements OnInit {
   registerForm: FormGroup;
 
   constructor( public authService: AuthService, private router:Router, public formbuilder: FormBuilder ) {
+    //Inicializa o formulario de registro de um novo usuario
     this.registerForm = this.formbuilder.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -46,5 +47,4 @@ export class RegisterPage implements OnInit {
   public goBack() {
     window.history.back();
   }
-
 }

@@ -15,10 +15,10 @@ export class ArticlePage implements OnInit {
   public article_id:number;
   public count:number;
   public numOfComments:number;
+  public loggedUser = {profile_picture:null};
   public articleComments = [];
   public articleContent = [];
   public article_owner = [];
-  public loggedUser = {profile_picture:null};
   public comment = [];
   public commentForm: FormGroup;
   public commentEditForm: FormGroup;
@@ -32,18 +32,17 @@ export class ArticlePage implements OnInit {
     public commentService:CommentService,
     public authService: AuthService,
     public formBuilder:FormBuilder) {
-    this.article_id = JSON.parse(localStorage.getItem('article_id'));
+      //Pega o id do artigo do localStorage passado na transicao de paginas
+      this.article_id = JSON.parse(localStorage.getItem('article_id'));
 
-    this.commentForm = this.formBuilder.group({
-      commentary: [null, [Validators.required]]
-    });
+      //Inicializando o formulario do comentario
+      this.commentForm = this.formBuilder.group({
+        commentary: [null, [Validators.required]]
+      });
    }
 
-  ngOnInit() { this.setVisitorPic(); }
-
-  public setVisitorPic(){
-    if (this.userToken){}
-    else {this.loggedUser.profile_picture = '../assets/logo_2_1.png'}
+  ngOnInit() {
+    this.setVisitorPic();
   }
 
   //Chamada das funcoes para quando o usuario entrar na pagina
@@ -66,6 +65,12 @@ export class ArticlePage implements OnInit {
     this.authService.getDetails().subscribe((response) => {
       this.loggedUser = response.user;
     });
+  }
+
+  //Garante o flow do visitante fazendo o display da nossa logo, ao inves da foto de perfil de um usuario logado
+  public setVisitorPic(){
+    if (this.userToken){}
+    else {this.loggedUser.profile_picture = '../assets/logo_2_1.png'}
   }
 
   //Faz o display do artigo conforme o seu id
@@ -91,7 +96,7 @@ export class ArticlePage implements OnInit {
     for (let i=0; i<this.articleComments.length; i++){
       let id = this.articleComments[i].id
       this.commentService.indexCommentOwner(id).subscribe((response) =>{
-        console.log(response.comment_owner.name)
+        //console.log(response.comment_owner.name)
         this.articleComments[i].username = response.comment_owner.name;
       });
     }
@@ -102,7 +107,7 @@ export class ArticlePage implements OnInit {
   public showComments(article_id){
     this.commentService.indexArticleComment(article_id).subscribe((response) =>{
       this.articleComments = response.comments;
-      console.log(this.articleComments);
+      //console.log(this.articleComments);
       this.assignCommentToUser();
     });
   }

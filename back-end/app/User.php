@@ -122,21 +122,7 @@ class User extends Authenticatable
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
-        $this->follower_count = $this->followers->count();
-        $this->following_count = $this->following->count();
         $this->save();
-
-        if($request->profile_picture) {
-          If(!Storage::exists( 'localPhoto/')){
-            Storage::makeDirectory('localPhoto/', 0775, true);
-          }
-
-          $file = $request->file('profile_picture');
-          $fileName = rand().'.'.$file->getClientOriginalExtension();
-          $path = $file->storeAs('localPhoto/',$fileName);
-          $this->profile_picture = $path;
-          $this->save();
-        }
 
         //always assign a registered user marker to a newly created user
         $registeredUser = Role::where('marker', 'registered-user')->first();
@@ -204,7 +190,7 @@ class User extends Authenticatable
      }
 
      /**
-      * Function that check if the authenticated user is owner of the article.
+      * Function used on CheckOwnerMiddleware that check if the authenticated user is owner of the given article.
       *
       * @param  \Illuminate\Http\Request  $request
       * @param  int  $article_id
@@ -216,7 +202,7 @@ class User extends Authenticatable
      }
 
      /**
-      * Function that check if the authenticated user is owner of the article.
+      * Function used on CheckOwnerMiddleware that check if the authenticated user is owner of the given comment.
       *
       * @param  \Illuminate\Http\Request  $request
       * @param  int  $article_id

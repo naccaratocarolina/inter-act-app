@@ -32,17 +32,19 @@ export class HomePage implements OnInit {
 
   ngOnInit() { }
 
+  //Chamada das funcoes para quando o usuario entrar na pagina
   public ionViewWillEnter() {
     this.indexAllArticles();
     this.indexFollowingArticles();
   }
 
+  //Chamada das funcoes para quando o usuario sair da pagina
   public ionViewWillLeave() {
     this.postsAll = [];
     this.postFollowing = [];
   }
 
-  //display a listing of all articles
+  //Faz o display de todos os artigos da plataforma
   public indexAllArticles() {
     this.articleService.indexAllArticles().subscribe((response) => {
       this.postsAll = response.articles;
@@ -50,7 +52,7 @@ export class HomePage implements OnInit {
     });
   }
 
-  //display a listing of the articles posted by users that the logged user follows
+  //Faz o display dos artigos filtrando pelos usuarios que o usuario logado segue
   public indexFollowingArticles() {
     this.articleService.indexFollowingArticles().subscribe((response) => {
       console.log(response.articles);
@@ -63,22 +65,23 @@ export class HomePage implements OnInit {
     });
   }
 
-  //redirects to the article page loading the card id clicked into storage
+  //Redireciona para a pagina de artigo carregando o id do artigo clicado
   public redirectArticle(article_id) {
     localStorage.setItem('article_id', JSON.stringify(article_id));
     this.router.navigate(['/article']);
   }
 
-  //redirects to the create article page
+  //Redireciona para a pagina de criacao de um novo artigo
   public redirectNewArticle() {
     this.router.navigate(['/new-article']);
   }
 
-    //redirects to the register page
-    public redirectRegisterPage() {
-      this.router.navigate(['/register']);
-    }
+  //Redireciona para a pagina de criacao de conta
+  public redirectRegisterPage() {
+    this.router.navigate(['/register']);
+  }
 
+  //Funcoes que fazem as abas de Todos e Seguindo da pagina principal
   async segmentChanged(ev) {
     await this.selectedSlide.slideTo(this.segment)
   }

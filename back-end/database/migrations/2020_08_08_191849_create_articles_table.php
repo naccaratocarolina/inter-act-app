@@ -18,7 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('subtitle');
             $table->longText('text');
-            $table->string('image')->nullable();
+            $table->longText('image')->nullable();
             $table->string('category');
             $table->string('date')->nullable();
             $table->unsignedInteger('likes_count')->default(0);
