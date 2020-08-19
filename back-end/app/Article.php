@@ -70,50 +70,7 @@ class Article extends Model
       $now = Carbon::now();
       $this->date = $now->toFormattedDateString();
       $this->save();
-
-      if($request->has('image') && strpos($request->image, ';base64')){
-            $base64 = $request->image;
-            //obtem a extensão
-            $extension = explode('/', $base64);
-            $extension = explode(';', $extension[1]);
-            $extension = '.'.$extension[0];
-            //gera o nome
-            $name = time().$extension;
-            //obtem o arquivo
-            $separatorFile = explode(',', $base64);
-            $file = $separatorFile[1];
-            $path = 'public/base64-files/';
-            //envia o arquivo
-            Storage::put($path.$name, base64_decode($file));
-      }
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatePhotoArticle(Request $request)
-    {
-      if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::delete('image'. $this->image);
-          Storage::makeDirectory('localPhoto/', 0775, true);
-        }
-        $file = $request->file('image');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
-        $this->image = $path;
-      }
-      else{
-        return response()->json(['message' => 'Falha ao carregar a imagem']);
-      }
-
-      $this->save();
-    }
-
 
     /**
      * Update the specified resource in storage.
@@ -137,6 +94,9 @@ class Article extends Model
       }
       if($request->date){
         $this->date = $request->date;
+      }
+      if($request->image){
+        $this->image = $request->image;
       }
       $this->save();
     }

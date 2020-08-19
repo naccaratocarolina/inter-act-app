@@ -122,6 +122,7 @@ class User extends Authenticatable
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
+        $this->profile_picture = $request->profile_picture;
         $this->save();
 
         //always assign a registered user marker to a newly created user
@@ -136,28 +137,6 @@ class User extends Authenticatable
         }
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function updatePhotoUser(UserRequest $request)
-    {
-      if($request->profile_picture) {
-        IF(!Storage::exists('localPhoto/')){
-          Storage::delete('profile_picture'. $this->profile_picture);
-          Storage::makeDirectory('localPhoto/', 0775, true);
-        }
-        $file = $request->file('profile_picture');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
-        $this->profile_picture = $path;
-        $this->save();
-      }
-    }
     /**
      * Update the specified resource in storage.
      *
@@ -179,6 +158,9 @@ class User extends Authenticatable
        }
        if($request->description){
          $this->description = $request->description;
+       }
+       if($request->profile_picture){
+         $this->profile_picture = $request->profile_picture;
        }
        $this->save();
 

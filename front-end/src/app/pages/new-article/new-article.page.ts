@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
-
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -64,8 +63,6 @@ export class NewArticlePage implements OnInit {
       resultType: CameraResultType.DataUrl,
       source: CameraSource.Camera
     });
-    console.log(image);
     this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
-    console.log(this.photo);
   }
 }
