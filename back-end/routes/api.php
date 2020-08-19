@@ -34,6 +34,8 @@ use Illuminate\Support\Facades\Route;
   Route::get('indexUser', 'UserController@indexUser');
   Route::post('createUser', 'UserController@createUser');
   Route::get('showUser/{id}', 'UserController@showUser');
+  Route::get('indexFollowingUsers/{user_id}', 'UserController@indexFollowingUsers');
+  Route::get('indexFollowersUsers/{user_id}', 'UserController@indexFollowersUsers');
 
   //Role Controller
   Route::post('createRole', 'RoleController@createRole');
@@ -74,8 +76,6 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('moderator');
 
   //User Controller
-  Route::get('indexFollowingUsers/{user_id}', 'UserController@indexFollowingUsers');
-  Route::get('indexFollowersUsers/{user_id}', 'UserController@indexFollowersUsers');
   Route::get('actionLike/{article_id}', 'UserController@actionLike');
   Route::get('actionFollow/{following_id}', 'UserController@actionFollow');
   Route::get('removeFollow/{following_id}', 'UserController@removeFollow');

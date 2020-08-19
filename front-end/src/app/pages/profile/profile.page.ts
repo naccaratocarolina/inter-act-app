@@ -21,6 +21,8 @@ export class ProfilePage implements OnInit {
   userToken = localStorage.getItem("token");
   loggedUserId:number;
   viewingOwnProfile:boolean;
+  public followingUsers = [];
+  public followerUsers = [];
 
   constructor(
     private router:Router,
@@ -39,20 +41,21 @@ export class ProfilePage implements OnInit {
     this.showUser(this.profile_id);
     this.hasFollow(this.profile_id);
     this.getDetails();
+    console.log(this.userData);
+    this.indexFollowersUsers(this.profile_id);
+    this.indexFollowingUsers(this.profile_id);
   }
 
   //Chamada das funcoes para quando o usuario sair da pagina
-  public ionViewWillLeave() {
-
-  }
+  public ionViewWillLeave() { }
 
   //Pega os detalhes do usuario logado e compara com o profile_id. Seta o resultado em variavel booleana para uso no Ngif.
   public getDetails(){
     this.authService.getDetails().subscribe((response) => {
       this.loggedUserId = response.user.id;
-      this.userViewingOwnProfile();  
+      this.userViewingOwnProfile();
     })
-    
+
   }
 
   public userViewingOwnProfile(){
@@ -120,6 +123,21 @@ export class ProfilePage implements OnInit {
   public redirectArticle(article_id) {
     localStorage.setItem('article_id', JSON.stringify(article_id));
     this.router.navigate(['/article']);
+  }
+
+  //Lista os usuarios
+  public indexFollowingUsers(profile_id) {
+    this.userService.indexFollowingUsers(profile_id).subscribe((response) => {
+      this.followingUsers = response.following;
+      console.log(response.message);
+    });
+  }
+
+  public indexFollowersUsers(profile_id) {
+    this.userService.indexFollowersUsers(profile_id).subscribe((response) => {
+      this.followerUsers = response.followers;
+      console.log(response.message);
+    });
   }
 
   //Acao do botao de voltar na header

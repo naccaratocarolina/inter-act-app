@@ -18,7 +18,9 @@ export class FollowingPage implements OnInit {
     this.following_id = JSON.parse(localStorage.getItem('following_id'));
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.followingUsers);
+  }
 
   public ionViewWillEnter() {
     this.getLoggedUser();

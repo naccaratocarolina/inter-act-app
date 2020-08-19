@@ -179,7 +179,7 @@ class User extends Authenticatable
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function updateUser(UserRequest $request)
+     public function updateUser(Request $request)
      {
        //atualiza os campos do user
        if($request->name){

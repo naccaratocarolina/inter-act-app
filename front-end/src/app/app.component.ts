@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = []
-  public loggedUser = [];
+  public loggedUser = {profile_picture:null};
   userToken = localStorage.getItem('token');
 
   showSidemenu(userToken) {
@@ -86,7 +86,7 @@ export class AppComponent implements OnInit {
 
   public setVisitorPic(){
     if (this.userToken){}
-    //else {this.loggedUser.profile_picture = '../assets/logo_2_1.png'}
+    else {this.loggedUser.profile_picture = '../assets/logo_2_1.png'}
   }
 
   //Pega o usuario logado
