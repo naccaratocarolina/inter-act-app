@@ -27,22 +27,25 @@ export class NewArticlePage implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer) {
 
-    this.newArticleForm = this.formbuilder.group({
-      title: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(57)]],
-      subtitle: [null, [Validators.required, Validators.minLength(12), Validators.maxLength(83)]],
-      text: [null, [Validators.required]],
-      category: [null, [Validators.required]],
-    });
+      //Inicializa o formulario de criacao de um novo artigo
+      this.newArticleForm = this.formbuilder.group({
+        title: [null, [Validators.required, Validators.minLength(5), Validators.maxLength(57)]],
+        subtitle: [null, [Validators.required, Validators.minLength(12), Validators.maxLength(83)]],
+        text: [null, [Validators.required]],
+        category: [null, [Validators.required]],
+        image: [null]
+      });
    }
 
   ngOnInit() {
   }
 
-
+  //Redireciona para a pagina principal
   public redirectHome() {
     this.router.navigate(['/home']);
   }
 
+  //Envia o formulario de criacao de um novo artigo
   submitForm(form) {
     if(this.photo) {
       form.value.image = this.photo['changingThisBreaksApplicationSecurity'];

@@ -13,9 +13,8 @@ export class RedirPagePage implements OnInit {
   ngOnInit() {
   }
 
+  //Redireciona para a pagina principal
   homeRedirect() {
     this.router.navigateByUrl('/home')
   }
-
-
 }

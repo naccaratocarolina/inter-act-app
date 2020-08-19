@@ -26,7 +26,7 @@ export class CommentService {
     return this.http.get(this.apiUrl + 'indexArticleComment/' + article_id, this.httpHeaders);
   }
 
-  //Localiza o usuario que postoi determinado comentario atravez do id do ultimo
+  //Localiza o usuario que postou determinado comentario atravez do id do ultimo
   public indexCommentOwner(id):Observable<any>{
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'indexCommentOwner/' + id, this.httpHeaders)

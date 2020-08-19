@@ -10,7 +10,10 @@ import { AuthService } from "../../services/Auth/auth.service";
 })
 export class ArticleProfileComponent implements OnInit {
   @Input() All;
-  public loggedUser = [];
+  public loggedUserId:number;
+  public userIsAdmin:boolean;
+  public userOwnProfile:boolean;
+  public profile_id = JSON.parse(localStorage.getItem('profile_id'));
 
   constructor( private router:Router, public profilePage:ProfilePage, public authService: AuthService ) {
   }
@@ -19,12 +22,22 @@ export class ArticleProfileComponent implements OnInit {
     this.getLoggedUser();
   }
 
-  //Pega o usuario logado
+  //Pega o usuario logado e define
   public getLoggedUser() {
     this.authService.getDetails().subscribe((response) => {
-      this.loggedUser = response.user;
+      this.loggedUserId = response.user.id;
+      this.determineUser();
     });
   }
+
+  public determineUser(){
+    if (this.loggedUserId==this.profile_id){
+      this.userOwnProfile=true;
+    } else {this.userOwnProfile=false};
+    if (this.loggedUserId==1){
+      this.userIsAdmin = true
+    } else {this.userIsAdmin=false}
+    }
 
   //Funcao que deleta um artigo
   public destroyArticle(article_id, profile_id) {

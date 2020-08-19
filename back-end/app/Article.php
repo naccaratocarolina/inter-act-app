@@ -66,12 +66,12 @@ class Article extends Model
       $this->likes_count = $this->isLikedBy->count();
       $this->image = $request->image;
       $this->save();
-      /* date_default_timezone_set('America/Sao_Paulo');
+      date_default_timezone_set('America/Sao_Paulo');
       $now = Carbon::now();
       $this->date = $now->toFormattedDateString();
-      $this->save(); */
+      $this->save();
 
-      /* if($request->image){
+      if($request->image){
         IF(!Storage::exists('localPhoto/')){
           Storage::delete('image'. $this->image);
           Storage::makeDirectory('localPhoto/', 0775, true);
@@ -85,12 +85,6 @@ class Article extends Model
       else{
         return response()->json(['message' => 'Falha ao carregar a imagem']);
       }
-
-      date_default_timezone_set('America/Sao_Paulo');
-      $now = Carbon::now();
-      $this->date = $now->toFormattedDateString();
-
-      $this->save(); */
     }
 
     /**

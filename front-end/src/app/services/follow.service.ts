@@ -26,6 +26,7 @@ export class FollowService {
     return this.http.get(this.apiUrl + 'actionFollow/' + following_id, this.httpHeaders);
   }
 
+  //Usuario logado remove o follow de outro usuario dado atraves do following_id
   public removeFollow(following_id):Observable<any>{
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
     return this.http.get(this.apiUrl + 'removeFollow/' + following_id, this.httpHeaders);

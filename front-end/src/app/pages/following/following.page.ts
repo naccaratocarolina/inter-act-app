@@ -15,11 +15,15 @@ export class FollowingPage implements OnInit {
   public clickedUser = [];
 
   constructor(public userService: UserService, public followService:FollowService, public authService: AuthService) {
+    //Pega o id do usuario dono da pagina passado na transicao de paginas
     this.following_id = JSON.parse(localStorage.getItem('following_id'));
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+    console.log(this.followingUsers);
+  }
 
+  //Chamada das funcoes para quando o usuario entrar na pagina
   public ionViewWillEnter() {
     this.getLoggedUser();
     this.showUser(this.following_id);
@@ -40,7 +44,7 @@ export class FollowingPage implements OnInit {
     });
   }
 
-  //Lista os usuarios
+  //Lista os usuarios seguidos pelo usuario dado pelo id following_id
   public indexFollowingUsers(following_id) {
     this.userService.indexFollowingUsers(following_id).subscribe((response) => {
       this.followingUsers = response.following;
@@ -48,7 +52,7 @@ export class FollowingPage implements OnInit {
     });
   }
 
-  //Realiza a acao de seguir ou parar de seguir outro usuario
+  //Permite que o usuario pare de seguir outros usuarios quando abre a sua pagina de seguindo
   public removeFollow(user_id, following_id) {
     this.followService.removeFollow(user_id).subscribe((response) => {
     console.log(response.message);

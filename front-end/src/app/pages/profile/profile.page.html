@@ -12,7 +12,7 @@
       
     </ion-buttons>
     <img class='profile-pic' src = "{{userData.profile_picture}}">
-    <ion-button *ngIf="userToken" class='follow' (click)='actionFollow(this.profile_id)'>{{followText}}</ion-button>
+    <ion-button *ngIf="(userToken && viewingOwnProfile)" class='follow' (click)='actionFollow(this.profile_id)'>{{followText}}</ion-button>
   </section>
 
 <section class='card'>
@@ -22,11 +22,11 @@
     <section class='followinfo'>
       <section class='followers' (click)="redirectFollowers(userData.id)">
         <h3>Seguidores</h3>
-        <h4>{{userData.follower_count}}</h4>
+        <h4>{{followerUsers.length}}</h4>
       </section>
       <section class='following' (click)="redirectFollowing(userData.id)"> 
         <h3>Seguindo</h3>
-        <h4>{{userData.following_count}}</h4>
+        <h4>{{followingUsers.length}}</h4>
       </section>
     </section>
     <section>

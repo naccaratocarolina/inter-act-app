@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { ArticleService } from '../../services/article.service';
 import { FollowService } from '../../services/follow.service';
+import { AuthService } from '../../services/Auth/auth.service';
 import { Injectable } from '@angular/core';
 
 @Component({
@@ -18,14 +19,20 @@ export class ProfilePage implements OnInit {
   profile_id:number;
   followBool:boolean;
   userToken = localStorage.getItem("token");
+  loggedUserId:number;
+  viewingOwnProfile:boolean;
+  public followingUsers = [];
+  public followerUsers = [];
 
   constructor(
     private router:Router,
     public userService:UserService,
     public articleService:ArticleService,
     public followService:FollowService,
+    public authService:AuthService,
     ) {
-    this.profile_id = JSON.parse(localStorage.getItem('profile_id'));
+      //Pega o id do usuario dono do perfil clicado setado na transicao de paginas
+      this.profile_id = JSON.parse(localStorage.getItem('profile_id'));
    }
 
   ngOnInit() { }
@@ -34,11 +41,30 @@ export class ProfilePage implements OnInit {
   public ionViewWillEnter() {
     this.showUser(this.profile_id);
     this.hasFollow(this.profile_id);
+    this.getDetails();
+    console.log(this.userData);
+    this.indexFollowersUsers(this.profile_id);
+    this.indexFollowingUsers(this.profile_id);
   }
 
   //Chamada das funcoes para quando o usuario sair da pagina
-  public ionViewWillLeave() {
+  public ionViewWillLeave() { }
 
+  //Pega os detalhes do usuario logado e compara com o profile_id. Seta o resultado em variavel booleana para uso no Ngif.
+  public getDetails(){
+    this.authService.getDetails().subscribe((response) => {
+      this.loggedUserId = response.user.id;
+      this.userViewingOwnProfile();
+    });
+  }
+
+  //Garante o flow dos usuarios logados, nao permitindo que algumas informacoes sejam mostradas caso contrario
+  public userViewingOwnProfile(){
+    if (this.loggedUserId == this.profile_id) {
+      this.viewingOwnProfile=false;
+    } else {
+      this.viewingOwnProfile=true;
+    }
   }
 
   //Pega o usuario conforme o seu id
@@ -47,6 +73,7 @@ export class ProfilePage implements OnInit {
       this.userData = response.user;
       console.log(response.message);
       this.showUserArticles(this.profile_id);
+      console.log(this.userData)
     })
   }
 
@@ -60,11 +87,11 @@ export class ProfilePage implements OnInit {
   //Realiza a acao de seguir ou parar de seguir outro usuario
   public actionFollow(user_id) {
     this.followService.actionFollow(user_id).subscribe((response) => {
-    this.hasFollow(user_id);
-    this.showUser(user_id);
-    console.log(response.message)
-  });
-}
+      this.hasFollow(user_id);
+      this.showUser(user_id);
+      console.log(response.message)
+    });
+  }
 
   //Checa se determinado usuario ja foi seguido ou nao pelo usuario logado
   public hasFollow(user_id) {
@@ -88,6 +115,7 @@ export class ProfilePage implements OnInit {
     }
   }
 
+  //Deleta um artigo dado pelo seu article_id
   public destroyArticle(article_id, profile_id) {
     this.articleService.destroyArticle(article_id).subscribe((response) => {
       console.log(response.message);
@@ -101,16 +129,34 @@ export class ProfilePage implements OnInit {
     this.router.navigate(['/article']);
   }
 
+  //Lista os usuarios
+  public indexFollowingUsers(profile_id) {
+    this.userService.indexFollowingUsers(profile_id).subscribe((response) => {
+      this.followingUsers = response.following;
+      console.log(response.message);
+    });
+  }
+
+  //Lista todos os usuarios que seguem o usuario dado pelo id do dono do perfil clicado
+  public indexFollowersUsers(profile_id) {
+    this.userService.indexFollowersUsers(profile_id).subscribe((response) => {
+      this.followerUsers = response.followers;
+      console.log(response.message);
+    });
+  }
+
   //Acao do botao de voltar na header
   goBack() {
     window.history.back();
   }
 
+  //Redireciona para a pagina de following carregando o id do usuario clicado
   public redirectFollowing(following_id) {
     localStorage.setItem('following_id', JSON.stringify(following_id));
     this.router.navigate(['/following']);
   }
 
+  //Redireciona para a pagina de follower carregando o id do usuario clicado
   public redirectFollowers(follower_id) {
     localStorage.setItem('follower_id', JSON.stringify(follower_id));
     this.router.navigate(['/followers']);
