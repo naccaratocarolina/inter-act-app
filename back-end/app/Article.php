@@ -64,7 +64,7 @@ class Article extends Model
       $this->text = $request->text;
       $this->category = $request->category;
       $this->likes_count = $this->isLikedBy->count();
-      //$this->image = $request->image;
+      $this->image = $request->image;
       $this->save();
       date_default_timezone_set('America/Sao_Paulo');
       $now = Carbon::now();
