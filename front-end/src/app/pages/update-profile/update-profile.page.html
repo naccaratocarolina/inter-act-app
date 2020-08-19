@@ -18,10 +18,15 @@
 
 <ion-content fullscreen class="bgImage">
 
-   <ion-fab horizontal="end" vertical="bottom" slot="fixed">
-     <ion-fab-button (click)="takePicture()">
-       <ion-icon name="camera-outline"></ion-icon>
+  <ion-fab horizontal="end" vertical="bottom" slot="fixed">
+     <ion-fab-button>
+       <ion-icon md="caret-up" ios="chevron-up-circle-outline"></ion-icon>
      </ion-fab-button>
+     <ion-fab-list side="top">
+       <ion-fab-button (click)="takePicture()">
+         <ion-icon name="camera-outline"></ion-icon>
+       </ion-fab-button>
+     </ion-fab-list>
    </ion-fab>
  <div class="ion-padding">
    
