@@ -64,26 +64,27 @@ class Article extends Model
       $this->text = $request->text;
       $this->category = $request->category;
       $this->likes_count = $this->isLikedBy->count();
-      $this->image = $request->image;
+      //$this->image = $request->image;
       $this->save();
       date_default_timezone_set('America/Sao_Paulo');
       $now = Carbon::now();
       $this->date = $now->toFormattedDateString();
       $this->save();
 
-      if($request->image){
-        IF(!Storage::exists('localPhoto/')){
-          Storage::delete('image'. $this->image);
-          Storage::makeDirectory('localPhoto/', 0775, true);
-        }
-
-        $file = $request->file('image');
-        $fileName = rand().'.'.$file->getClientOriginalExtension();
-        $path = $file->storeAs('localPhoto/' ,$fileName);
-        $this->image = $path;
-      }
-      else{
-        return response()->json(['message' => 'Falha ao carregar a imagem']);
+      if($request->has('image') && strpos($request->image, ';base64')){
+            $base64 = $request->image;
+            //obtem a extensão
+            $extension = explode('/', $base64);
+            $extension = explode(';', $extension[1]);
+            $extension = '.'.$extension[0];
+            //gera o nome
+            $name = time().$extension;
+            //obtem o arquivo
+            $separatorFile = explode(',', $base64);
+            $file = $separatorFile[1];
+            $path = 'public/base64-files/';
+            //envia o arquivo
+            Storage::put($path.$name, base64_decode($file));
       }
     }
 
