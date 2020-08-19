@@ -1,5 +1,5 @@
 {
-  "appId": "com.io.ionic.starter.interact",
+  "appId": "com.appPackageId.interact",
   "appName": "interact",
   "bundledWebRuntime": false,
   "npmClient": "npm",

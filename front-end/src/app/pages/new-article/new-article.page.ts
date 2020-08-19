@@ -3,7 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 
-
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
@@ -37,8 +36,7 @@ export class NewArticlePage implements OnInit {
       });
    }
 
-  ngOnInit() {
-  }
+  ngOnInit() { }
 
   //Redireciona para a pagina principal
   public redirectHome() {
