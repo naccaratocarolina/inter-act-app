@@ -15,9 +15,13 @@ ion-button ion-icon {
     color: white;
 }
 
+ion-label {
+  color:#0D8FE3;
+}
+
 ion-title {
     --color: #ffffff;
-    
+
     font-size: 1.5em;
     font-weight: 400;
 }
@@ -102,4 +106,3 @@ hr {
 .message ion-button {
     text-transform: capitalize;
 }
-

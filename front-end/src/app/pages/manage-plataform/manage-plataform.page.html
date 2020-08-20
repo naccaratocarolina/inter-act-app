@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()" fill="clear">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-text-center">Gerenciar plataforma</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-list *ngFor='let user of allUsers'>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-grid class="user-container">
+          <ion-col size="auto" class="img-container"><img class="userImg" src="{{user.profile_picture}}"></ion-col>
+          <ion-col>
+            {{user.name}}
+          </ion-col>
+          <ion-icon *ngIf="user.isMod" color="success" name="checkmark-circle"></ion-icon>
+        </ion-grid>
+      </ion-item>
+      
+      <ion-item-options side="end">
+        <ion-item-option color="danger">
+          <ion-icon (click)="destroyUser(user.id)" slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="dark">
+          <ion-icon (click)="assignModerator(user.id)" slot="icon-only" name="arrow-up-circle-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

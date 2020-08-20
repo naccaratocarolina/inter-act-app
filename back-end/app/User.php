@@ -122,8 +122,16 @@ class User extends Authenticatable
         $this->email = $request->email;
         $this->password = bcrypt($request->password);
         $this->description = $request->description;
-        $this->profile_picture = $request->profile_picture;
         $this->save();
+
+        //Create an user with a default photo
+        if($request->profile_picture) {
+          $this->profile_picture = $request->profile_picture;
+          $this->save();
+        }
+        else {
+          $this->profile_picture = 'https://lorempixel.com/480/640/';
+        }
 
         //always assign a registered user marker to a newly created user
         $registeredUser = Role::where('marker', 'registered-user')->first();

@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from "../../services/Auth/auth.service";
 import { Router } from '@angular/router';
 import { IonicStorageModule } from "@ionic/storage";
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,11 @@ export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
 
-  constructor( public authService: AuthService, private router:Router, public formbuilder: FormBuilder ) {
+  constructor(
+    public authService: AuthService,
+    private router:Router,
+    public formbuilder: FormBuilder,
+    public toastController: ToastController) {
     //Inicializa o formulario de registro de um novo usuario
     this.registerForm = this.formbuilder.group({
       name: ['', [Validators.required]],
@@ -33,9 +38,17 @@ export class RegisterPage implements OnInit {
         localStorage.setItem('token', response.data.token);
 
         //redirects to home page
-        this.router.navigate(['/home']);
+        this.router.navigate(['/home']).then(()=>window.location.reload());
       });
     }
+  }
+
+  async registerSuccessToast() {
+    const toast = await this.toastController.create({
+      message: 'Seja bem-vindx!',
+      duration: 3000
+    });
+    toast.present();
   }
 
   //Redireciona pra página de login

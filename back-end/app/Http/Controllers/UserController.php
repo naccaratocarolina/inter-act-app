@@ -30,7 +30,7 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function indexUser()
+    public function indexAllUsers()
     {
         $users = User::orderBy('id', 'desc')->get();
         return response()->json(['users' => $users]);
@@ -108,7 +108,7 @@ class UserController extends Controller
        $user = User::findOrFail($id);
        $user->roles()->detach();
        $user = User::destroy($id);
-       return response()->json(['message' => 'User deletado!']);
+       return response()->json(['message' =>'User deletado!']);
       }
 
       /**
@@ -217,6 +217,20 @@ class UserController extends Controller
           if($article_like->id === $article->id) {
             return 1;
           }
+        }
+        return 0;
+      }
+
+      /**
+       * Function that check if an the authenticated user is a moderator
+       *
+       * @param  int  $article_id
+       * @return bool
+       */
+      public function isModerator($id) {
+        $user = User::findOrFail($id);
+        if($user->roles->contains('marker', 'moderator')) {
+          return 1;
         }
         return 0;
       }

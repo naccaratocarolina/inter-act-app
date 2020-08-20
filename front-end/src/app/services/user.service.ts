@@ -23,8 +23,8 @@ export class UserService {
   constructor(public http:HttpClient) { }
 
   //Faz o display de todos os usuarios
-  public indexUser():Observable<any> {
-    return this.http.get(this.apiUrl + 'indexUser', this.httpHeaders);
+  public indexAllUsers():Observable<any> {
+    return this.http.get(this.apiUrl + 'indexAllUsers', this.httpHeaders);
   }
 
   //Funcao que lista usuarios filtrando por pessoas que o usuario autenticado segue

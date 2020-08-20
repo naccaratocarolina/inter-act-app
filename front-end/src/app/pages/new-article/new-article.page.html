@@ -8,7 +8,7 @@
   
       <ion-buttons slot="end">
         <form [formGroup]="newArticleForm" (ngSubmit)="submitForm(newArticleForm)">
-          <ion-button type="submit" [disabled]="newArticleForm.invalid">
+          <ion-button (click)="ArticlePostedToast()" type="submit" [disabled]="newArticleForm.invalid">
             Postar
           </ion-button>
         </form>
@@ -53,6 +53,7 @@
               <ion-select-option value="Atividade física">Atividade física</ion-select-option>
               <ion-select-option value="Comida">Comida</ion-select-option>
               <ion-select-option value="Viagem">Viagem</ion-select-option>
+              <ion-select-option value="Outros">Outros</ion-select-option>
             </ion-select>
           </ion-item>
       </ion-list>

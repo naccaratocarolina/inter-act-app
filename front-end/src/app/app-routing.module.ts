@@ -4,12 +4,8 @@ import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'redir-page',
+    redirectTo: 'slider',
     pathMatch: 'full'
-  },
-  {
-    path: 'redir-page',
-    loadChildren: () => import('./pages/redir-page/redir-page.module').then( m => m.RedirPagePageModule)
   },
   {
     path: 'login',
@@ -50,6 +46,14 @@ const routes: Routes = [
   {
     path: 'followers',
     loadChildren: () => import('./pages/followers/followers.module').then( m => m.FollowersPageModule)
+  },
+  {
+    path: 'slider',
+    loadChildren: () => import('./pages/slider/slider.module').then( m => m.SliderPageModule)
+  },
+  {
+    path: 'manage-plataform',
+    loadChildren: () => import('./pages/manage-plataform/manage-plataform.module').then( m => m.ManagePlataformPageModule)
   }
 ];
 

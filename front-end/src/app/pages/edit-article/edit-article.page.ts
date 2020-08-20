@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-edit-article',
@@ -25,7 +26,8 @@ export class EditArticlePage implements OnInit {
     public formbuilder: FormBuilder,
     public articleService:ArticleService,
     private router: Router,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    public toastController: ToastController) {
 
       //Inicializa o formulario de edicao do artigo
       this.editArticleForm = this.formbuilder.group({
@@ -60,6 +62,14 @@ export class EditArticlePage implements OnInit {
       source: CameraSource.Camera
     });
     this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+  }
+
+  async ArticleEditedToast() {
+    const toast = await this.toastController.create({
+      message: 'Artigo editado com sucesso!',
+      duration: 4000
+    });
+    toast.present();
   }
 
   //Redireciona para a pagina principal

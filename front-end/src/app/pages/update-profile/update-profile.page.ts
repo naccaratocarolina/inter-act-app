@@ -5,6 +5,7 @@ import { UserService } from '../../services/user.service';
 import { Router } from '@angular/router';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-update-profile',
@@ -22,7 +23,8 @@ export class UpdateProfilePage implements OnInit {
     public authService: AuthService,
     public userService: UserService,
     private router: Router,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    public toastController: ToastController) {
       //Inicializa o formulario de edicao de perfil
       this.updateProfileForm = this.formBuilder.group ({
         name: [null],
@@ -65,6 +67,14 @@ export class UpdateProfilePage implements OnInit {
       source: CameraSource.Camera
     });
     this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(profile_picture && (profile_picture.dataUrl));
+  }
+
+  async profileEditedToast() {
+    const toast = await this.toastController.create({
+      message: 'Perfil editado com sucesso!',
+      duration: 4000
+    });
+    toast.present();
   }
 
   //Redireciona para a pagina de perfil

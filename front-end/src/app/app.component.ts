@@ -12,8 +12,9 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
-  public appPages = []
+  public appPages = [];
   public loggedUser = {profile_picture:null};
+  public isMod:boolean;
   userToken = localStorage.getItem('token');
 
   showSidemenu(userToken) {
@@ -62,7 +63,7 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     public authService:AuthService,
-    private router:Router,
+    private router:Router
   ) {
     this.initializeApp();
   }
@@ -94,6 +95,12 @@ export class AppComponent implements OnInit {
     this.authService.getDetails().subscribe((response) => {
       this.loggedUser = response.user;
     });
+  }
+
+  public redirectManagePlataform(title, user_id) {
+    if(title == 'Gerenciar plataforma') {
+      window.location.replace('/manage-plataform');
+    }
   }
 
   //Redireciona para a pagina de perfil e salva o id do usuario clicado

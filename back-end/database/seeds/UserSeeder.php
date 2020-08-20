@@ -26,6 +26,7 @@ class UserSeeder extends Seeder
         $admin->roles()->attach($moderator);
 
         //Creating the others registered users
+        /*
         factory(User::class, 5)->create()->each(function ($user) {
           $articles = factory(Article::class,2)->make();
           $comments = factory(Comment::class,2)->make();
@@ -48,6 +49,6 @@ class UserSeeder extends Seeder
 
           //User is followed by n Users n-n
           $user->followers()->attach(User::all()->random()->id);
-        });
+        });*/
   }
 }

@@ -31,7 +31,7 @@ use Illuminate\Support\Facades\Route;
   Route::post('login', 'API\PassportController@login')->name('login');
 
   //User Controller
-  Route::get('indexUser', 'UserController@indexUser');
+  Route::get('indexAllUsers', 'UserController@indexAllUsers');
   Route::post('createUser', 'UserController@createUser');
   Route::get('showUser/{id}', 'UserController@showUser');
   Route::get('indexFollowingUsers/{user_id}', 'UserController@indexFollowingUsers');
@@ -70,7 +70,8 @@ Route::group(['middleware' => 'auth:api'], function() {
   //Role Controller
   Route::get('indexRole', 'RoleController@indexRole')->middleware('moderator');
   Route::get('showRole/{id}', 'RoleController@showRole')->middleware('moderator');
-  Route::post('addRole/{role_id}', 'RoleController@addRole')->middleware('moderator');
+  Route::get('addRole/{role_id}', 'RoleController@addRole')->middleware('moderator');
+  Route::get('assignModerator/{user_id}', 'RoleController@assignModerator')->middleware('moderator');
   Route::put('updateRole/{id}', 'RoleController@updateRole')->middleware('moderator');
   Route::delete('destroyRole/{id}', 'RoleController@destroyRole')->middleware('moderator');
 
@@ -80,6 +81,7 @@ Route::group(['middleware' => 'auth:api'], function() {
   Route::get('removeFollow/{following_id}', 'UserController@removeFollow');
   Route::get('hasFollow/{following_id}', 'UserController@hasFollow');
   Route::get('hasLike/{article_id}', 'UserController@hasLike');
+  Route::get('isModerator/{id}', 'UserController@isModerator');
   Route::put('updateUser/{id}', 'UserController@updateUser')->middleware('role');
   Route::delete('destroyUser/{id}', 'UserController@destroyUser')->middleware('role');
 });

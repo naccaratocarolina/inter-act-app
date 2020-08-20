@@ -48,15 +48,12 @@ export class HomePage implements OnInit {
   public indexAllArticles() {
     this.articleService.indexAllArticles().subscribe((response) => {
       this.postsAll = response.articles;
-      console.log(this.postsAll);
     });
   }
 
   //Faz o display dos artigos filtrando pelos usuarios que o usuario logado segue
   public indexFollowingArticles() {
     this.articleService.indexFollowingArticles().subscribe((response) => {
-      console.log(response.articles);
-
       for(let i=0; i<response.articles.length; i++) {
         for (let j=0; j<response.articles[i].length; j++) {
           this.postFollowing.push(response.articles[i][j]);

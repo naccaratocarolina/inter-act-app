@@ -8,7 +8,7 @@
   
       <ion-buttons slot="end">
         <form [formGroup]="editArticleForm" (ngSubmit)="submitForm(editArticleForm, article_id)">
-          <ion-button type="submit" [disabled]="editArticleForm.invalid">
+          <ion-button type="submit" [disabled]="editArticleForm.invalid" (click)="ArticleEditedToast()">
             Editar
           </ion-button>
         </form>
@@ -50,11 +50,11 @@
             <ion-select-option value="Arte">Arte</ion-select-option>
             <ion-select-option value="Atividade física">Atividade física</ion-select-option>
             <ion-select-option value="Comida">Comida</ion-select-option>
-            <ion-select-option value="Viagem">Viagem</ion-select-option>
+            <ion-select-option value="Outros">Outros</ion-select-option>
           </ion-select>
         </ion-item>
     </ion-list>
-    <img  [src]="photo" vertical="center" horizontal="center">
+    <img [src]="photo" vertical="center" horizontal="center">
     </form>
 
   </div>

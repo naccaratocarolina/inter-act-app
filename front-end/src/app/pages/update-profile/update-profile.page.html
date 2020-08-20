@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-buttons slot="end">
       <form [formGroup]="updateProfileForm" (ngSubmit)="submitForm(updateProfileForm, loggedUser.id)">
-        <ion-button type="submit" [disabled]="updateProfileForm.invalid">
+        <ion-button type="submit" [disabled]="updateProfileForm.invalid" (click)="profileEditedToast()">
           Salvar
         </ion-button>
       </form>

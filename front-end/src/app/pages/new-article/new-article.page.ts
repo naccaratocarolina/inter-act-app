@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ArticleService } from '../../services/article.service';
 import { Plugins, CameraResultType, CameraSource } from '@capacitor/core';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-new-article',
@@ -23,7 +24,8 @@ export class NewArticlePage implements OnInit {
     public formbuilder: FormBuilder,
     public articleService:ArticleService,
     private router: Router,
-    private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer,
+    public toastController: ToastController) {
 
       //Inicializa o formulario de criacao de um novo artigo
       this.newArticleForm = this.formbuilder.group({
@@ -50,7 +52,6 @@ export class NewArticlePage implements OnInit {
     this.articleService.createArticle(form.value).subscribe((response) => {
       console.log(response.message);
       form.reset();
-      console.log(response.article);
       this.redirectHome();
     });
   }
@@ -64,5 +65,13 @@ export class NewArticlePage implements OnInit {
       source: CameraSource.Camera
     });
     this.photo = this.sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+  }
+
+  async ArticlePostedToast() {
+    const toast = await this.toastController.create({
+      message: 'Artigo postado com sucesso!',
+      duration: 4000
+    });
+    toast.present();
   }
 }

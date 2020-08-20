@@ -27,9 +27,15 @@ export class RoleService {
 
   constructor( public http:HttpClient ) { }
 
-  //Moderador pode atribuir um marcador de moderador a um usuario registrado na plataforma
-  public addRole(role_id):Observable<any> {
+  //Moderador adiciona o marcador de moderador a outro usuario normal
+  public assignModerator(user_id):Observable<any> {
     this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
-    return this.http.post(this.apiUrl + 'addRole/' + role_id, null, this.httpHeaders)
+    return this.http.get(this.apiUrl + 'assignModerator/' + user_id, this.httpHeaders);
+  }
+
+  //Funcao que verifica se o usuario logado possui marcador de moderador
+  public isModerator(user_id):Observable<any> {
+    this.httpHeaders['headers']["Authorization"] = 'Bearer ' + localStorage.getItem('token');
+    return this.http.get(this.apiUrl + 'isModerator/' + user_id, this.httpHeaders);
   }
 }

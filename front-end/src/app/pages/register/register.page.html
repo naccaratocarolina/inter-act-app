@@ -24,7 +24,7 @@
         <ion-input placeholder="(6 a 36 caracteres)" type="password" formControlName="password"></ion-input>
       </section>
       
-      <ion-button class='button' [disabled]="registerForm.invalid" type="submit" fill="clear" size='large'><h2>Enviar</h2></ion-button>
+      <ion-button class='button' (click)="registerSuccessToast()" [disabled]="registerForm.invalid" type="submit" fill="clear" size='large'><h2>Enviar</h2></ion-button>
     </form>
   </div>
   <h6>Já possui uma conta? <span (click)='loginRedirect()'>Clique aqui.</span></h6>

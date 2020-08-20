@@ -42,7 +42,6 @@ export class ProfilePage implements OnInit {
     this.showUser(this.profile_id);
     this.hasFollow(this.profile_id);
     this.getDetails();
-    console.log(this.userData);
     this.indexFollowersUsers(this.profile_id);
     this.indexFollowingUsers(this.profile_id);
   }
@@ -73,7 +72,6 @@ export class ProfilePage implements OnInit {
       this.userData = response.user;
       console.log(response.message);
       this.showUserArticles(this.profile_id);
-      console.log(this.userData)
     })
   }
 

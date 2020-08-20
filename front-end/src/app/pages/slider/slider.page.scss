@@ -1,0 +1,48 @@
+img {
+  position: absolute;
+  z-index: 1000;
+  max-width: 50%;
+  width: 50vw;
+  left: 25vw;
+}
+
+h1 {
+    font-family: 'Comfortaa', cursive;
+    font-size: 1.5em;
+    text-transform: capitalize;
+    margin: 0;
+}
+
+.slide_1 {
+  background: rgb(255, 255, 255) url("../../../assets/fundo_1.png") no-repeat center center / cover;
+}
+
+.slide_2 {
+  background: rgb(255, 255, 255) url("../../../assets/fundo_2.png") no-repeat center center / cover;
+}
+
+.slide_3 {
+  background: rgb(255, 255, 255) url("../../../assets/fundo_3.png") no-repeat center center / cover;
+}
+
+ion-slides {
+  height: 100%;
+  width: 100%;
+}
+
+.redirect-home-button {
+  ion-button {
+    position: absolute;
+    z-index: 100000000;
+    --border-radius: 10em;
+    top: 80vh;
+    left: 30vw;
+
+    border: solid;
+    border-width: 0.125em;
+    border-color: white;
+    border-radius: 10em;
+    width: 40vw;
+    height: 3.125em;
+  }
+}

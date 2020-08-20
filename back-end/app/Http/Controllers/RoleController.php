@@ -55,6 +55,19 @@ class RoleController extends Controller
     }
 
     /**
+     * Add a moderator marker to an authenticated user
+     *
+     * @return object
+     */
+    public function assignModerator($user_id) {
+      $user = User::findOrFail($user_id);
+      $moderator = Role::where('marker', 'moderator')->first();
+      $user->roles()->attach($moderator);
+      $user->save();
+      return response()->json(['message' => $user->name . ' agora eh moderador!']);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Role  $role
