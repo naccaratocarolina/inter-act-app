@@ -148,8 +148,6 @@ class UserController extends Controller
         $following = User::findOrFail($following_id);
         $user->following()->detach($following->id);
         $following->followers()->detach($user->id);
-        User::where('id', $user->id)->decrement('following_count');
-        User::where('id', $following->id)->decrement('follower_count');
         $following = User::findOrFail($following_id);
         return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
       }
