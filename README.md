@@ -14,7 +14,7 @@ estimular atividades e trocas saudáveis.
 - Ionic
 - Laravel
 
-## instruções
+## Instruções
 Após clonar esse repositório na sua máquina:
 ### 1. Front-end
 ```bash
