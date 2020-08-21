@@ -5,7 +5,7 @@ ion-toolbar {
 ion-button {
     color: #0D8FE3;
     text-transform: capitalize;
-    
+
 }
 
 ion-title {
@@ -14,16 +14,19 @@ ion-title {
     font-weight: bold;
     padding: 0;
     color: #141414;
-    
+
 }
 
 ion-label {
     padding-right: 5px;
-} 
+}
 
 ion-input h2, ion-item ion-label {
     color: black;
-    
+}
+
+ion-fab {
+  position: fixed;
 }
 
 ion-input {

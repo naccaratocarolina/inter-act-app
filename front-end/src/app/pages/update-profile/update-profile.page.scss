@@ -18,6 +18,10 @@ ion-fab-button {
     --background: #0D8FE3;
 }
 
+ion-fab {
+  position: fixed;
+}
+
 ion-title {
     text-align: center;
     font-size: 1em;
