@@ -161,7 +161,7 @@ export class AppComponent implements OnInit {
     if (title == 'Sair'){
       this.authService.logout().subscribe((response) => {
         localStorage.removeItem('token');
-        this.showSidemenu(this.userToken);
+        this.showSidemenu(this.userToken, this.this.userIsAdmin);
         this.router.navigate(['/home']).then(()=>window.location.reload());
       })
     }
