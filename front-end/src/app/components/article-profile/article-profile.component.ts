@@ -37,7 +37,7 @@ export class ArticleProfileComponent implements OnInit {
     if (this.loggedUserId==1){
       this.userIsAdmin = true
     } else {this.userIsAdmin=false}
-    }
+  }
 
   //Funcao que deleta um artigo
   public destroyArticle(article_id, profile_id) {

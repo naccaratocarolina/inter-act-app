@@ -45,7 +45,7 @@ class CadastreNotification extends Notification
                     ->subject('Confirmação de cadastro InterAct')
                     ->greeting(' Seja bem vindo a InterAct!')
                     ->line('Clique no botão a baixo e confirm se cadastro')
-                    ->action('Confirme cadastro' , url('/'))
+                    ->action('Confirme cadastro' , url('http://localhost:8100/login'))
                     ->line('Obrigada por escolher a InterAct!');
     }
 

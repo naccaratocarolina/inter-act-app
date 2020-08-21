@@ -14,11 +14,41 @@ export class AppComponent implements OnInit {
   public selectedIndex = 0;
   public appPages = [];
   public loggedUser = {profile_picture:null};
-  public isMod:boolean;
   userToken = localStorage.getItem('token');
+  public userIsAdmin:boolean;
+  public isVisitor:boolean;
 
-  showSidemenu(userToken) {
-    if (userToken) {
+  showSidemenu(userToken, userIsAdmin) {
+    if(userIsAdmin) {
+      this.appPages =[
+    {
+      title: 'Perfil',
+      url: 'profile',
+      icon: 'person'
+    },
+    {
+      title: 'Home',
+      url: 'home',
+      icon: 'home'
+    },
+    {
+      title: 'Editar Perfil',
+      url: 'update-profile',
+      icon: 'settings'
+    },
+    {
+      title: 'Gerenciar plataforma',
+      url: 'manage-plataform',
+      icon: 'hammer'
+    },
+    {
+      title: 'Sair',
+      url: 'home',
+      icon: 'log-out-outline'
+    }]
+    }
+
+    else if (userToken) {
       this.appPages =[
     {
       title: 'Perfil',
@@ -40,7 +70,11 @@ export class AppComponent implements OnInit {
       url: 'home',
       icon: 'log-out-outline'
     }]
-    } else { this.appPages = [
+    }
+
+
+    else {
+       this.appPages = [
       {
         title: 'Login',
         url: 'login',
@@ -55,7 +89,8 @@ export class AppComponent implements OnInit {
         title: 'Home',
         url: 'home',
         icon: 'home'
-      }]}
+      }
+    ]}
   }
 
   constructor(
@@ -80,9 +115,9 @@ export class AppComponent implements OnInit {
     if (path !== undefined) {
       this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
     }
-    this.showSidemenu(this.userToken);
     this.getLoggedUser();
     this.setVisitorPic();
+    this.showSidemenu(this.userToken, this.userIsAdmin);
   }
 
   public setVisitorPic(){
@@ -94,7 +129,17 @@ export class AppComponent implements OnInit {
   public getLoggedUser() {
     this.authService.getDetails().subscribe((response) => {
       this.loggedUser = response.user;
+      this.determineUser(response.user.id);
+      this.showSidemenu(this.userToken, this.userIsAdmin);
     });
+  }
+
+  public determineUser(id){
+    if (id==1){
+      this.userIsAdmin = true;
+    } else {
+      this.userIsAdmin=false;
+    }
   }
 
   public redirectManagePlataform(title, user_id) {
