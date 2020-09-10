@@ -11,19 +11,15 @@ use Auth;
 
 class RoleController extends Controller
 {
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
     public function construct()
     {
       $this->middleware('moderator');
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexRole()
     {
@@ -34,7 +30,8 @@ class RoleController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param RoleRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function createRole(RoleRequest $request)
     {
@@ -46,9 +43,11 @@ class RoleController extends Controller
     /**
      * Add a role to the authenticated user
      *
-     * @return object
+     * @param $role_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function addRole($role_id) {
+    public function addRole($role_id)
+    {
       $user = Auth::user();
       $user->roles()->attach($role_id);
       return response()->json(['ok']);
@@ -57,9 +56,11 @@ class RoleController extends Controller
     /**
      * Add a moderator marker to an authenticated user
      *
-     * @return object
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function assignModerator($user_id) {
+    public function assignModerator($user_id)
+    {
       $user = User::findOrFail($user_id);
       $moderator = Role::where('marker', 'moderator')->first();
       $user->roles()->attach($moderator);
@@ -70,8 +71,8 @@ class RoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Role  $role
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function showRole($id)
     {
@@ -82,9 +83,9 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Role  $role
-     * @return \Illuminate\Http\Response
+     * @param RoleRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateRole(RoleRequest $request, $id)
     {
@@ -96,8 +97,8 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Role  $role
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroyRole($id)
     {

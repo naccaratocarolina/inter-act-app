@@ -7,15 +7,13 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests\ArticleRequest as ArticleRequest;
 
 use App\User;
-use App\Article;
 
 class ArticleController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexAllArticles()
     {
@@ -26,7 +24,8 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource that belongs to the authenticated user.
      *
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexUserArticles($id)
     {
@@ -38,10 +37,11 @@ class ArticleController extends Controller
     /**
      * Display the article owner.
      *
-     * @param  \App\Article  $article_id
-     * @return \Illuminate\Http\Response
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function indexArticleOwner($article_id) {
+    public function indexArticleOwner($article_id)
+    {
       $article = Article::findOrFail($article_id);
       $article_owner = $article->user;
       return response()->json(['message' => 'Dono do artigo encontrado!', 'article_owner' => $article_owner]);
@@ -50,9 +50,10 @@ class ArticleController extends Controller
     /**
      * Display a listing of the resource that belongs to the users that the user making the request follows.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function indexFollowingArticles() {
+    public function indexFollowingArticles()
+    {
       $user = Auth::user();
       //grab que users that $user is following
       $following_array = $user->following;
@@ -68,7 +69,8 @@ class ArticleController extends Controller
     /**
      * Creates a new instance of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      */
     public function createArticle(Request $request)
     {
@@ -80,8 +82,8 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function showArticle($id)
     {
@@ -92,9 +94,9 @@ class ArticleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
      public function updateArticle(Request $request, $id)
      {
@@ -104,12 +106,12 @@ class ArticleController extends Controller
        return response()->json(['message' => 'Artigo editado!', 'article' => $article]);
      }
 
-     /**
-      * Remove the specified resource from storage.
-      *
-      * @param  \App\Article  $article
-      * @return \Illuminate\Http\Response
-      */
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
      public function destroyArticle($id)
      {
        $user = Auth::user();

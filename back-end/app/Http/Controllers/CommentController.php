@@ -14,7 +14,7 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexAllComment()
     {
@@ -25,7 +25,8 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource that belongs to given user.
      *
-     * @return \Illuminate\Http\Response
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexUserComment($user_id)
     {
@@ -37,7 +38,8 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource witch was assigned to the given article.
      *
-     * @return \Illuminate\Http\Response
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexArticleComment($article_id)
     {
@@ -49,8 +51,8 @@ class CommentController extends Controller
     /**
      * Display the article owner.
      *
-     * @param  \App\Comment  $comment_id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexCommentOwner($id) {
       $comment = Comment::findOrFail($id);
@@ -61,7 +63,9 @@ class CommentController extends Controller
     /**
      * Creates a new instance of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param CommentRequest $request
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function postCommentOnArticle(CommentRequest $request, $article_id) {
       $comment = new Comment;
@@ -72,9 +76,9 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @param CommentRequest $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function updateComment(CommentRequest $request, $id)
     {
@@ -87,8 +91,8 @@ class CommentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function showComment($id)
     {
@@ -99,8 +103,8 @@ class CommentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroyComment($id)
     {

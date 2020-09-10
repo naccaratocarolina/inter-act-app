@@ -15,12 +15,11 @@ use App\Input;
 
 class Article extends Model
 {
-  /**
-   * One to Many Relationship User & Article
-   * An User can have n Articles
-   * A Article can belong to 1 User
-   * @return mixed
-   */
+    /**
+     * One to Many Relationship User & Article
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
     public function user()
     {
         return $this->belongsTo('App\User');
@@ -28,33 +27,31 @@ class Article extends Model
 
     /**
      * Many to Many Relationship User & Article
-     * An User can like n Articles
-     * A Article can be liked by n Users
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
-      public function isLikedBy()
-      {
-          return $this->belongsToMany('App\User', 'likes');
-      }
+    public function isLikedBy()
+    {
+        return $this->belongsToMany('App\User', 'likes');
+    }
 
     /**
      * One to Many Relationship Article & Comment
-     * An Article can have n Comments
-     * A Comment can belong to 1 Article
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
-     public function comments()
-     {
-         return $this->hasMany('App\Comment');
-     }
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
 
-
-     /**
+    /**
      * Create a new Article
      *
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function createArticle(Request $request) {
+    public function createArticle(Request $request)
+    {
       //grab the user id that is making the request
       $user = Auth::user();
       $this->user_id = $user->id; //and saves it in the article table
@@ -75,11 +72,10 @@ class Article extends Model
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
-    public function updateArticle(Request $request) {
+    public function updateArticle(Request $request)
+    {
       if($request->title){
         $this->title = $request->title;
       }

@@ -52,9 +52,8 @@ class User extends Authenticatable
 
     /**
      * Many to Many Relationship User & Role
-     * An User can have n Roles
-     * A Role can be assigned to n Users
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function roles()
     {
@@ -63,9 +62,8 @@ class User extends Authenticatable
 
     /**
      * One to Many Relationship User & Article
-     * An User can have n Articles
-     * A Article can belong to 1 User
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function articles()
     {
@@ -74,9 +72,8 @@ class User extends Authenticatable
 
     /**
      * Many to Many Relationship User & Article
-     * An User can like n Articles
-     * A Article can be liked by n Users
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function like()
     {
@@ -85,9 +82,8 @@ class User extends Authenticatable
 
     /**
      * One to Many Relationship User & Comment
-     * An User can post n Comments
-     * A Comment can belong to 1 User
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()
     {
@@ -95,16 +91,22 @@ class User extends Authenticatable
     }
 
     /**
-     * Many to Many Self Relationship User & User
-     * An User can follow n Users
+     * Many to Many Self Relationship User & User (followers)
+     *
      * An User can be followed by n Users
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function followers()
     {
         return $this->belongsToMany('App\User', 'followers', 'follower_id', 'following_id');
     }
 
+    /**
+     * Many to Many Self Relationship User & User (following)
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function following()
     {
         return $this->belongsToMany('App\User', 'following', 'follower_id', 'following_id');
@@ -113,7 +115,7 @@ class User extends Authenticatable
     /**
      * Create a new User
      *
-     * @return \Illuminate\Http\Response
+     * @param UserRequest $request
      */
     public function createUser(UserRequest $request)
     {
@@ -148,9 +150,7 @@ class User extends Authenticatable
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
      */
      public function updateUser(Request $request)
      {
@@ -179,25 +179,23 @@ class User extends Authenticatable
        }
      }
 
-     /**
-      * Function used on CheckOwnerMiddleware that check if the authenticated user is owner of the given article.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @param  int  $article_id
-      * @return bool
-      */
+    /**
+     * Function used on CheckOwnerMiddleware that check if the authenticated user is owner of the given article.
+     *
+     * @param $article_id
+     * @return bool
+     */
      public function isArticleOwner($article_id) {
        $user = Auth::user();
        return (bool) $user->articles->contains('id', $article_id);
      }
 
-     /**
-      * Function used on CheckOwnerMiddleware that check if the authenticated user is owner of the given comment.
-      *
-      * @param  \Illuminate\Http\Request  $request
-      * @param  int  $article_id
-      * @return bool
-      */
+    /**
+     * Function used on CheckOwnerMiddleware that check if the authenticated user is owner of the given comment.
+     *
+     * @param $comment_id
+     * @return bool
+     */
      public function isCommentOwner($comment_id) {
        $user = Auth::user();
        return (bool) $user->comments->contains('id', $comment_id);

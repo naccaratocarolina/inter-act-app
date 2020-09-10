@@ -18,9 +18,8 @@ class Comment extends Model
 
     /**
      * One to Many Relationship User & Comment
-     * An User can post n Comments
-     * A Comment can belong to 1 User
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function user()
     {
@@ -29,9 +28,8 @@ class Comment extends Model
 
     /**
      * One to Many Relationship Article & Comment
-     * An Article can have n Comments
-     * A Comment can belong to 1 Article
-     * @return mixed
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
     public function article()
     {
@@ -41,7 +39,8 @@ class Comment extends Model
     /**
      * Creates a new instance of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @param CommentRequest $request
+     * @param $article_id
      */
     public function postCommentOnArticle(CommentRequest $request, $article_id) {
       $user = Auth::user();
@@ -55,9 +54,7 @@ class Comment extends Model
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Comment  $comment
-     * @return \Illuminate\Http\Response
+     * @param CommentRequest $request
      */
     public function updateComment(CommentRequest $request) {
         $current = Carbon::now();

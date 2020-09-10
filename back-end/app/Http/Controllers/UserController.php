@@ -15,11 +15,6 @@ use Auth;
 
 class UserController extends Controller
 {
-  /**
-   * Create a new controller instance.
-   *
-   * @return void
-   */
     public function construct()
     {
       $this->middleware('role');
@@ -28,7 +23,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function indexAllUsers()
     {
@@ -39,9 +34,11 @@ class UserController extends Controller
     /**
      * Display a listing of the following users.
      *
-     * @return \Illuminate\Http\Response
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function indexFollowingUsers($user_id) {
+    public function indexFollowingUsers($user_id)
+    {
       $user = User::findOrFail($user_id);
       $following = $user->following;
       return response()->json(['message' => 'Pessoas que vc segue encontradas!','following' => $following]);
@@ -50,19 +47,21 @@ class UserController extends Controller
     /**
      * Display a listing of the followers users.
      *
-     * @return \Illuminate\Http\Response
+     * @param $user_id
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function indexFollowersUsers($user_id) {
+    public function indexFollowersUsers($user_id)
+    {
       $user = User::findOrFail($user_id);
       $followers = $user->followers;
       return response()->json(['message' => 'Seguidores encontrados!','followers' => $followers]);
     }
 
     /**
-     * Create a new User
-     * And assign a Role
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Create a new User Aand assign a default Role
+     *
+     * @param UserRequest $request
+     * @return \Illuminate\Http\JsonResponse
      */
      public function createUser(UserRequest $request)
      {
@@ -74,8 +73,8 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function showUser($id)
     {
@@ -86,9 +85,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
      public function updateUser(Request $request, $id)
      {
@@ -100,8 +99,8 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
      */
      public function destroyUser($id)
      {
@@ -111,46 +110,48 @@ class UserController extends Controller
        return response()->json(['message' =>'User deletado!']);
       }
 
-      /**
-       * Function that can attach or detach the relationship of one user following another
-       *
-       * @param  int  $following_id
-       * @return \Illuminate\Http\Response
-       */
-      public function actionFollow($following_id) {
-        $user = Auth::user();
-        $following = User::findOrFail($following_id);
+    /**
+     * Function that can attach or detach the relationship of one user following another
+     *
+     * @param $following_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+     public function actionFollow($following_id)
+     {
+       $user = Auth::user();
+       $following = User::findOrFail($following_id);
 
-        if(!$user->following->contains($following->id)) {
-          //attach the ids
-          $user->following()->attach($following_id);
-          $following->followers()->attach($user->id);
-          $following = User::findOrFail($following_id);
+       if(!$user->following->contains($following->id)) {
+         //attach the ids
+         $user->following()->attach($following_id);
+         $following->followers()->attach($user->id);
+         $following = User::findOrFail($following_id);
           return response()->json(['message' => 'Agora voce segue ' . $following->name]);
-        }
-        else {
-          //dettach the ids
-          $user->following()->detach($following->id);
-          $following->followers()->detach($user->id);
-          $following = User::findOrFail($following_id);
-          return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
-        }
-      }
+       }
+       else {
+         //dettach the ids
+         $user->following()->detach($following->id);
+         $following->followers()->detach($user->id);
+         $following = User::findOrFail($following_id);
+         return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
+       }
+     }
 
-      /**
-       * Function that detach the relationship of one user following another
-       *
-       * @param  int  $following_id
-       * @return \Illuminate\Http\Response
-       */
-      public function removeFollow($following_id) {
-        $user = Auth::user();
-        $following = User::findOrFail($following_id);
-        $user->following()->detach($following->id);
-        $following->followers()->detach($user->id);
-        $following = User::findOrFail($following_id);
-        return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
-      }
+    /**
+     * Function that detach the relationship of one user following another
+     *
+     * @param $following_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+     public function removeFollow($following_id)
+     {
+       $user = Auth::user();
+       $following = User::findOrFail($following_id);
+       $user->following()->detach($following->id);
+       $following->followers()->detach($user->id);
+       $following = User::findOrFail($following_id);
+       return response()->json(['message' => 'Voce parou de seguir ' . $following->name]);
+     }
 
       /**
        * Function that check if an article was already followed
@@ -158,78 +159,86 @@ class UserController extends Controller
        * @param  int  $id
        * @return bool
        */
-      public function hasFollow($following_id) {
-        $user = Auth::user();
-        $following = User::findOrFail($following_id);
+     public function hasFollow($following_id)
+     {
+       $user = Auth::user();
+       $following = User::findOrFail($following_id);
 
-        $following_list = $user->following;
+       $following_list = $user->following;
 
-        foreach($following_list as $following_user) {
-          if($following->id === $following_user->id) {
-            return 1;
-          }
+       foreach($following_list as $following_user)
+       {
+         if($following->id === $following_user->id)
+         {
+           return 1;
+         }
+       }
+       return 0;
+     }
+
+    /**
+     * Function that creates the relationship of one user liking an article
+     *
+     * @param $article_id
+     * @return \Illuminate\Http\JsonResponse
+     */
+     public function actionLike($article_id) {
+       $user = Auth::user();
+       $article = Article::findOrFail($article_id);
+
+       if(!$user->like->contains($article->id))
+       {
+         //attach the ids
+         $user->like()->attach($article_id);
+         //increments the likes count
+         Article::where('id', $article_id)->increment('likes_count');
+         $article = Article::findOrFail($article_id);
+         return response()->json(['message' => 'Voce deu um like <3', 'likes_count'=> $article->likes_count] );
         }
-        return 0;
-      }
+       else {
+         //attach the ids
+         $user->like()->detach($article_id);
+         //decrements the likes count
+         Article::where('id', $article_id)->decrement('likes_count');
+         $article = Article::findOrFail($article_id);
+         return response()->json(['message' => 'Voce removeu o seu like :(', 'likes_count'=> $article->likes_count] );
+       }
+     }
 
-      /**
-       * Function that creates the relationship of one user liking an article
-       *
-       * @param  int  $article_id
-       * @return \Illuminate\Http\Response
-       */
-      public function actionLike($article_id) {
-        $user = Auth::user();
-        $article = Article::findOrFail($article_id);
+    /**
+     * Function that check if an article was already liked
+     *
+     * @param $article_id
+     * @return int
+     */
+     public function hasLike($article_id)
+     {
+       $user = Auth::user();
+       $article_like = Article::findOrFail($article_id);
+       $articles = $user->like;
 
-        if(!$user->like->contains($article->id)) {
-          //attach the ids
-          $user->like()->attach($article_id);
-          //increments the likes count
-          Article::where('id', $article_id)->increment('likes_count');
-          $article = Article::findOrFail($article_id);
-          return response()->json(['message' => 'Voce deu um like <3', 'likes_count'=> $article->likes_count] );
-        }
-        else {
-          //attach the ids
-          $user->like()->detach($article_id);
-          //decrements the likes count
-          Article::where('id', $article_id)->decrement('likes_count');
-          $article = Article::findOrFail($article_id);
-          return response()->json(['message' => 'Voce removeu o seu like :(', 'likes_count'=> $article->likes_count] );
-        }
-      }
+       foreach($articles as $article)
+       {
+         if($article_like->id === $article->id)
+         {
+           return 1;
+         }
+       }
+       return 0;
+     }
 
-      /**
-       * Function that check if an article was already liked
-       *
-       * @param  int  $article_id
-       * @return bool
-       */
-      public function hasLike($article_id) {
-        $user = Auth::user();
-        $article_like = Article::findOrFail($article_id);
-        $articles = $user->like;
-
-        foreach($articles as $article) {
-          if($article_like->id === $article->id) {
-            return 1;
-          }
-        }
-        return 0;
-      }
-
-      /**
-       * Function that check if an the authenticated user is a moderator
-       *
-       * @param  int  $article_id
-       * @return bool
-       */
-      public function isModerator($id) {
-        $user = User::findOrFail($id);
-        if($user->roles->contains('marker', 'moderator')) {
-          return 1;
-        }
-        return 0;
-      }
+    /**
+     * Function that check if an the authenticated user is a moderator
+     *
+     * @param $id
+     * @return int
+     */
+     public function isModerator($id) {
+       $user = User::findOrFail($id);
+       if($user->roles->contains('marker', 'moderator'))
+       {
+         return 1;
+       }
+       return 0;
+     }
 }
