@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Schema;
 use App\Role;
+use App\User;
 
 class RoleTest extends TestCase
 {
@@ -17,8 +18,21 @@ class RoleTest extends TestCase
      *
      * @return void
      */
-    public function testRolesDatabaseHasExpectedColumns() {
+    public function testRolesDatabaseHasExpectedColumns()
+    {
         $columns = ['id', 'name', 'marker'];
         $this->assertTrue(Schema::hasColumns('roles', $columns), 1);
+    }
+
+    /**
+     * Test the relationship Roles BelongsToMany Users
+     *
+     * @return void
+     */
+    public function testRoleBelongsToManyUsers()
+    {
+        $role = factory(Role::class)->create();
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $role->users);
     }
 }

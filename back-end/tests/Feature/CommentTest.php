@@ -21,4 +21,23 @@ class CommentTest extends TestCase
         $columns = ['id', 'commentary', 'user_id', 'article_id'];
         $this->assertTrue(Schema::hasColumns('comments', $columns), 1);
     }
+
+    /**
+     * Test the relationship Comment Belongs To User
+     *
+     * @return void
+     */
+    public function testCommentBelongsToUser()
+    {
+        $user = factory('App\User')->create();
+        $comment = factory(Comment::class)->create(['user_id' => $user->id]);
+
+        $this->assertEquals(1, $comment->user->count());
+        $this->assertInstanceOf('App\User', $comment->user);
+    }
+
+    public function testUserFollowers()
+    {
+
+    }
 }

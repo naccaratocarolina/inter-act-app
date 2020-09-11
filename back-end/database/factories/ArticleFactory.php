@@ -12,6 +12,6 @@ $factory->define(Article::class, function (Faker $faker) {
         'text' => $faker->paragraph($nbSentences = 5, $variableNbSentences = true),
         'image' => $faker->imageUrl($width = 640, $height = 480),
         'category' => $faker->randomElement($categories = array('Comida','Arte', 'Atividade Física', 'Viagem')),
-        'user_id' => factory('App\User')->create()->id,
+        //'user_id' => factory('App\User')->create()->id,
     ];
 });

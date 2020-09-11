@@ -10,7 +10,7 @@ use Carbon\Carbon;
 use App\Users;
 use App\Article;
 use App\Comment;
-use Auth;
+use Illuminate\Support\Facades\Auth as Auth;
 
 class Comment extends Model
 {
