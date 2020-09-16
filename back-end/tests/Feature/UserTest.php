@@ -3,10 +3,13 @@
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Schema;
 use App\User;
+use App\Article;
+use App\Comment;
+use App\Role;
 
 class UserTest extends TestCase
 {
@@ -24,6 +27,50 @@ class UserTest extends TestCase
     }
 
     /**
+     * Tests if the pivot table roles_users migration columns were created correctly
+     *
+     * @return void
+     */
+    public function testUserRolesDatabaseHasExpectedColumns()
+    {
+        $columns = ['role_id', 'user_id'];
+        $this->assertTrue(Schema::hasColumns('roles_users', $columns));
+    }
+
+    /**
+     * Tests if the pivot table following migration columns were created correctly
+     *
+     * @return void
+     */
+    public function testFollowingDatabaseHasExpectedColumns()
+    {
+        $columns = ['follower_id', 'follower_id'];
+        $this->assertTrue(Schema::hasColumns('following', $columns));
+    }
+
+    /**
+     * Tests if the pivot table followers migration columns were created correctly
+     *
+     * @return void
+     */
+    public function testFollowersDatabaseHasExpectedColumns()
+    {
+        $columns = ['follower_id', 'follower_id'];
+        $this->assertTrue(Schema::hasColumns('followers', $columns));
+    }
+
+    /**
+     * Tests if the pivot table likes migration columns were created correctly
+     *
+     * @return void
+     */
+    public function testLikesDatabaseHasExpectedColumns()
+    {
+        $columns = ['article_id', 'user_id'];
+        $this->assertTrue(Schema::hasColumns('likes', $columns));
+    }
+
+    /**
      * Test the relationship User BelongsToMany Roles
      *
      * @return void
@@ -31,8 +78,17 @@ class UserTest extends TestCase
     public function testUserBelongsToManyRoles()
     {
         $user = factory(User::class)->create();
+        $roles = factory(Role::class, 30)->create();
+
+        foreach($roles as $role) {
+            $role->users()->attach($user);
+            $this->assertCount(1, $role->users);
+            $this->assertContainsOnlyInstancesOf(User::class, $role->users);
+        }
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->roles);
+        $this->assertCount(30, $user->roles);
+        $this->assertContainsOnlyInstancesOf(Role::class, $user->roles);
     }
 
     /**
@@ -43,7 +99,7 @@ class UserTest extends TestCase
     public function testUserHasManyArticles()
     {
         $user = factory(User::class)->create();
-        $article = factory('App\Article')->create(['user_id' => $user->id]);
+        $article = factory(Article::class)->create(['user_id' => $user->id]);
 
         $this->assertTrue($user->articles->contains($article));
         $this->assertEquals(1, $user->articles->count());
@@ -58,8 +114,17 @@ class UserTest extends TestCase
     public function testUserLikeArticle()
     {
         $user = factory(User::class)->create();
+        $articles = factory(Article::class, 30)->create();
+
+        foreach($articles as $article) {
+            $article->isLikedBy()->attach($user);
+            $this->assertCount(1, $article->isLikedBy);
+            $this->assertContainsOnlyInstancesOf(User::class, $article->isLikedBy);
+        }
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->like);
+        $this->assertCount(30, $user->like);
+        $this->assertContainsOnlyInstancesOf(Article::class, $user->like);
     }
 
     /**
@@ -70,10 +135,116 @@ class UserTest extends TestCase
     public function testUserHasManyComments()
     {
         $user = factory(User::class)->create();
-        $comment = factory('App\Comment')->create(['user_id' => $user->id]);
+        $comment = factory(Comment::class)->create(['user_id' => $user->id]);
 
         $this->assertTrue($user->comments->contains($comment));
         $this->assertEquals(1, $user->comments->count());
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->comments);
+    }
+
+    public function testUserFollowUsers()
+    {
+        $user = factory(User::class)->create();
+        $followers = factory(User::class, 30)->create();
+
+        foreach($followers as $follower) {
+            $follower->following()->attach($user);
+            $user->followers()->attach($follower);
+            $this->assertCount(1, $follower->following);
+            $this->assertContainsOnlyInstancesOf(User::class, $follower->following);
+        }
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->followers);
+        $this->assertCount(30, $user->followers);
+        $this->assertContainsOnlyInstancesOf(User::class, $user->followers);
+    }
+
+    public function testUserFollowingUsers()
+    {
+        $user = factory(User::class)->create();
+        $followings = factory(User::class, 30)->create();
+
+        foreach($followings as $following) {
+            $following->followers()->attach($user);
+            $user->following()->attach($following);
+            $this->assertCount(1, $following->followers);
+            $this->assertContainsOnlyInstancesOf(User::class, $following->followers);
+        }
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $user->following);
+        $this->assertCount(30, $user->following);
+        $this->assertContainsOnlyInstancesOf(User::class, $user->following);
+    }
+
+    /**
+     * Test method POST
+     *
+     * @return void
+     */
+    public function testUserCreatedSuccessfully()
+    {
+        $userData = [
+            "name" => "User",
+            "email" => "user@user.com",
+            "password" => "senha123"
+        ];
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ];
+
+        $this->json('POST', 'api/createUser', $userData, $headers)
+            ->assertStatus(200)
+            ->assertJson([
+                "message" => "User criado!",
+                "user" => [
+                    "name" => "User",
+                    "email" => "user@user.com"
+                ]
+            ])
+        ;
+        $this->assertCount(1, User::all());
+    }
+
+    /**
+     * Test method GET
+     *
+     * @return void
+     */
+    public function testUserListedSuccessfully()
+    {
+        factory(User::class)->create([
+            "name" => "User 1",
+            "email" => "user1@email.com"
+        ]);
+
+        factory(User::class)->create([
+            "name" => "User 2",
+            "email" => "user2@email.com"
+        ]);
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ];
+
+        $this->json('GET', 'api/indexAllUsers', $headers)
+            ->assertStatus(200)
+            ->assertJson([
+                "users" => [
+                    [
+                        "id" => 2,
+                        "name" => "User 2",
+                        "email" => "user2@email.com"
+                    ],
+                    [
+                        "id" => 1,
+                        "name" => "User 1",
+                        "email" => "user1@email.com"
+                    ]
+                ]
+            ])
+        ;
     }
 }

@@ -3,12 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="9d091823-9164-46e6-8e34-c72ba8a94088" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Article.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Article.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/ArticleFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/ArticleFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/CommentFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/CommentFactory.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/database/factories/RoleFactory.php" beforeDir="false" afterPath="$PROJECT_DIR$/database/factories/RoleFactory.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/User.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/ArticleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/ArticleTest.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tests/Feature/CommentTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/CommentTest.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/Feature/CommentTest.php" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/RoleTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/RoleTest.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tests/Feature/UserTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/Feature/UserTest.php" afterDir="false" />
     </list>
@@ -17,7 +16,7 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ComposerSettings" synchronizationState="SYNCHRONIZE">
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
     <execution />
   </component>
@@ -31,6 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
+  <component name="PhpDebugGeneral" listening_started="true" />
   <component name="PhpWorkspaceProjectConfiguration">
     <include_path>
       <path value="$PROJECT_DIR$/vendor/nunomaduro/collision" />
@@ -155,6 +155,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -165,10 +166,14 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.PHP" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
-  <component name="RunManager" selected="PHPUnit.UserTest.testUserBelongsToManyRoles">
+  <component name="RunManager" selected="PHPUnit.AuthenticationTest">
+    <configuration name="AuthenticationTest" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="Tests\Feature\AuthenticationTest" file="$PROJECT_DIR$/tests/Feature/AuthenticationTest.php" scope="Class" />
+      <method v="2" />
+    </configuration>
     <configuration name="UserTest.testUserBelongsToManyRoles" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
       <TestRunner class="Tests\Feature\UserTest" file="$PROJECT_DIR$/tests/Feature/UserTest.php" method="testUserBelongsToManyRoles" scope="Method" />
       <method v="2" />
@@ -179,6 +184,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="PHPUnit.AuthenticationTest" />
         <item itemvalue="PHPUnit.UserTest.testUserBelongsToManyRoles" />
       </list>
     </recent_temporary>
@@ -192,6 +198,11 @@
       <option name="presentableId" value="Default" />
       <updated>1599769960278</updated>
       <workItem from="1599769962539" duration="10265000" />
+      <workItem from="1599821906133" duration="400000" />
+      <workItem from="1599924199288" duration="4000" />
+      <workItem from="1600108014155" duration="129000" />
+      <workItem from="1600184753194" duration="869000" />
+      <workItem from="1600185650630" duration="20483000" />
     </task>
     <servers />
   </component>
@@ -203,14 +214,36 @@
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
     <state x="2542" y="234" width="732" height="637" key="#Inspections/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1599770357381" />
-    <state x="2646" y="310" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1599783656093">
+    <state x="2646" y="310" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog" timestamp="1600211348254">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2646" y="310" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1599783656093" />
-    <state x="2289" y="120" key="SettingsEditor" timestamp="1599770071558">
+    <state x="726" y="329" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1600189604215" />
+    <state x="2646" y="310" width="524" height="484" key="#com.jetbrains.php.actions.copyPaste.importReferences.PhpImportReferencesDialog/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1600211348254" />
+    <state x="2696" y="310" width="424" height="484" key="FileChooserDialogImpl" timestamp="1600108140725">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>
-    <state x="2289" y="120" key="SettingsEditor/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1599770071558" />
+    <state x="2696" y="310" width="424" height="484" key="FileChooserDialogImpl/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1600108140725" />
+    <state width="1874" height="287" key="GridCell.Tab.0.bottom" timestamp="1600185102418">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1874" height="287" key="GridCell.Tab.0.bottom/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1600185102418" />
+    <state width="1874" height="287" key="GridCell.Tab.0.center" timestamp="1600185102417">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1874" height="287" key="GridCell.Tab.0.center/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1600185102417" />
+    <state width="1874" height="287" key="GridCell.Tab.0.left" timestamp="1600185102417">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1874" height="287" key="GridCell.Tab.0.left/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1600185102417" />
+    <state width="1874" height="287" key="GridCell.Tab.0.right" timestamp="1600185102417">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state width="1874" height="287" key="GridCell.Tab.0.right/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1600185102417" />
+    <state x="2156" y="128" width="1048" height="730" key="SettingsEditor" timestamp="1600191627474">
+      <screen x="1920" y="0" width="1920" height="1080" />
+    </state>
+    <state x="460" y="145" width="1048" height="730" key="SettingsEditor/1920.0.1920.1080/0.27.1920.1053@0.27.1920.1053" timestamp="1600190862857" />
+    <state x="2156" y="128" key="SettingsEditor/1920.0.1920.1080/0.27.1920.1053@1920.0.1920.1080" timestamp="1600191627474" />
     <state x="2443" y="359" width="930" height="386" key="com.jetbrains.php.test.PhpNewTestDialog" timestamp="1599780614201">
       <screen x="1920" y="0" width="1920" height="1080" />
     </state>

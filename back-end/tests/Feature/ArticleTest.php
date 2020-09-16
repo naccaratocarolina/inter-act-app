@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Comment;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -17,7 +19,8 @@ class ArticleTest extends TestCase
      *
      * @return void
      */
-    public function testArticlesDatabaseHasExpectedColumns() {
+    public function testArticlesDatabaseHasExpectedColumns()
+    {
         $columns = ['id', 'title', 'subtitle', 'text', 'image', 'category', 'date', 'likes_count', 'is_liked', 'user_id'];
         $this->assertTrue(Schema::hasColumns('articles', $columns), 1);
     }
@@ -29,7 +32,7 @@ class ArticleTest extends TestCase
      */
     public function testArticleBelongsToUser()
     {
-        $user = factory('App\User')->create();
+        $user = factory(User::class)->create();
         $article = factory(Article::class)->create(['user_id' => $user->id]);
 
         $this->assertEquals(1, $article->user->count());
@@ -44,7 +47,31 @@ class ArticleTest extends TestCase
     public function testArticleIsLikedByUsers()
     {
         $article = factory(Article::class)->create();
+        $users = factory(User::class, 30)->create();
+
+        foreach($users as $user) {
+            $user->like()->attach($article);
+            $this->assertCount(1, $user->like);
+            $this->assertContainsOnlyInstancesOf(Article::class, $user->like);
+        }
 
         $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $article->isLikedBy);
+        $this->assertCount(30, $article->isLikedBy);
+        $this->assertContainsOnlyInstancesOf(User::class, $article->isLikedBy);
+    }
+
+    /**
+     * Test the relationship Article hasMany Comments
+     *
+     * @return void
+     */
+    public function testArticleHasManyComments()
+    {
+        $article = factory(Article::class)->create();
+        $comment = factory(Comment::class)->create(['article_id' => $article->id]);
+
+        $this->assertTrue($article->comments->contains($comment));
+        $this->assertCount(1, $article->comments);
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $article->comments);
     }
 }

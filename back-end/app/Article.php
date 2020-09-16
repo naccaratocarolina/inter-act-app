@@ -4,14 +4,8 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use App\Http\Requests\ArticleRequest as ArticleRequest;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Support\Facades\Storage;
-
 use Carbon\Carbon;
-use App\User;
 use Auth;
-use App\Input;
 
 class Article extends Model
 {

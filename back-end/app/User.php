@@ -2,18 +2,11 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest as UserRequest;
 use Laravel\Passport\HasApiTokens;
-use Illuminate\Support\Facades\Storage;
-
-use App\Input;
-use App\Article;
-use App\Comment;
-use App\Role;
 use Auth;
 
 class User extends Authenticatable
@@ -109,7 +102,7 @@ class User extends Authenticatable
      */
     public function following()
     {
-        return $this->belongsToMany('App\User', 'following', 'follower_id', 'following_id');
+        return $this->belongsToMany('App\User', 'followers', 'follower_id', 'following_id');
     }
 
     /**
