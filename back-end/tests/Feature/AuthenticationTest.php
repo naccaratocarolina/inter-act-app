@@ -137,6 +137,11 @@ class AuthenticationTest extends TestCase
         ;
     }
 
+    /**
+     * Test successful login
+     *
+     * @return void
+     */
     public function testSuccessfulLogin()
     {
         factory(User::class)->create([
@@ -151,7 +156,7 @@ class AuthenticationTest extends TestCase
 
         $loginData = ['email' => 'user@test.com', 'password' => 'senha123'];
 
-        $response = $this->json('POST', 'api/login', $loginData, $headers)
+        $loggedUser = $this->json('POST', 'api/login', $loginData, $headers)
             ->assertStatus(200)
             ->assertJson(["message" => "Login concluido!"])
             ->assertJsonStructure([
@@ -171,16 +176,21 @@ class AuthenticationTest extends TestCase
             ])
         ;
 
-        $this->assertNotNull($response->json('data.token'));
+        $this->assertNotNull($loggedUser->json('data.token'));
         $this->assertAuthenticated();
     }
 
+    /**
+     * Test getDetails
+     *
+     * @return void
+     */
     public function testGetDetails()
     {
         $userData = [
             'name' => 'Carolina',
             'email' => 'carolina@carolina.com',
-            'password' => 'senha123',
+            'password' => 'senha123'
         ];
 
         $headers = [
@@ -189,5 +199,45 @@ class AuthenticationTest extends TestCase
         ];
 
         $registeredUser = $this->json('POST', 'api/register', $userData, $headers)->assertStatus(200);
+        $token = $registeredUser->json('data.token');
+        $this->assertNotNull($token);
+        $this->get('api/getDetails', ['Authorization' => 'Bearer '.$token])
+            ->assertStatus(200)
+            ->assertJson([
+                "user" => [
+                    'name' => 'Carolina',
+                    'email' => 'carolina@carolina.com'
+                ]
+            ])
+        ;
+        $this->assertAuthenticated();
+    }
+
+    /**
+     * Test successful logout
+     *
+     * @return void
+     */
+    public function testSuccessfulLogout()
+    {
+        factory(User::class)->create([
+            'email' => 'user@test.com',
+            'password' => bcrypt('senha123')
+        ]);
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ];
+
+        $loginData = ['email' => 'user@test.com', 'password' => 'senha123'];
+
+        $registeredUser = $this->json('POST', 'api/login', $loginData, $headers)->assertStatus(200);
+        $token = $registeredUser->json('data.token');
+        $this->assertNotNull($token);
+        $this->get('api/logout', ['Authorization' => 'Bearer '.$token])
+            ->assertStatus(200)
+            ->assertJson(["User deslogado!"])
+        ;
     }
 }

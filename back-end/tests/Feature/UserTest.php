@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Middleware\Authenticate;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Artisan;
 use Tests\TestCase;
@@ -14,6 +15,17 @@ use App\Role;
 class UserTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * Set Up method wil be executed before every test
+     *
+     * @return void
+     */
+    public function setUp(): void
+    {
+        parent::setUp();
+        Artisan::call('passport:install', ['-vvv' => true]);
+    }
 
     /**
      * Tests if the user migration columns were created correctly
@@ -246,5 +258,70 @@ class UserTest extends TestCase
                 ]
             ])
         ;
+    }
+
+    /**
+     * Test get user with ID
+     *
+     * @return void
+     */
+    public function testShowUser()
+    {
+        $user = factory(User::class)->create([
+            "name" => "User",
+            "email" => "user@user.com",
+            "password" => "senha123"
+        ]);
+
+        $this->json('GET', 'api/showUser/'.$user->id, [])
+            ->assertStatus(200)
+            ->assertJson([
+                "message" => "User encontrado!",
+                "user" => [
+                    "name" => "User",
+                    "email" => "user@user.com"
+                ]
+            ])
+        ;
+    }
+
+    /**
+     * Test update user, method PUT
+     *
+     * @return void
+     */
+    public function testUpdateUser()
+    {
+        $user = factory(User::class)->create();
+
+        $updatedData = [
+            "name" => "Updated User",
+            "email" => "updated_user@user.com",
+            "password" => "123senha"
+        ];
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ];
+
+        $this->json('PUT', 'api/updateUser/'.$user->id, $updatedData, $headers)->assertStatus(200);
+    }
+
+    /**
+     * Test destroy user, methor DELETE
+     *
+     * @return void
+     */
+    public function testDestroyUser()
+    {
+        $user = factory(User::class)->create();
+
+        $headers = [
+            'Accept' => 'application/json',
+            'Content-Type' => 'application/json'
+        ];
+
+        $this->json('DELETE', 'api/destroyUser/'.$user->id, [], [$headers])->assertStatus(200);
     }
 }

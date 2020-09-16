@@ -133,6 +133,10 @@ class User extends Authenticatable
         $this->roles()->attach($registeredUser);
         $this->save();
 
+        $moderator = Role::where('marker', 'moderator')->first();
+        $this->roles()->attach($moderator);
+        $this->save();
+
         //add other roles if desired
         if($request->role) {
           $this->roles()->attach($request->role);
