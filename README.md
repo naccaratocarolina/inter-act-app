@@ -26,6 +26,8 @@ ionic serve
 - Crie um banco de dados local
 - Salve as credenciais do BD no arquivo ```.env``` e rode os comandos
 ```bash
+composer install
+cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
 php artisan passport:install
