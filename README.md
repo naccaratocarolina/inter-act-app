@@ -22,7 +22,7 @@ npm install
 ionic serve
 ```
 
-## 2. Back-end
+### 2. Back-end
 - Crie um banco de dados local
 - Salve as credenciais do BD no arquivo ```.env``` e rode os comandos
 ```bash
